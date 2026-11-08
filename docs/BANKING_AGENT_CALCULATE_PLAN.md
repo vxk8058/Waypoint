@@ -156,6 +156,7 @@ Do these in order. Each step ends with its own tests passing, as in the main che
   - It's built in one pass over the formula: facts become label (value); dates become "December 25, 2026"; earlier calculations become label (value); `ceil`/`floor`/`min`/`max` become words; `* / //` become `× ÷ ÷ (whole)`.
   - Uncited calculations get no line.
 - **Failed calculations** become caveats: "Couldn't calculate weeks needed: Division by zero."
+- **Removed (2026-11-08, by request):** the "How this was worked out" paragraph is no longer shown in answers or the fallback. Formulas stay in `state["calculations"]` for debugging.
 - **Fallback:** the code-only fallback now leads with calculation results (up to four tiles with balances) plus their explanation line, so a calculated answer survives a failed or rejected plan.
 - **`RULES`:** one line telling the planner to lead with `calc.*` facts and show before/after as stats for what-if questions.
 - **Tests:** 5 new (4 in `tests/test_gen_ui.py`, 1 end-to-end in `tests/test_main_graph.py`). One step 1 test had used a made-up `calc.` key without a formula and now uses another prefix. Full suite: 308 passed.
@@ -258,3 +259,53 @@ Record the results in `BANKING_AGENT_CHECKLIST.md`.
 - **Changing Verify to see facts instead of raw records changes its judgment.** Rerun all seven original scenarios live after Step 3.
 
 **Rough effort:** 1–1.5 days.
+
+---
+
+## Follow-up: comparison bar charts for what-if answers (2026-11-08)
+
+What-if and goal answers had no visual: charts could only come from code-built spending datasets, and nothing existed for goals or calculated results.
+
+- **`ChartChoice`** (`ui/plan.py`) can now use either a `dataset` or `facts`: 2–4 fact keys compared as bars. Exactly one source is required.
+- **`plan_problems`** rejects unknown chart facts, facts with different units, and date facts.
+- **`_comparison()`** (`nodes/gen_ui.py`) builds a one-series bar chart in code:
+  - categories are the fact labels; values are whole dollars for money, otherwise one decimal
+  - format: currency, percent, or number with a " days"/" months" suffix
+  - highlights are filtered to real labels
+  - values still come only from code-computed facts and calculations
+- **Gen UI rules:** for what-if and goal questions, always include one fact comparison chart (usually before vs after).
+- **Tests:** 8 new. Full suite: 325 passed.
+- **Live check:**
+  - Christmas: target $6,000 vs projected $4,933 vs saved $4,200
+  - $100/day: daily saving rate $113 vs $13
+  - Dining: average monthly spending $680 vs $612 (with the "always" rule; the earlier "prefer" wording skipped it once)
+  - Savings balance: still no chart
+- **Rough edge:** the planner picks which figures to compare. For $100/day it compared daily rates rather than "135 days vs 16 days to the goal", which would have been clearer.
+
+## Follow-up: every answer with account data gets a chart (2026-11-08, user request)
+
+Prompt instructions alone did not reliably produce charts (a live answer had neither a chart nor stats despite the "always include one" rule), so code now guarantees it.
+
+- **`_default_chart()`** (`nodes/gen_ui.py`): when a plan has no chart, and in the code-only fallback, code adds one from the user's data, most relevant first:
+  1. the same-unit figures the answer mentions (2 or more) → "Key figures from this answer"
+  2. savings goal saved vs target → "<goal> progress"
+  3. the latest month's spending by category (sorted largest first)
+  4. average month: income, spending, recurring bills, debt payments
+
+  Values always come from code-built facts or datasets. The only answers without a chart are ones with no account data at all (non-banking questions, or routing or data failures). A chart there would need invented numbers.
+- **`_bar()`** builds every chart block, both planned and default. Defaults are horizontal with value labels shown.
+- **Gen UI rules:** "charts: one to three (every answer has at least one)". Removed "Use none when a sentence or stats answer the question". Added guidance for transfer requests and broad questions.
+- **Router:** broad questions ("help me with my money") now get an overview of all four products instead of `[]`. Transfer and payment requests route to the accounts involved, read-only, while saying the action isn't supported. `[]` is only for non-banking questions. Verify is told an overview answers a broad question, and that moving money can't be done.
+- **Changed expectation:** the build guide's scenario 7 ("savings balance: text only, no chart") now expects a goal progress chart. `test_7` and the related Gen UI tests were updated.
+- **Tests:** 3 new, 8 updated. Full suite: 328 passed.
+- **Live check** (port 8001, Poyo):
+
+| Question | Chart |
+|---|---|
+| $100/day for 30 days, how much faster? | 135 days → 18 days, 117 days faster |
+| Savings balance | Goal progress $4,200 vs $6,000 |
+| Checking balance | Checking $1,653 vs total cash $6,214 |
+| Help me with my money | Overview text + income vs spending by month, plus a suggested next question |
+| Transfer $50 to savings | "I can't move money… No transfer was made" + checking vs savings balances |
+| Afford the car by Christmas? | Target vs projected vs saved |
+| Weather | No chart (no account data), refused |

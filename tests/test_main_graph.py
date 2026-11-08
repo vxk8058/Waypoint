@@ -229,7 +229,7 @@ def test_calculated_answer_end_to_end(service):
     days = -(-(profile.goal.target_amount - profile.goal.current_saved) // 100)
     blocks = out["final_ui"]["blocks"]
     assert blocks[0]["props"]["text"] == f"Adding that, you'd reach your goal in {days} days."
-    assert blocks[2]["props"]["text"].endswith(f"÷ 100) = {days} days.")
+    assert [b["type"] for b in blocks] == ["paragraph", "stats", "bar_chart"]
 
 
 def test_failed_calculation_is_retried_once_its_inputs_exist():

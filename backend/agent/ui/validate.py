@@ -13,7 +13,12 @@ def has_raw_number(text: str) -> bool:
 
 
 def plan_problems(plan: UIPlan, facts: dict, datasets: dict) -> list[str]:
-    problems = [f"Unknown dataset '{c.dataset}'" for c in plan.charts if c.dataset not in datasets]
+    problems = [f"Unknown dataset '{c.dataset}'" for c in plan.charts if c.dataset and c.dataset not in datasets]
+    for chart in plan.charts:
+        problems += [f"Unknown chart fact '{key}'" for key in chart.facts if key not in facts]
+        units = {facts[key]["unit"] for key in chart.facts if key in facts}
+        if "date" in units or len(units) > 1:
+            problems.append(f"Chart facts must share one numeric unit: {chart.facts}")
     problems += [f"Unknown stat '{key}'" for key in plan.stats if key not in facts]
     texts = [plan.answer] + [t for c in plan.charts for t in (c.title, c.subtitle, c.caption) if t]
     for text in texts:

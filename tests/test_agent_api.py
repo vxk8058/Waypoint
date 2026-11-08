@@ -56,8 +56,9 @@ def test_1_checking_balance(world):
                    VerifyDecision=[{"done": True}],
                    UIPlan=[{"answer": "Your checking balance is {checking.balance}.", "stats": ["checking.balance"]}])
     balance = sum(a.balance for a in profile.accounts if a.type == "checking")
-    assert r.status_code == 200 and kinds(r) == ["paragraph", "stats"]
+    assert r.status_code == 200 and kinds(r) == ["paragraph", "stats", "bar_chart"]
     assert r.json()["blocks"][1]["props"]["items"][0]["value"] == balance
+    assert r.json()["blocks"][2]["props"]["title"].startswith("Spending by category, October 2026")
     assert len(calls["VerifyDecision"]) == 1
 
 
@@ -121,11 +122,14 @@ def test_6_october_spending_chart_uses_exact_totals(world):
     assert r.json()["blocks"][0]["props"]["text"] == f"You spent ${sum(expected.values()):,} in October."
 
 
-def test_7_savings_balance_is_text_only(world):
-    service, _ = world
+def test_7_savings_balance_gets_goal_progress_chart(world):
+    service, profile = world
     r, _ = ask(service, "What's my savings balance?", RouteDecision=route("savings"), VerifyDecision=[{"done": True}],
                UIPlan=[{"answer": "Your savings balance is {savings.balance}.", "stats": ["savings.balance"]}])
-    assert "bar_chart" not in kinds(r)
+    # The guide expected text only here; every answer with data now gets a chart (user request, 2026-11-08).
+    assert kinds(r) == ["paragraph", "stats", "bar_chart"]
+    assert r.json()["blocks"][2]["props"]["series"][0]["values"] == [profile.goal.current_saved,
+                                                                     profile.goal.target_amount]
 
 
 def test_agent_only_reads_the_signed_in_users_profile(world):
