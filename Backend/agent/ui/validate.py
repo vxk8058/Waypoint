@@ -1,7 +1,7 @@
 """Grounding: model text may state numbers only through {fact_key} placeholders filled by code."""
 import re
 
-from .datasets import money
+from .datasets import fmt
 from .plan import UIPlan
 
 PLACEHOLDER = re.compile(r"\{([^{}]+)\}")
@@ -25,4 +25,4 @@ def plan_problems(plan: UIPlan, facts: dict, datasets: dict) -> list[str]:
 
 
 def fill(text: str, facts: dict) -> str:
-    return PLACEHOLDER.sub(lambda m: money(facts[m[1]]["value"]), text)
+    return PLACEHOLDER.sub(lambda m: fmt(facts[m[1]]), text)

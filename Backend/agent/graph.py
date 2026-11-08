@@ -5,6 +5,7 @@ from functools import partial
 from langgraph.graph import END, START, StateGraph
 
 from ..services.profile_service import ProfileService
+from .nodes.calculate import calculate
 from .nodes.eval_query import eval_query, route_to_products
 from .nodes.gen_ui import gen_ui
 from .nodes.verify import after_verify, verify
@@ -52,10 +53,12 @@ def build_agent_graph(profiles: ProfileService, planner=None, worker=None):
         graph.add_node(name, node)
         graph.add_edge(name, "verify")  # parallel branches finish in one superstep, so Verify runs once per round
     graph.add_node("verify", partial(verify, planner=planner))
+    graph.add_node("calculate", calculate)
     graph.add_node("gen_ui", partial(gen_ui, planner=planner))
     graph.add_edge(START, "eval_query")
     graph.add_conditional_edges("eval_query", route_to_products, [*branches, "gen_ui"])
-    graph.add_conditional_edges("verify", after_verify, ["eval_query", "gen_ui"])
+    graph.add_conditional_edges("verify", after_verify, ["eval_query", "calculate", "gen_ui"])
+    graph.add_edge("calculate", "verify")  # Verify checks results; the round limit still ends the loop
     graph.add_edge("gen_ui", END)
     return graph.compile()
 
@@ -75,6 +78,9 @@ def run_agent(graph, state: AgentState) -> AgentState:
                 v = update["verify"]
                 detail = (f"round={update['iterations']} done={v.done} need_products={v.need_products} "
                           f"need_other_data={v.need_other_data}")
+            elif node == "calculate":
+                calcs = update["calculations"]
+                detail = f"count={len(calcs)} errors={sum('error' in c for c in calcs)}"
             elif node == "gen_ui":
                 detail = f"blocks={[b['type'] for b in update['final_ui']['blocks']]}"
             else:

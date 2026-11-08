@@ -171,3 +171,112 @@ def test_planner_failure_and_no_results_use_code_only_fallback(profile):
 def test_numeric_verify_caveat_is_replaced():
     update = gen_ui({"query": "x", "results": [], "verify": VerifyDecision(done=False, missing="Owes $5,000")})
     assert update["final_ui"]["blocks"][-1]["props"]["text"] == "Some requested information could not be verified."
+
+
+# Calculate plan, step 1: fact units and everyday-maths facts
+
+
+@pytest.mark.parametrize("unit,value,text", [
+    ("dollars", 1800, "$1,800"), ("dollars", -120, "-$120"), ("dollars", 1799.6, "$1,800"),
+    ("days", 18, "18 days"), ("days", 1, "1 day"), ("months", 4.5, "4.5 months"), ("months", 1.0, "1 month"),
+    ("percent", 25, "25%"), ("count", 1200, "1,200"), ("date", "2027-08-31", "August 31, 2027"),
+])
+def test_fact_formatting_by_unit(unit, value, text):
+    from backend.agent.ui.datasets import fmt
+    assert fmt({"value": value, "unit": unit}) == text
+
+
+def test_goal_and_monthly_facts_come_from_trusted_records(profile):
+    facts = build_facts([result(profile, "savings")], {})
+    w = profile.wellness_inputs
+    assert facts["savings.goal_monthly_contribution"] == {
+        "label": f"Monthly saving toward {profile.goal.name}", "value": profile.goal.monthly_contribution,
+        "good": "up", "unit": "dollars"}
+    assert facts["savings.goal_target_date"]["value"] == profile.goal.target_date.isoformat()
+    assert facts["savings.goal_target_date"]["unit"] == "date"
+    assert [facts[k]["value"] for k in ("monthly.income", "monthly.spending", "monthly.recurring_bills",
+                                         "monthly.debt_payments", "liquid_cash")] == [
+        w.monthly_income_avg, w.monthly_spending_avg, w.monthly_recurring_bills,
+        w.scheduled_monthly_debt_payments, w.liquid_cash]
+    assert all(f["unit"] == "dollars" for k, f in facts.items() if k != "savings.goal_target_date")
+
+
+def test_non_dollar_facts_render_in_text_and_tiles(profile):
+    savings = result(profile, "savings")
+    facts = build_facts([savings], {})
+    facts["other.days"] = {"label": "Days to reach goal", "value": 18, "good": "none", "unit": "days"}
+    plan = UIPlan(answer="You'd get there in {other.days}, before {savings.goal_target_date}.",
+                  stats=["other.days", "savings.goal_target_date", "savings.balance"])
+    doc = validate_document(build_document(plan, {}, facts, []))
+    target = profile.goal.target_date
+    assert doc["blocks"][0]["props"]["text"] == (
+        f"You'd get there in 18 days, before {target:%B} {target.day}, {target.year}.")
+    days, when, balance = doc["blocks"][1]["props"]["items"]
+    assert days == {"label": "Days to reach goal", "goodDirection": "none", "value": "18 days"}
+    assert when["value"] == f"{target:%B} {target.day}, {target.year}" and "format" not in when
+    assert balance["format"] == {"style": "currency", "decimals": 0}
+
+
+# Calculate plan, step 5: calculations in the answer
+
+DAYS = {"name": "days_needed", "label": "Days to reach goal", "unit": "days",
+        "formula": "ceil({savings.goal_remaining} / 100)"}
+
+
+def calc_state(profile, calculations, plan_output=None, planner_model=None):
+    savings = result(profile, "savings")
+    remaining = savings.data["goal_remaining"]
+    calcs = [{**c, "value": -(-remaining // 100)} if c.get("value") == "auto" else c for c in calculations]
+    model = planner_model or planner(plan_output)
+    return remaining, gen_ui({"query": "If I add $100 a day, how fast can I get my car?", "results": [savings],
+                              "calculations": calcs, "verify": VerifyDecision(done=True)}, model)
+
+
+def test_cited_calculation_shows_value_and_explanation(profile):
+    remaining, update = calc_state(profile, [{**DAYS, "value": "auto"}], {
+        "answer": "At that pace you'd reach it in {calc.days_needed}.",
+        "stats": ["calc.days_needed", "savings.goal_remaining"]})
+    days = -(-remaining // 100)
+    blocks = update["final_ui"]["blocks"]
+    assert [b["type"] for b in blocks] == ["paragraph", "stats", "paragraph"]
+    assert blocks[0]["props"]["text"] == f"At that pace you'd reach it in {days} days."
+    assert blocks[1]["props"]["items"][0] == {"label": "Days to reach goal", "goodDirection": "none",
+                                              "value": f"{days} days"}
+    assert blocks[2]["props"] == {"size": "small", "tone": "muted", "text": (
+        f"How this was worked out: Days to reach goal = round up(Left to reach {profile.goal.name} "
+        f"(${remaining:,}) ÷ 100) = {days} days.")}
+
+
+def test_chained_and_dated_calculations_explain_with_labels():
+    from backend.agent.nodes.gen_ui import build_document
+    facts = {
+        "savings.goal_remaining": {"label": "Left to reach goal", "value": 1800, "good": "down", "unit": "dollars"},
+        "calc.days_needed": {**DAYS, "value": 18, "good": "none"},
+        "calc.weeks": {"label": "Weeks to goal", "value": 3, "good": "none", "unit": "count",
+                       "formula": "ceil(days_needed / 7)"},
+        "calc.per_month": {"label": "Needed per month", "value": 982, "good": "none", "unit": "dollars",
+                           "formula": '{savings.goal_remaining} * 30 // days_until("2026-12-25")'},
+    }
+    doc = build_document(UIPlan(answer="{calc.weeks}; {calc.per_month}."), {}, facts, [])
+    assert doc["blocks"][1]["props"]["text"] == (
+        "How this was worked out: Weeks to goal = round up(Days to reach goal (18 days) ÷ 7) = 3. "
+        "Needed per month = Left to reach goal ($1,800) × 30 ÷ (whole) days until December 25, 2026 = $982.")
+
+
+def test_uncited_calculation_adds_no_explanation_and_failures_become_caveats(profile):
+    _, update = calc_state(profile, [{**DAYS, "value": "auto"},
+                                     {**DAYS, "name": "bad", "label": "Weeks needed", "error": "Division by zero"}],
+                           {"answer": "Here is your goal."})
+    blocks = update["final_ui"]["blocks"]
+    assert [b["type"] for b in blocks] == ["paragraph", "callout"]
+    assert blocks[1]["props"]["text"] == "Couldn't calculate weeks needed: Division by zero."
+
+
+def test_fallback_keeps_calculated_answer(profile):
+    failing = Mock()
+    failing.with_structured_output.return_value.invoke.side_effect = ConnectionError("down")
+    remaining, update = calc_state(profile, [{**DAYS, "value": "auto"}], planner_model=failing)
+    blocks = update["final_ui"]["blocks"]
+    assert [b["type"] for b in blocks] == ["paragraph", "stats", "paragraph"]
+    assert blocks[1]["props"]["items"][0]["value"] == f"{-(-remaining // 100)} days"
+    assert blocks[2]["props"]["text"].startswith("How this was worked out: Days to reach goal = round up(")

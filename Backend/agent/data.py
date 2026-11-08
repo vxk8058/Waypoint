@@ -18,7 +18,8 @@ def get_data(profiles: ProfileService, profile_id: str, source: Source, *, refre
     if profile.profile_id != profile_id:
         raise ValueError("Retrieved profile does not match the requested profile")
     data = profile.model_dump(mode="json")
-    output = {key: data[key] for key in ("profile_id", "data_mode", "history_start", "as_of_date", "metadata")}
+    output = {key: data[key] for key in ("profile_id", "data_mode", "history_start", "as_of_date",
+                                   "metadata", "wellness_inputs")}
     if source == "transactions":
         return {**output, "transactions": data["transactions"]}
     if source == "bio":

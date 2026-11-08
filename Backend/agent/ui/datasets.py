@@ -1,6 +1,7 @@
 """Chart datasets and headline facts computed in code from trusted product results (whole dollars)."""
 import calendar
 from collections import defaultdict
+from datetime import date
 
 
 def _label(slug: str) -> str:
@@ -59,8 +60,8 @@ def build_facts(results, datasets: dict[str, dict]) -> dict[str, dict]:
     """Every dollar figure the generated text may mention, keyed for {placeholder} use."""
     facts = {}
 
-    def add(key, label, value, good="none"):
-        facts[key] = {"label": label, "value": value, "good": good}
+    def add(key, label, value, good="none", unit="dollars"):
+        facts[key] = {"label": label, "value": value, "good": good, "unit": unit}
 
     for result in results:
         data = result.data
@@ -73,6 +74,19 @@ def build_facts(results, datasets: dict[str, dict]) -> dict[str, dict]:
             add("savings.goal_target", f"{data['goal']['name']} target", data["goal"]["target_amount"])
             add("savings.goal_saved", f"Saved toward {data['goal']['name']}", data["goal"]["current_saved"], "up")
             add("savings.goal_remaining", f"Left to reach {data['goal']['name']}", data["goal_remaining"], "down")
+            add("savings.goal_monthly_contribution", f"Monthly saving toward {data['goal']['name']}",
+                data["goal"]["monthly_contribution"], "up")
+            add("savings.goal_target_date", f"{data['goal']['name']} target date", data["goal"]["target_date"],
+                unit="date")
+    # Profile-wide monthly averages: the same in every branch's data, so take the first.
+    wellness = next((r.data["wellness_inputs"] for r in results if r.data.get("wellness_inputs")), None)
+    if wellness:
+        add("monthly.income", "Average monthly income", wellness["monthly_income_avg"], "up")
+        add("monthly.spending", "Average monthly spending", wellness["monthly_spending_avg"], "down")
+        add("monthly.recurring_bills", "Monthly recurring bills", wellness["monthly_recurring_bills"], "down")
+        add("monthly.debt_payments", "Scheduled monthly debt payments",
+            wellness["scheduled_monthly_debt_payments"], "down")
+        add("liquid_cash", "Cash in checking and savings", wellness["liquid_cash"], "up")
     for key, ds in datasets.items():
         for series in ds["series"]:
             name = series["name"].lower()
@@ -86,5 +100,30 @@ def build_facts(results, datasets: dict[str, dict]) -> dict[str, dict]:
     return facts
 
 
+def data_date(results) -> str | None:
+    """The records' as-of date (date maths counts from here, not today)."""
+    for result in results:
+        for data in (result.data, *(v for v in result.data.values() if isinstance(v, dict))):
+            if data.get("as_of_date"):
+                return data["as_of_date"]
+    return None
+
+
 def money(value: int) -> str:
     return f"-${-value:,}" if value < 0 else f"${value:,}"
+
+
+def fmt(fact: dict) -> str:
+    """A fact's value as display text, by unit."""
+    value, unit = fact["value"], fact.get("unit", "dollars")
+    if unit == "dollars":
+        return money(round(value))
+    if unit == "date":
+        d = date.fromisoformat(value)
+        return f"{d:%B} {d.day}, {d.year}"
+    number = f"{value:,.0f}" if float(value).is_integer() else f"{value:,.1f}"
+    if unit == "percent":
+        return f"{number}%"
+    if unit in ("days", "months"):
+        return f"{number} {unit[:-1] if number == '1' else unit}"
+    return number  # count

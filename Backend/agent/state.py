@@ -19,6 +19,7 @@ class AgentState(TypedDict, total=False):
     route: RouteDecision
     results: Annotated[list[ProductResult], merge_results]
     verify: VerifyDecision
+    calculations: list[dict]  # results so far: name, label, unit, formula, and value or error
     iterations: int
     final_ui: dict[str, Any]
 
@@ -29,4 +30,4 @@ def initial_state(query: str, user: PublicUser) -> AgentState:
     if not query:
         raise ValueError("A banking question is required")
     return {"query": query, "user_id": user.user_id, "profile_id": user.profile_id,
-            "results": [], "iterations": 0}
+            "results": [], "calculations": [], "iterations": 0}

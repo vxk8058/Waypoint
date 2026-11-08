@@ -4,6 +4,8 @@ from typing import Any, Literal
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 Product = Literal["checking", "savings", "credit_card", "loans"]
+Unit = Literal["dollars", "days", "months", "percent", "count"]
+_RESERVED = {"min", "max", "round", "ceil", "floor", "abs", "days_until", "months_until"}  # calc.py functions
 
 
 class ProductEvaluation(BaseModel):
@@ -38,6 +40,23 @@ class RouteDecision(BaseModel):
         return self
 
 
+class Calculation(BaseModel):
+    """A formula the planner wants computed; backend.agent.calc runs it against trusted facts."""
+
+    model_config = ConfigDict(extra="forbid", str_strip_whitespace=True)
+
+    name: str = Field(pattern=r"^[a-z][a-z0-9_]{0,39}$")
+    label: str = Field(min_length=1, max_length=80)
+    unit: Unit
+    formula: str = Field(min_length=1, max_length=200)
+
+    @model_validator(mode="after")
+    def not_a_function_name(self):
+        if self.name in _RESERVED:
+            raise ValueError(f"Calculation name {self.name!r} is reserved")
+        return self
+
+
 class VerifyDecision(BaseModel):
     """Incomplete with no fetch targets means stop with a caveat/clarification."""
 
@@ -47,13 +66,18 @@ class VerifyDecision(BaseModel):
     need_products: list[Product] = Field(default_factory=list)
     need_other_data: bool = Field(default=False, strict=True)
     missing: str = ""
+    calculations: list[Calculation] = Field(default_factory=list, max_length=5)
 
     @model_validator(mode="after")
     def consistent_decision(self):
         if len(self.need_products) != len(set(self.need_products)):
             raise ValueError("Requested products must be unique")
-        if self.done and (self.need_products or self.need_other_data or self.missing):
+        if len({c.name for c in self.calculations}) != len(self.calculations):
+            raise ValueError("Calculation names must be unique")
+        if self.done and (self.need_products or self.need_other_data or self.missing or self.calculations):
             raise ValueError("A completed decision cannot request or report missing data")
+        if self.calculations and (self.need_products or self.need_other_data):
+            raise ValueError("Fetch data first; request calculations in the next round")
         if not self.done and not self.missing:
             raise ValueError("An incomplete decision must explain what is missing")
         return self
