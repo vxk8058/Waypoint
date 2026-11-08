@@ -1,0 +1,10 @@
+# Waypoint backend
+pydantic>=2.7,<3
+pymongo>=4.8,<5          # includes dnspython for mongodb+srv:// (Atlas)
+python-dotenv>=1.0
+httpx>=0.27              # Nessie client (Phase 3+)
+fastapi>=0.115           # API (Phase 4+)
+
+# Tests
+pytest>=8
+mongomock>=4.1

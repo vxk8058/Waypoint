@@ -1,0 +1,39 @@
+{
+  "profile_id": "stu-003",
+  "customer": {
+    "first_name": "Leah",
+    "last_name": "Walker",
+    "street_number": "2018",
+    "street_name": "University Dr",
+    "city": "College Station",
+    "state": "TX",
+    "zip": "77840"
+  },
+  "account_rewards": {
+    "stu-003-checking": 0,
+    "stu-003-savings": 0,
+    "stu-003-credit-card": 2931
+  },
+  "loans": [
+    {
+      "account_id": "stu-003-auto-loan",
+      "loan_type": "auto",
+      "status": "repayment",
+      "credit_score": 659
+    }
+  ],
+  "transaction_medium": "balance",
+  "transaction_status": "completed",
+  "bill_status": "recurring",
+  "field_sources": {
+    "customer.first_name": "waypoint_generated",
+    "customer.last_name": "waypoint_generated",
+    "customer.address": "waypoint_generated",
+    "account_rewards": "derived",
+    "loans[*].credit_score": "waypoint_generated",
+    "loans[*].status": "pnc_generated",
+    "transaction_medium": "waypoint_generated",
+    "transaction_status": "waypoint_generated",
+    "bill_status": "waypoint_generated"
+  }
+}

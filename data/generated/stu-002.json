@@ -1,0 +1,31 @@
+{
+  "profile_id": "stu-002",
+  "customer": {
+    "first_name": "Marcus",
+    "last_name": "Brooks",
+    "street_number": "315",
+    "street_name": "Hickory St",
+    "city": "Denton",
+    "state": "TX",
+    "zip": "76201"
+  },
+  "account_rewards": {
+    "stu-002-checking": 0,
+    "stu-002-savings": 0
+  },
+  "loans": [],
+  "transaction_medium": "balance",
+  "transaction_status": "completed",
+  "bill_status": "recurring",
+  "field_sources": {
+    "customer.first_name": "waypoint_generated",
+    "customer.last_name": "waypoint_generated",
+    "customer.address": "waypoint_generated",
+    "account_rewards": "derived",
+    "loans[*].credit_score": "waypoint_generated",
+    "loans[*].status": "pnc_generated",
+    "transaction_medium": "waypoint_generated",
+    "transaction_status": "waypoint_generated",
+    "bill_status": "waypoint_generated"
+  }
+}
