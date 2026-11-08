@@ -3,32 +3,7 @@
 // checking + savings − credit card debt, loans excluded. Month-ends match the backend's
 // monthly summary (closing_liquid minus card balances).
 import { isLoan, signedBalance, type BankAccount } from "./accounts";
-import { apiFetch } from "./api";
-
-export interface ApiTransaction {
-  transaction_id: string;
-  account_id: string;
-  date: string; // YYYY-MM-DD
-  /** Change to the account's balance; for liabilities, positive means more is owed. */
-  balance_change: number;
-}
-
-interface TransactionsPage {
-  items: ApiTransaction[];
-  total: number;
-}
-
-const PAGE_SIZE = 500; // backend maximum
-
-/** All of the user's transactions (the endpoint pages at 500). */
-export async function fetchAllTransactions(): Promise<ApiTransaction[]> {
-  const all: ApiTransaction[] = [];
-  for (let offset = 0; ; offset += PAGE_SIZE) {
-    const page = await apiFetch<TransactionsPage>(`/api/me/transactions?limit=${PAGE_SIZE}&offset=${offset}`);
-    all.push(...page.items);
-    if (page.items.length === 0 || all.length >= page.total) return all;
-  }
-}
+import type { ApiTransaction } from "./transactions";
 
 export interface BalancePoint {
   date: string; // YYYY-MM-DD

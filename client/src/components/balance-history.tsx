@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import type { BankAccount } from "../lib/accounts";
-import { buildBalanceHistory, fetchAllTransactions } from "../lib/balance-history";
+import { buildBalanceHistory } from "../lib/balance-history";
+import { fetchAllTransactions } from "../lib/transactions";
 import { useAsync } from "../lib/use-async";
 import { LineChart } from "./charts";
 
@@ -33,7 +34,7 @@ export interface BalanceHistoryProps {
 /** Line chart of the current balance's daily history. */
 export function BalanceHistory({ accounts, asOf, className = "" }: BalanceHistoryProps) {
   const [range, setRange] = useState<RangeKey>("6M");
-  const { data: transactions, error, loading } = useAsync(fetchAllTransactions, []);
+  const { data: transactions, error, loading } = useAsync(() => fetchAllTransactions(), []);
 
   const history = useMemo(
     () => (transactions ? buildBalanceHistory(accounts, transactions, asOf) : []),
@@ -85,7 +86,10 @@ export function BalanceHistory({ accounts, asOf, className = "" }: BalanceHistor
           </button>
         ))}
       </div>
-      <LineChart spec={spec} loading={loading && !transactions} />
+      {/* Chart card, marker outlines and label halos all use --color-surface; point it at the app background. */}
+      <div className="flex-1 [--color-surface:var(--color-canvas)]">
+        <LineChart spec={spec} loading={loading && !transactions} className="h-full" />
+      </div>
     </div>
   );
 }
