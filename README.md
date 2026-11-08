@@ -95,8 +95,8 @@ python scripts/seed_nessie.py                     # Nessie ids in MongoDB
 uvicorn backend.api.main:app --reload --port 8000
 ```
 
-Log in at `http://localhost:8000/docs` with **poyo@waypoint.demo / waypoint-demo**. This
-demo user is linked to `stu-002`, Poyo de Avon. Banking data is read live from Nessie and
+Log in at `http://localhost:8000/docs` with any demo login below (password **waypoint-demo**).
+Each login sees only its own student. Banking data is read live from Nessie and
 merged with PNC-only data from MongoDB. See [docs/API.md](docs/API.md).
 
 ## Run the frontend
@@ -109,7 +109,7 @@ npm install      # first time, or after package.json changes
 npm run dev      # http://localhost:5173
 ```
 
-Sign in with **poyo@waypoint.demo / waypoint-demo**.
+Sign in with any demo login (password **waypoint-demo**): `poyo@`, `lucas@`, `leah@` or `priya@waypoint.demo`.
 
 - In dev, Vite proxies `/auth` and `/api` to `http://localhost:8000` (`client/vite.config.ts`), so no
   CORS setup is needed. For a backend elsewhere: `WAYPOINT_API_URL=http://host:port npm run dev`.
@@ -121,12 +121,12 @@ Sign in with **poyo@waypoint.demo / waypoint-demo**.
 
 ## Demo profiles
 
-| ID | Student | Highlights |
-|---|---|---|
-| `stu-001` (primary) | UT Dallas junior, CS, library job + family support | Card paid in full, deferred unsubsidized loan, emergency-fund goal |
-| `stu-002` (demo login) | Poyo de Avon, UNT sophomore, lives at home, retail job | No card, saving for a first car |
-| `stu-003` | Texas A&M senior, co-op internship | Auto loan, card carried at ~28% utilization, relocation goal |
-| `stu-004` | UT Austin freshman, dining job + aid refund | Subsidized loan, card carried, tuition-gap goal |
+| ID | Demo login | Student | Highlights |
+|---|---|---|---|
+| `stu-001` | `lucas@waypoint.demo` | Lucas Patel, UT Dallas junior, CS, library job + family support | Card paid in full, deferred unsubsidized loan, emergency-fund goal |
+| `stu-002` | `poyo@waypoint.demo` | Poyo de Avon, UNT sophomore, lives at home, retail job | No card, saving for a first car |
+| `stu-003` | `leah@waypoint.demo` | Leah Walker, Texas A&M senior, co-op internship | Auto loan, card carried at ~28% utilization, relocation goal |
+| `stu-004` | `priya@waypoint.demo` | Priya Ramirez, UT Austin freshman, dining job + aid refund | Subsidized loan, card carried, tuition-gap goal |
 
 ## Layout
 
@@ -140,7 +140,7 @@ backend/
   integrations/nessie/  Nessie HTTP client, response schemas, retrieval gateway
   seeding/      idempotent Nessie seeder, reset, read-back verifier
   services/     ProfileService: cached Nessie retrieval with snapshot and pre-seed fallbacks
-  auth/         demo user, password hashing, signed session tokens
+  auth/         demo users (one per student), password hashing, signed session tokens
   api/          FastAPI app (uvicorn backend.api.main:app)
   pipeline.py   generate → fill → map → normalize → validate
 scripts/        runnable pipeline steps

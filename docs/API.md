@@ -10,11 +10,15 @@ Interactive docs: `http://localhost:8000/docs`
 
 ## Authentication
 
-A hardcoded demo user is created in MongoDB `users` at startup:
+Four hardcoded demo users, one per seeded student, are created in MongoDB `users` at startup.
+All use the password `waypoint-demo` (override with `WAYPOINT_DEMO_PASSWORD`).
 
-| Email | Password | Linked profile |
-|---|---|---|
-| `poyo@waypoint.demo` | `waypoint-demo` (override with `WAYPOINT_DEMO_PASSWORD`) | `stu-002`, Poyo de Avon |
+| Email | Student | Profile | What the data shows |
+|---|---|---|---|
+| `poyo@waypoint.demo` | Poyo de Avon | `stu-002` | No card or debt; saving for a first car |
+| `lucas@waypoint.demo` | Lucas Patel | `stu-001` | Card paid in full; deferred student loan; emergency fund |
+| `leah@waypoint.demo` | Leah Walker | `stu-003` | Auto loan; card balance carried; tight cash flow |
+| `priya@waypoint.demo` | Priya Ramirez | `stu-004` | Freshman; aid refund; subsidized loan; card carried |
 
 ```http
 POST /auth/login

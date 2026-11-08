@@ -227,3 +227,30 @@ def test_accounts_bills_goal_summary(api):
 
 def test_health(api):
     assert api.get("/health").json()["mongo"] == "ok"
+
+
+@pytest.mark.parametrize("email,profile_id,name", [
+    ("poyo@waypoint.demo", "stu-002", ("Poyo", "de Avon")),
+    ("lucas@waypoint.demo", "stu-001", ("Lucas", "Patel")),
+    ("leah@waypoint.demo", "stu-003", ("Leah", "Walker")),
+    ("priya@waypoint.demo", "stu-004", ("Priya", "Ramirez")),
+])
+def test_each_demo_login_sees_only_its_student(api, email, profile_id, name):
+    r = api.post("/auth/login", json={"email": email, "password": "pw-123"})
+    assert r.status_code == 200 and r.json()["user"]["profile_id"] == profile_id
+    h = {"Authorization": f"Bearer {r.json()['access_token']}"}
+    profile = api.get("/api/me/profile", headers=h).json()
+    assert profile["profile_id"] == profile_id and profile["data_mode"] == "nessie"
+    assert (profile["user"]["first_name"], profile["user"]["last_name"]) == name
+    assert all(a["account_id"].startswith(profile_id) for a in profile["accounts"])
+    other = "stu-001-checking" if profile_id != "stu-001" else "stu-002-checking"
+    assert api.get("/api/me/transactions", params={"account_id": other}, headers=h).status_code == 404
+
+
+def test_demo_login_names_match_nessie_customers(bundles):
+    from backend.auth.users import DEMO_USERS
+    by_profile = {b.profile.profile_id: b.generated.customer for b in bundles}
+    assert {u["profile_id"] for u in DEMO_USERS} == set(by_profile)
+    for u in DEMO_USERS:
+        c = by_profile[u["profile_id"]]
+        assert (u["first_name"], u["last_name"]) == (c.first_name, c.last_name)
