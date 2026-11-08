@@ -69,7 +69,7 @@ def test_2_savings_vs_loan_payoff_runs_in_parallel_and_flags_missing_payoff(worl
                    UIPlan=[{"answer": "Your savings balance is {savings.balance}.", "stats": ["savings.balance"]}])
     assert len(calls["VerifyDecision"]) == 1  # both branches joined before one Verify
     callout = r.json()["blocks"][-1]["props"]["text"]
-    assert "No loan account is available" in callout and "No loan payoff quote is available." in callout
+    assert "No loan payoff quote is available." in callout and "No loan account" not in callout  # not a data problem
     assert r.json()["blocks"][1]["props"]["items"][0]["value"] == sum(
         a.balance for a in profile.accounts if a.type == "savings")
 
@@ -90,7 +90,7 @@ def test_4_api_failure_is_a_caveat_not_a_crash(world):
     r, _ = ask(service, "What's my checking balance?", RouteDecision=route("checking"),
                VerifyDecision=[{"done": False, "missing": "Checking data is unavailable."}],
                UIPlan=[{"answer": "I couldn't reach your checking records."}])
-    assert r.status_code == 200 and kinds(r)[-1] == "callout"
+    assert r.status_code == 200 and kinds(r)[-1] == "paragraph"  # caveats are a muted closing note
     assert "Checking retrieval failed (ConnectionError)" in r.text and "internal-host" not in r.text
 
 

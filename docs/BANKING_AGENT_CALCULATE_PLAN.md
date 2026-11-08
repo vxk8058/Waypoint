@@ -309,3 +309,64 @@ Prompt instructions alone did not reliably produce charts (a live answer had nei
 | Transfer $50 to savings | "I can't move money… No transfer was made" + checking vs savings balances |
 | Afford the car by Christmas? | Target vs projected vs saved |
 | Weather | No chart (no account data), refused |
+
+## Follow-up: rich answer layouts (2026-11-08, user request)
+
+Goal: Simulation answers that use the whole AI document schema, like `client/src/pages/simulation-sample.ts`: headings, a lead paragraph with bold figures, stats with change vs last month, several chart types, rows, callouts, lists and notes. Every number still comes from code.
+
+**Plan format (`ui/plan.py`).** `UIPlan` is now an ordered list of `blocks`. One flat `Block` model covers heading, paragraph (size, tone), list, callout (tone, title), stats (`{fact, compare_to, caption}`), divider, bar_chart (dataset or 2–4 facts), pie_chart, line_chart and histogram. `beside_previous` puts blocks side by side in a row (at most three). The old `{answer, stats, charts}` form is still accepted as shorthand and converted to blocks, so all earlier tests check that old layouts come out unchanged.
+
+**New code-built data (`ui/datasets.py`).** Every dataset has a `kind`:
+- `category`: spending by category, and fact comparisons.
+- `time`: income vs spending by month.
+- `sizes`: `transaction_sizes`, the spending transactions of the last 90 days, plus count, median, mean and largest facts.
+- `projection`: `goal_projection`, the amount saved toward the goal at each month-end. It's counted back from today's saved amount using goal contributions.
+
+**Builder (`nodes/gen_ui.py`).** Code builds each block and fills every value:
+- Stat changes are percent changes, computed only for the same measure in a different month (for example spending in October vs September).
+- Pie slices and histogram values come straight from datasets.
+- The goal projection line projects at the current monthly contribution until the target. With `extra_monthly` and/or `lump_sum` (dollar facts, usually `calc.*`), it adds a what-if line. It shows a reference line at the goal, and `forecastFrom` marks today.
+- Untitled charts get a title from their data.
+- Chart titles drop markdown.
+- Lead paragraphs are never muted.
+- A tile caption that repeats its label is dropped.
+
+**Validation (`ui/validate.py`, `block_problems`)** checks each block:
+- the fields its type needs
+- that the chart type and dataset kind match
+- known facts and datasets
+- that what-if amounts are dollar facts
+- that stat comparisons use the same unit
+- no typed numbers except the user's own (from the question)
+- no time unit after a dollar figure ("{$1,800} days")
+
+**Failure handling.** If problems remain after one regeneration, the bad blocks are dropped and the rest kept, as long as answer text survives; otherwise the code-only fallback is used. Every answer with data still gets a chart.
+
+**Live-run fixes found while testing:**
+- **Thinking off for the layout step.** The Super model spent its whole 8,192-token budget reasoning and returned nothing (`finish=length`, all reasoning tokens). `get_llm("planner", thinking=False)` sends `chat_template_kwargs: {enable_thinking: false}` with every request; a `with_thinking_mode` binding is lost inside `with_structured_output`. Layout now takes about 5–40 s instead of failing or taking minutes.
+- **An empty or cut-off layout reply** gets a second attempt instead of going straight to the fallback.
+- **Repetition loops:** the model sometimes repeated blocks (163 callouts once). The schema now carries `maxItems: 16` for constrained decoding, and code drops repeated blocks, keeps at most two callouts and caps the layout at 16 blocks.
+- **Text slips are repaired:**
+  - words put in `title` instead of `text` move to `text`
+  - bare fact keys are treated as placeholders
+  - `**{key}}` becomes proper bold
+  - stray braces and dangling `**` are removed
+  - a repeated unit after a days/months placeholder is removed
+- **Verify:** told that an amount or time period in the question means a calculation is needed.
+
+**Tests:** 30 new (`tests/test_gen_ui_blocks.py` plus 1 in `tests/test_agent_llm.py`); earlier tests updated where behavior intentionally changed. Full suite: 357 passed.
+
+**Live results** (Poyo, port 8001; times are whole answers, including routing, Verify and calculations):
+
+| Question | Layout |
+|---|---|
+| $100/day for 30 days, how much faster? | Heading, lead ("119 days sooner"), 3 stats (135 → 16 days), goal projection with a what-if line, section, list, note (64 s) |
+| Can I afford the car by Christmas? | Heading, lead ($4,933 by Christmas, $1,067 short), 4 stats, saved vs projected vs target bars, projection line, section paragraph, list, note (89 s) |
+| How did my October go? | Heading, lead, 4 stats, income vs spending bars, category section with bars, goal section with projection line, divider, note (77 s) |
+| Cut dining out in half? | Heading, lead, stats, category bars, goal section with a "Cut dining out in half" projection line, before/after stats, callout, list, divider, note (48 s) |
+
+**Known limits:**
+- The planner chooses which facts to cite and sometimes picks a less fitting one (an October answer once used average-month income instead of October's).
+- Pie charts and histograms are available but weren't chosen in these runs.
+- Verify sometimes says "done" without calculating, and its provider errors aren't retried.
+- No plan timeline (Gantt) yet, because it would need code-built dates.

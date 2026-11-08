@@ -93,9 +93,9 @@ def test_invalid_plan_choices_cannot_introduce_data(profile):
     problems = plan_problems(plan, facts, datasets)
     assert len(problems) == 5
     with pytest.raises(ValueError):
-        UIPlan(answer="x", charts=[{"dataset": "a", "title": "t"}] * 4)
+        UIPlan(answer="x", stats=["a"], values=[1])  # unknown fields are still rejected
     with pytest.raises(ValueError):
-        UIPlan(answer="x", stats=["a"], values=[1])
+        UIPlan(blocks=[{"type": "table"}])
 
 
 # 11d: builder
@@ -154,7 +154,7 @@ def test_repeated_ungrounded_text_falls_back_with_caveats(profile):
                      "verify": VerifyDecision(done=False, missing="Recent deposits are missing")}, model)
     assert model.with_structured_output.return_value.invoke.call_count == 2
     blocks = update["final_ui"]["blocks"]
-    assert [b["type"] for b in blocks] == ["paragraph", "stats", "bar_chart", "callout"]
+    assert [b["type"] for b in blocks] == ["paragraph", "stats", "bar_chart", "paragraph"]  # caveats: muted note
     assert "1,000,000" not in str(blocks)
     assert blocks[1]["props"]["items"][0]["value"] == checking.data["balance_total"]
     assert blocks[2]["props"]["title"].startswith("Spending by category, October 2026")
@@ -254,7 +254,7 @@ def test_failed_calculations_become_caveats(profile):
                                      {**DAYS, "name": "bad", "label": "Weeks needed", "error": "Division by zero"}],
                            {"answer": "Here is your goal."})
     blocks = update["final_ui"]["blocks"]
-    assert [b["type"] for b in blocks] == ["paragraph", "bar_chart", "callout"]
+    assert [b["type"] for b in blocks] == ["paragraph", "bar_chart", "paragraph"]
     assert blocks[2]["props"]["text"] == "Couldn't calculate weeks needed: Division by zero."
 
 
@@ -328,8 +328,9 @@ def test_invalid_fact_charts_are_rejected(charts, problem):
     {"facts": ["a", "b", "c", "d", "e"], "title": "Five facts"},
 ])
 def test_chart_choice_needs_exactly_one_source(chart):
-    with pytest.raises(ValueError):
-        UIPlan(answer="x", charts=[chart])
+    facts = {k: {"label": k, "value": 1, "good": "none", "unit": "dollars"} for k in "abcde"}
+    datasets = {"income_vs_spending": {"kind": "time", "categories": [], "series": []}}
+    assert plan_problems(UIPlan(answer="x", charts=[chart]), facts, datasets)
 
 
 # Every answer with account data gets a chart, chosen by code when the plan has none

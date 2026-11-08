@@ -9,7 +9,7 @@ from ..config import Settings
 Decision = TypeVar("Decision", bound=BaseModel)
 
 
-def get_llm(role: Literal["planner", "worker"]):
+def get_llm(role: Literal["planner", "worker"], thinking: bool = True):
     if role not in ("planner", "worker"):
         raise ValueError("Model role must be planner or worker")
     settings = Settings.load()
@@ -19,7 +19,11 @@ def get_llm(role: Literal["planner", "worker"]):
 
     from langchain_nvidia_ai_endpoints import ChatNVIDIA
 
-    return ChatNVIDIA(model=model, api_key=settings.nvidia_api_key, temperature=0)
+    if thinking:
+        return ChatNVIDIA(model=model, api_key=settings.nvidia_api_key, temperature=0)
+    # Sent with every request, including structured-output ones (a with_thinking_mode binding is lost there).
+    return ChatNVIDIA(model=model, api_key=settings.nvidia_api_key, temperature=0,
+                      model_kwargs={"chat_template_kwargs": {"enable_thinking": False}})
 
 
 def structured(model, schema: type[Decision], prompt: str, retries: int = 2) -> Decision:

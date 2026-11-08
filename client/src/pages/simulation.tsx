@@ -1,4 +1,4 @@
-import { useRef, useState, type SubmitEvent, type KeyboardEvent, type SVGProps } from "react";
+import { useEffect, useRef, useState, type SubmitEvent, type KeyboardEvent, type SVGProps } from "react";
 import { AiDocument } from "../components/ai-document";
 import { Button } from "../components/button";
 import { Text } from "../components/text";
@@ -22,6 +22,31 @@ function SparkleIcon(props: SVGProps<SVGSVGElement>) {
     <Icon {...props}>
       <path d="M12 3v4M12 17v4M3 12h4M17 12h4M6.3 6.3l2.5 2.5M15.2 15.2l2.5 2.5M6.3 17.7l2.5-2.5M15.2 8.8l2.5-2.5" />
     </Icon>
+  );
+}
+
+// shortcut: timed steps, not live agent events; stream the agent's node path if exact progress is needed.
+const STEPS = ["Reading your accounts", "Checking what your question needs", "Running the numbers", "Designing your answer"];
+
+function ProgressSteps() {
+  const [step, setStep] = useState(0);
+  useEffect(() => {
+    const timer = setInterval(() => setStep((s) => Math.min(s + 1, STEPS.length - 1)), 12000);
+    return () => clearInterval(timer);
+  }, []);
+  return (
+    <ol aria-label="Progress" className="flex flex-col gap-1 text-sm">
+      {STEPS.map((label, i) => (
+        <li
+          key={label}
+          aria-current={i === step ? "step" : undefined}
+          className={i < step ? "text-blue-grey-400" : i === step ? "animate-pulse text-blue-grey-050" : "text-blue-grey-600"}
+        >
+          {i < step ? "✓" : i === step ? "●" : "○"} {label}
+          {i === step && "…"}
+        </li>
+      ))}
+    </ol>
   );
 }
 
@@ -144,6 +169,8 @@ export function Simulation() {
               <Text variant="small" tone="muted" className="animate-pulse">
                 Simulating “{result.prompt}”…
               </Text>
+              <ProgressSteps />
+              <Text variant="caption">This usually takes about a minute.</Text>
               <span className="h-7 w-2/3 animate-pulse rounded bg-surface-raised" />
               <span className="h-4 w-full animate-pulse rounded bg-surface-raised" />
               <span className="h-4 w-5/6 animate-pulse rounded bg-surface-raised" />

@@ -35,7 +35,8 @@ def normalize(formula: str, facts: dict, names) -> str:
 
     formula = _PLACEHOLDER.sub(unbrace, formula)
     for key in sorted(facts, key=len, reverse=True):  # longest first, so one key can't split a longer one
-        formula = re.sub(rf"(?<![\w.{{]){re.escape(key)}(?![\w.}}])", "{" + key + "}", formula)
+        # A "." right after a key is part of a longer key only when a word character follows (not a full stop).
+        formula = re.sub(rf"(?<![\w.{{]){re.escape(key)}(?![\w}}]|\.\w)", "{" + key + "}", formula)
     return formula
 
 

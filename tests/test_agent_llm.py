@@ -81,3 +81,12 @@ def test_provider_failure_is_not_retried_as_invalid_output():
     with pytest.raises(ConnectionError):
         structured(model, Decision, "Evaluate")
     runner.invoke.assert_called_once()
+
+
+def test_thinking_can_be_turned_off_for_every_request(model_env, monkeypatch):
+    monkeypatch.setenv("NVIDIA_API_KEY", "test-secret")
+    monkeypatch.setenv("PLANNER_MODEL", "test-model")
+    with patch("langchain_nvidia_ai_endpoints.ChatNVIDIA") as factory:
+        get_llm("planner", thinking=False)
+    factory.assert_called_once_with(model="test-model", api_key="test-secret", temperature=0,
+                                    model_kwargs={"chat_template_kwargs": {"enable_thinking": False}})

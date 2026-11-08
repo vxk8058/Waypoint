@@ -1,7 +1,8 @@
 """Chart datasets and headline facts computed in code from trusted product results (whole dollars)."""
 import calendar
+import statistics
 from collections import defaultdict
-from datetime import date
+from datetime import date, timedelta
 
 
 def _label(slug: str) -> str:
@@ -11,6 +12,11 @@ def _label(slug: str) -> str:
 def _month(month: str) -> str:
     year, number = month.split("-")
     return f"{calendar.month_name[int(number)]} {year}"
+
+
+def month_after(month: str) -> str:
+    year, number = map(int, month.split("-"))
+    return f"{year + number // 12}-{number % 12 + 1:02d}"
 
 
 def _transactions(results) -> list[dict]:
@@ -43,7 +49,7 @@ def build_datasets(results) -> dict[str, dict]:
             datasets[f"spending_by_category.{month}"] = {
                 "description": f"Spending by category, {_month(month)} ({scope} transactions)",
                 "keys": [c for c, _ in items], "categories": [_label(c) for c, _ in items],
-                "series": [{"name": "Spent", "values": [v for _, v in items]}], "time": False,
+                "series": [{"name": "Spent", "values": [v for _, v in items]}], "kind": "category",
             }
     if months:
         datasets["income_vs_spending"] = {
@@ -51,9 +57,35 @@ def build_datasets(results) -> dict[str, dict]:
             "keys": months, "categories": [_month(m) for m in months],
             "series": [{"name": "Income", "values": [income[m] for m in months]},
                        {"name": "Spending", "values": [sum(spending[m].values()) for m in months]}],
-            "time": True,
+            "kind": "time",
         }
+    if as_of := data_date(results):
+        cutoff = (date.fromisoformat(as_of) - timedelta(days=90)).isoformat()
+        sizes = [t["amount"] for t in txns if t["flow_class"] == "expense" and t["direction"] == "out"
+                 and t["date"] > cutoff]
+        if sizes:
+            datasets["transaction_sizes"] = {
+                "kind": "sizes", "values": sizes,
+                "description": f"Sizes of spending transactions, last 90 days ({scope} transactions)"}
+    for result in results:
+        if result.product == "savings" and result.data.get("accounts") and {"goal", "history_start"} <= result.data.keys():
+            datasets["goal_projection"] = _goal_history(result.data)
     return datasets
+
+
+def _goal_history(data: dict) -> dict:
+    """Month-end amount saved toward the goal, counted back from today's saved amount by its contributions."""
+    goal = data["goal"]
+    months, month = [], data["history_start"][:7]
+    while month <= data["as_of_date"][:7]:
+        months.append(month)
+        month = month_after(month)
+    contributions = [(t["date"][:7], t["amount"]) for t in data.get("transactions", [])
+                     if t["category"] == "goal_contribution" and t["direction"] == "in"]
+    history = [goal["current_saved"] - sum(a for m, a in contributions if m > month) for month in months]
+    return {"kind": "projection", "keys": months, "history": history, "current": goal["current_saved"],
+            "target": goal["target_amount"], "monthly": goal["monthly_contribution"], "name": goal["name"],
+            "description": f"{goal['name']}: amount saved each month, projected forward to the target"}
 
 
 def build_facts(results, datasets: dict[str, dict]) -> dict[str, dict]:
@@ -88,6 +120,14 @@ def build_facts(results, datasets: dict[str, dict]) -> dict[str, dict]:
             wellness["scheduled_monthly_debt_payments"], "down")
         add("liquid_cash", "Cash in checking and savings", wellness["liquid_cash"], "up")
     for key, ds in datasets.items():
+        if ds["kind"] == "sizes":
+            values = ds["values"]
+            add("transaction_sizes.count", "Spending transactions, last 90 days", len(values), unit="count")
+            add("transaction_sizes.median", "Median transaction, last 90 days", statistics.median(values))
+            add("transaction_sizes.mean", "Average transaction, last 90 days", statistics.mean(values))
+            add("transaction_sizes.largest", "Largest transaction, last 90 days", max(values))
+        if ds["kind"] not in ("category", "time"):
+            continue
         for series in ds["series"]:
             name = series["name"].lower()
             for slug, label, value in zip(ds["keys"], ds["categories"], series["values"]):
