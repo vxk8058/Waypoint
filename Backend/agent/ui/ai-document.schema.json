@@ -1,0 +1,2063 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AiDocument",
+  "description": "A visual answer for the user, rendered top to bottom as an ordered list of blocks. Mix text and charts freely, e.g. heading → stats → bar_chart → heading → paragraph → pie_chart. Guidelines: open with the answer (a lead paragraph or stats), then evidence. Give every chart a nearby sentence saying what to notice; don't repeat the chart's numbers in prose. Use a row to show 2–3 related charts side by side (they stack on phones). Prefer one well-chosen chart over several similar ones.",
+  "type": "object",
+  "required": [
+    "blocks"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "blocks": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/block"
+      }
+    }
+  },
+  "$defs": {
+    "block": {
+      "oneOf": [
+        {
+          "type": "object",
+          "description": "A section heading. Use level 1 for each major section of the answer, 2 for sub-sections. Sentence case, no trailing period. Keep it short; a heading that states the takeaway (\"Dining is up 18%\") beats a label (\"Dining\").",
+          "required": [
+            "type",
+            "props"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "heading"
+            },
+            "props": {
+              "$ref": "#/$defs/heading"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "Body text. Supports inline Markdown: **bold**, *italic*, `code`, [label](https://url). Separate paragraphs with a blank line. Put the key number in **bold**. Keep paragraphs short (1–3 sentences) and place them next to the chart they explain.",
+          "required": [
+            "type",
+            "props"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "paragraph"
+            },
+            "props": {
+              "$ref": "#/$defs/paragraph"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "A bulleted or numbered list. Use for 2–7 parallel points or steps. Inline Markdown allowed in items.",
+          "required": [
+            "type",
+            "props"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "list"
+            },
+            "props": {
+              "$ref": "#/$defs/list"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "A highlighted box for one important message. info = neutral tip or context; success = goal reached, good news; warning = something to watch (approaching a limit); danger = a real problem (over budget, missed payment). Use at most one or two per response.",
+          "required": [
+            "type",
+            "props"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "callout"
+            },
+            "props": {
+              "$ref": "#/$defs/callout"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "1–4 headline numbers shown as tiles (e.g. total spent, saved, net worth). Use instead of a chart when the answer is a single number or a few. Put it near the top of a response.",
+          "required": [
+            "type",
+            "props"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "stats"
+            },
+            "props": {
+              "$ref": "#/$defs/stats"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "A thin horizontal rule between unrelated parts. Rarely needed: headings already separate sections.",
+          "required": [
+            "type",
+            "props"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "divider"
+            },
+            "props": {
+              "$ref": "#/$defs/divider"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "Render a bar chart. Use for comparing amounts across categories (spending by category, income vs spending by month). Not for trends over many time points (use a line chart) or a single headline number.",
+          "required": [
+            "type",
+            "props"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "bar_chart"
+            },
+            "props": {
+              "$ref": "#/$defs/bar_chart"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "Render a line chart. Use for trends over time or any ordered x (balances, net worth, projections). Use a bar chart to compare separate categories.",
+          "required": [
+            "type",
+            "props"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "line_chart"
+            },
+            "props": {
+              "$ref": "#/$defs/line_chart"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "Render a histogram: how values of ONE measure are distributed (e.g. transaction sizes). Send raw values and let the chart bin them, or send bins.",
+          "required": [
+            "type",
+            "props"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "histogram"
+            },
+            "props": {
+              "$ref": "#/$defs/histogram"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "Render a donut/pie showing how ONE whole splits into a few parts, read at a glance. Max 4 coloured slices; the rest fold into grey \"Other\". Do NOT use to compare close values, rank many parts, or show change over time — use a bar chart. Avoid 2-slice pies.",
+          "required": [
+            "type",
+            "props"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "pie_chart"
+            },
+            "props": {
+              "$ref": "#/$defs/pie_chart"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "Render a scatter plot: the relationship between two measures (e.g. income vs savings rate per month). Up to 3 coloured groups.",
+          "required": [
+            "type",
+            "props"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "scatter_plot"
+            },
+            "props": {
+              "$ref": "#/$defs/scatter_plot"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "Render a Gantt chart: tasks, phases or goals on a calendar, with progress, milestones and dependencies.",
+          "required": [
+            "type",
+            "props"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "gantt_chart"
+            },
+            "props": {
+              "$ref": "#/$defs/gantt_chart"
+            }
+          }
+        },
+        {
+          "$ref": "#/$defs/rowBlock"
+        }
+      ]
+    },
+    "leafBlock": {
+      "oneOf": [
+        {
+          "type": "object",
+          "description": "A section heading. Use level 1 for each major section of the answer, 2 for sub-sections. Sentence case, no trailing period. Keep it short; a heading that states the takeaway (\"Dining is up 18%\") beats a label (\"Dining\").",
+          "required": [
+            "type",
+            "props"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "heading"
+            },
+            "props": {
+              "$ref": "#/$defs/heading"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "Body text. Supports inline Markdown: **bold**, *italic*, `code`, [label](https://url). Separate paragraphs with a blank line. Put the key number in **bold**. Keep paragraphs short (1–3 sentences) and place them next to the chart they explain.",
+          "required": [
+            "type",
+            "props"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "paragraph"
+            },
+            "props": {
+              "$ref": "#/$defs/paragraph"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "A bulleted or numbered list. Use for 2–7 parallel points or steps. Inline Markdown allowed in items.",
+          "required": [
+            "type",
+            "props"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "list"
+            },
+            "props": {
+              "$ref": "#/$defs/list"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "A highlighted box for one important message. info = neutral tip or context; success = goal reached, good news; warning = something to watch (approaching a limit); danger = a real problem (over budget, missed payment). Use at most one or two per response.",
+          "required": [
+            "type",
+            "props"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "callout"
+            },
+            "props": {
+              "$ref": "#/$defs/callout"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "1–4 headline numbers shown as tiles (e.g. total spent, saved, net worth). Use instead of a chart when the answer is a single number or a few. Put it near the top of a response.",
+          "required": [
+            "type",
+            "props"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "stats"
+            },
+            "props": {
+              "$ref": "#/$defs/stats"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "A thin horizontal rule between unrelated parts. Rarely needed: headings already separate sections.",
+          "required": [
+            "type",
+            "props"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "divider"
+            },
+            "props": {
+              "$ref": "#/$defs/divider"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "Render a bar chart. Use for comparing amounts across categories (spending by category, income vs spending by month). Not for trends over many time points (use a line chart) or a single headline number.",
+          "required": [
+            "type",
+            "props"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "bar_chart"
+            },
+            "props": {
+              "$ref": "#/$defs/bar_chart"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "Render a line chart. Use for trends over time or any ordered x (balances, net worth, projections). Use a bar chart to compare separate categories.",
+          "required": [
+            "type",
+            "props"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "line_chart"
+            },
+            "props": {
+              "$ref": "#/$defs/line_chart"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "Render a histogram: how values of ONE measure are distributed (e.g. transaction sizes). Send raw values and let the chart bin them, or send bins.",
+          "required": [
+            "type",
+            "props"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "histogram"
+            },
+            "props": {
+              "$ref": "#/$defs/histogram"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "Render a donut/pie showing how ONE whole splits into a few parts, read at a glance. Max 4 coloured slices; the rest fold into grey \"Other\". Do NOT use to compare close values, rank many parts, or show change over time — use a bar chart. Avoid 2-slice pies.",
+          "required": [
+            "type",
+            "props"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "pie_chart"
+            },
+            "props": {
+              "$ref": "#/$defs/pie_chart"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "Render a scatter plot: the relationship between two measures (e.g. income vs savings rate per month). Up to 3 coloured groups.",
+          "required": [
+            "type",
+            "props"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "scatter_plot"
+            },
+            "props": {
+              "$ref": "#/$defs/scatter_plot"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "Render a Gantt chart: tasks, phases or goals on a calendar, with progress, milestones and dependencies.",
+          "required": [
+            "type",
+            "props"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "gantt_chart"
+            },
+            "props": {
+              "$ref": "#/$defs/gantt_chart"
+            }
+          }
+        }
+      ]
+    },
+    "rowBlock": {
+      "type": "object",
+      "description": "Place 2–3 blocks side by side (usually charts or stats). Stacks vertically on small screens. Rows can't be nested.",
+      "required": [
+        "type",
+        "props"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "row"
+        },
+        "props": {
+          "type": "object",
+          "required": [
+            "blocks"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "columns": {
+              "type": "integer",
+              "enum": [
+                1,
+                2,
+                3
+              ],
+              "description": "Defaults to the number of blocks (max 3)."
+            },
+            "blocks": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 3,
+              "items": {
+                "$ref": "#/$defs/leafBlock"
+              }
+            }
+          }
+        }
+      }
+    },
+    "heading": {
+      "title": "HeadingSpec",
+      "description": "A section heading. Use level 1 for each major section of the answer, 2 for sub-sections. Sentence case, no trailing period. Keep it short; a heading that states the takeaway (\"Dining is up 18%\") beats a label (\"Dining\").",
+      "type": "object",
+      "required": [
+        "text"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "text": {
+          "type": "string",
+          "description": "Heading text. Inline **bold**/*italic* allowed but rarely needed."
+        },
+        "level": {
+          "type": "integer",
+          "enum": [
+            1,
+            2,
+            3
+          ],
+          "default": 1,
+          "description": "1 = section, 2 = sub-section, 3 = small label-style heading."
+        }
+      }
+    },
+    "paragraph": {
+      "title": "ParagraphSpec",
+      "description": "Body text. Supports inline Markdown: **bold**, *italic*, `code`, [label](https://url). Separate paragraphs with a blank line. Put the key number in **bold**. Keep paragraphs short (1–3 sentences) and place them next to the chart they explain.",
+      "type": "object",
+      "required": [
+        "text"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "text": {
+          "type": "string"
+        },
+        "size": {
+          "type": "string",
+          "enum": [
+            "default",
+            "lead",
+            "small"
+          ],
+          "default": "default",
+          "description": "lead = larger intro/summary sentence at the top; small = footnotes, caveats, sources."
+        },
+        "tone": {
+          "type": "string",
+          "enum": [
+            "default",
+            "muted"
+          ],
+          "default": "default",
+          "description": "muted for secondary remarks."
+        }
+      }
+    },
+    "list": {
+      "title": "ListSpec",
+      "description": "A bulleted or numbered list. Use for 2–7 parallel points or steps. Inline Markdown allowed in items.",
+      "type": "object",
+      "required": [
+        "items"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "items": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "ordered": {
+          "type": "boolean",
+          "default": false,
+          "description": "true for numbered steps where order matters."
+        }
+      }
+    },
+    "callout": {
+      "title": "CalloutSpec",
+      "description": "A highlighted box for one important message. info = neutral tip or context; success = goal reached, good news; warning = something to watch (approaching a limit); danger = a real problem (over budget, missed payment). Use at most one or two per response.",
+      "type": "object",
+      "required": [
+        "text"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "tone": {
+          "type": "string",
+          "enum": [
+            "info",
+            "success",
+            "warning",
+            "danger"
+          ],
+          "default": "info"
+        },
+        "title": {
+          "type": "string",
+          "description": "Short bold first line. Defaults to Note / Good news / Heads up / Warning."
+        },
+        "text": {
+          "type": "string",
+          "description": "Inline Markdown allowed."
+        }
+      }
+    },
+    "stats": {
+      "title": "StatsSpec",
+      "description": "1–4 headline numbers shown as tiles (e.g. total spent, saved, net worth). Use instead of a chart when the answer is a single number or a few. Put it near the top of a response.",
+      "type": "object",
+      "required": [
+        "items"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "items": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 4,
+          "items": {
+            "type": "object",
+            "required": [
+              "label",
+              "value"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "label": {
+                "type": "string",
+                "description": "What the number is, e.g. \"Spent in October\"."
+              },
+              "value": {
+                "type": [
+                  "number",
+                  "string"
+                ],
+                "description": "A raw number (formatted with `format`) or a pre-formatted string."
+              },
+              "format": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "style": {
+                    "type": "string",
+                    "enum": [
+                      "number",
+                      "currency",
+                      "percent"
+                    ]
+                  },
+                  "currency": {
+                    "type": "string",
+                    "description": "ISO 4217 code. Default USD."
+                  },
+                  "decimals": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 6
+                  },
+                  "compact": {
+                    "type": "boolean",
+                    "description": "Force $1.2M style. Default: auto at 100,000+."
+                  },
+                  "prefix": {
+                    "type": "string"
+                  },
+                  "suffix": {
+                    "type": "string"
+                  }
+                }
+              },
+              "change": {
+                "type": [
+                  "number",
+                  "string"
+                ],
+                "description": "Change vs. the comparison period. A number is a percent (12 → \"+12%\") unless changeFormat says otherwise; a string is shown as-is (\"+$240\")."
+              },
+              "changeFormat": {
+                "type": "string",
+                "enum": [
+                  "percent",
+                  "number",
+                  "currency"
+                ],
+                "default": "percent"
+              },
+              "goodDirection": {
+                "type": "string",
+                "enum": [
+                  "up",
+                  "down",
+                  "none"
+                ],
+                "default": "up",
+                "description": "Which direction is good. Spending: down. Savings: up. none = always neutral colour."
+              },
+              "caption": {
+                "type": "string",
+                "description": "Comparison context, e.g. \"vs. September\"."
+              }
+            }
+          }
+        }
+      }
+    },
+    "divider": {
+      "title": "DividerSpec",
+      "description": "A thin horizontal rule between unrelated parts. Rarely needed: headings already separate sections.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {}
+    },
+    "bar_chart": {
+      "title": "BarChartSpec",
+      "description": "Render a bar chart. Use for comparing amounts across categories (spending by category, income vs spending by month). Not for trends over many time points (use a line chart) or a single headline number.",
+      "type": "object",
+      "required": [
+        "categories",
+        "series"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Short chart title, sentence case. Say what is measured, e.g. \"Spending by category, October\"."
+        },
+        "subtitle": {
+          "type": "string",
+          "description": "Optional context line: units, period, or the takeaway."
+        },
+        "categories": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Labels along the category axis, in display order. Keep them short."
+        },
+        "series": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 5,
+          "description": "One entry per measure. Up to 4 are coloured; a 5th is grey; more are folded into \"Other\". Keep the same order across charts so colours stay consistent.",
+          "items": {
+            "type": "object",
+            "required": [
+              "name",
+              "values"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "values": {
+                "type": "array",
+                "items": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "description": "One number per category, same order as `categories`. null = no data."
+              },
+              "color": {
+                "type": "string",
+                "enum": [
+                  "purple",
+                  "teal",
+                  "orange",
+                  "blue",
+                  "neutral"
+                ],
+                "description": "Optional. Pin a colour so the same entity matches across charts. Omit to use palette order."
+              }
+            }
+          }
+        },
+        "orientation": {
+          "type": "string",
+          "enum": [
+            "vertical",
+            "horizontal"
+          ],
+          "default": "vertical",
+          "description": "vertical = columns (good for time periods). horizontal = bars (good for long category names or many categories)."
+        },
+        "layout": {
+          "type": "string",
+          "enum": [
+            "grouped",
+            "stacked",
+            "percent"
+          ],
+          "default": "grouped",
+          "description": "grouped compares series side by side; stacked shows parts summing to a total; percent shows each category's composition as 100%."
+        },
+        "valueFormat": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "style": {
+              "type": "string",
+              "enum": [
+                "number",
+                "currency",
+                "percent"
+              ],
+              "default": "number",
+              "description": "percent means values are already percentages (45 = 45%)."
+            },
+            "currency": {
+              "type": "string",
+              "description": "ISO 4217 code, default USD."
+            },
+            "decimals": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 6
+            },
+            "compact": {
+              "type": [
+                "boolean",
+                "string"
+              ],
+              "enum": [
+                true,
+                false,
+                "auto"
+              ],
+              "default": "auto",
+              "description": "12.4K / $1.2M notation. auto compacts at 10,000+."
+            },
+            "prefix": {
+              "type": "string"
+            },
+            "suffix": {
+              "type": "string",
+              "description": "Unit suffix, e.g. \" hrs\"."
+            }
+          }
+        },
+        "categoryAxis": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "label": {
+              "type": "string"
+            },
+            "show": {
+              "type": "boolean",
+              "default": true
+            }
+          }
+        },
+        "valueAxis": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "label": {
+              "type": "string"
+            },
+            "show": {
+              "type": "boolean",
+              "default": true
+            },
+            "min": {
+              "type": "number",
+              "maximum": 0,
+              "description": "Must be ≤ 0; bars always start at zero."
+            },
+            "max": {
+              "type": "number",
+              "minimum": 0
+            },
+            "tickCount": {
+              "type": "integer",
+              "minimum": 2,
+              "maximum": 10,
+              "default": 5
+            },
+            "gridlines": {
+              "type": "boolean",
+              "default": true
+            }
+          }
+        },
+        "valueLabels": {
+          "type": "string",
+          "enum": [
+            "auto",
+            "none",
+            "all",
+            "max",
+            "min-max",
+            "last",
+            "totals"
+          ],
+          "default": "auto",
+          "description": "Which bars print their value. Be selective; tooltips and the table already show every value. totals applies to stacked layouts."
+        },
+        "legend": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "show": {
+              "type": "boolean",
+              "description": "Defaults to true for 2+ series."
+            }
+          }
+        },
+        "highlight": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Category names to emphasise (others are dimmed). Use to point at what your answer is about."
+        },
+        "referenceLines": {
+          "type": "array",
+          "description": "Rules at a value, e.g. a budget or savings target.",
+          "items": {
+            "type": "object",
+            "required": [
+              "value"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "value": {
+                "type": "number"
+              },
+              "label": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "sort": {
+          "type": "string",
+          "enum": [
+            "none",
+            "asc",
+            "desc"
+          ],
+          "default": "none",
+          "description": "Sort categories by total. Don't sort time periods."
+        },
+        "height": {
+          "type": "integer",
+          "minimum": 160,
+          "maximum": 800,
+          "default": 320,
+          "description": "Vertical charts only; horizontal charts size to their rows."
+        },
+        "emptyMessage": {
+          "type": "string"
+        }
+      }
+    },
+    "line_chart": {
+      "title": "LineChartSpec",
+      "description": "Render a line chart. Use for trends over time or any ordered x (balances, net worth, projections). Use a bar chart to compare separate categories.",
+      "type": "object",
+      "required": [
+        "x",
+        "series"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Short title, sentence case. Say what is measured."
+        },
+        "subtitle": {
+          "type": "string",
+          "description": "Optional context: units, period, or the takeaway."
+        },
+        "x": {
+          "type": "array",
+          "items": {
+            "type": [
+              "string",
+              "number"
+            ]
+          },
+          "description": "X values in order: ISO dates (\"2026-03-01\" or \"2026-03\"), numbers, or short category labels."
+        },
+        "xType": {
+          "type": "string",
+          "enum": [
+            "time",
+            "number",
+            "category"
+          ],
+          "description": "Optional; detected from x when omitted."
+        },
+        "series": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 5,
+          "description": "One entry per line. ≤4 stay distinguishable; more are drawn grey.",
+          "items": {
+            "type": "object",
+            "required": [
+              "name",
+              "values"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "values": {
+                "type": "array",
+                "items": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "description": "One per x. null leaves a gap."
+              },
+              "color": {
+                "type": "string",
+                "enum": [
+                  "purple",
+                  "teal",
+                  "orange",
+                  "blue",
+                  "neutral"
+                ],
+                "description": "Optional. Pin so the same entity matches across charts."
+              },
+              "band": {
+                "type": "object",
+                "required": [
+                  "lower",
+                  "upper"
+                ],
+                "additionalProperties": false,
+                "description": "Uncertainty range, e.g. simulation 10th–90th percentile.",
+                "properties": {
+                  "lower": {
+                    "type": "array",
+                    "items": {
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    }
+                  },
+                  "upper": {
+                    "type": "array",
+                    "items": {
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "curve": {
+          "type": "string",
+          "enum": [
+            "linear",
+            "monotone",
+            "step"
+          ],
+          "default": "monotone",
+          "description": "step for values that change in jumps (balances after deposits)."
+        },
+        "area": {
+          "type": "boolean",
+          "default": false,
+          "description": "Light wash under the line. Best with one series."
+        },
+        "markers": {
+          "type": "string",
+          "enum": [
+            "auto",
+            "none",
+            "last",
+            "all"
+          ],
+          "default": "auto"
+        },
+        "valueLabels": {
+          "type": "string",
+          "enum": [
+            "auto",
+            "none",
+            "last",
+            "max",
+            "min-max"
+          ],
+          "default": "auto",
+          "description": "Which points print their value. Be selective."
+        },
+        "endLabels": {
+          "type": "boolean",
+          "description": "Series names at line ends. Default on for 2–4 series when they don't collide."
+        },
+        "highlight": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Series names to emphasise; others turn grey."
+        },
+        "forecastFrom": {
+          "type": [
+            "string",
+            "number"
+          ],
+          "description": "The x value where actuals end and projection begins; the rest is dashed and labelled Projected."
+        },
+        "valueFormat": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "How numbers are printed.",
+          "properties": {
+            "style": {
+              "type": "string",
+              "enum": [
+                "number",
+                "currency",
+                "percent"
+              ],
+              "default": "number",
+              "description": "percent means values are already percentages (45 = 45%)."
+            },
+            "currency": {
+              "type": "string",
+              "description": "ISO 4217 code, default USD."
+            },
+            "decimals": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 6
+            },
+            "compact": {
+              "type": [
+                "boolean",
+                "string"
+              ],
+              "enum": [
+                true,
+                false,
+                "auto"
+              ],
+              "default": "auto",
+              "description": "12.4K / $1.2M notation. auto compacts at 10,000+."
+            },
+            "prefix": {
+              "type": "string"
+            },
+            "suffix": {
+              "type": "string",
+              "description": "Unit suffix, e.g. \" hrs\"."
+            }
+          }
+        },
+        "xAxis": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "label": {
+              "type": "string"
+            },
+            "show": {
+              "type": "boolean",
+              "default": true
+            }
+          }
+        },
+        "yAxis": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "label": {
+              "type": "string"
+            },
+            "show": {
+              "type": "boolean",
+              "default": true
+            },
+            "min": {
+              "type": "number"
+            },
+            "max": {
+              "type": "number"
+            },
+            "tickCount": {
+              "type": "integer",
+              "minimum": 2,
+              "maximum": 10,
+              "default": 5
+            },
+            "gridlines": {
+              "type": "boolean",
+              "default": true
+            },
+            "includeZero": {
+              "type": "boolean",
+              "default": true,
+              "description": "Set false to zoom into a narrow range (e.g. 98–104)."
+            }
+          }
+        },
+        "referenceLines": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "value"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "value": {
+                "type": "number"
+              },
+              "label": {
+                "type": "string"
+              }
+            }
+          },
+          "description": "Horizontal rules, e.g. a savings goal."
+        },
+        "legend": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "show": {
+              "type": "boolean"
+            }
+          }
+        },
+        "height": {
+          "type": "integer",
+          "minimum": 160,
+          "maximum": 800,
+          "default": 300
+        },
+        "emptyMessage": {
+          "type": "string"
+        }
+      }
+    },
+    "histogram": {
+      "title": "HistogramSpec",
+      "description": "Render a histogram: how values of ONE measure are distributed (e.g. transaction sizes). Send raw values and let the chart bin them, or send bins.",
+      "type": "object",
+      "required": [],
+      "additionalProperties": false,
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Short title, sentence case. Say what is measured."
+        },
+        "subtitle": {
+          "type": "string",
+          "description": "Optional context: units, period, or the takeaway."
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "description": "Raw observations. Preferred: enables mean/median markers."
+        },
+        "bins": {
+          "type": "array",
+          "description": "Pre-binned data, used instead of values.",
+          "items": {
+            "type": "object",
+            "required": [
+              "start",
+              "end",
+              "count"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "start": {
+                "type": "number"
+              },
+              "end": {
+                "type": "number"
+              },
+              "count": {
+                "type": "number",
+                "minimum": 0
+              }
+            }
+          }
+        },
+        "binCount": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100,
+          "description": "Approximate bin count; widths are rounded to clean numbers."
+        },
+        "binWidth": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "description": "Exact bin width; overrides binCount."
+        },
+        "valueFormat": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "How numbers are printed.",
+          "properties": {
+            "style": {
+              "type": "string",
+              "enum": [
+                "number",
+                "currency",
+                "percent"
+              ],
+              "default": "number",
+              "description": "percent means values are already percentages (45 = 45%)."
+            },
+            "currency": {
+              "type": "string",
+              "description": "ISO 4217 code, default USD."
+            },
+            "decimals": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 6
+            },
+            "compact": {
+              "type": [
+                "boolean",
+                "string"
+              ],
+              "enum": [
+                true,
+                false,
+                "auto"
+              ],
+              "default": "auto",
+              "description": "12.4K / $1.2M notation. auto compacts at 10,000+."
+            },
+            "prefix": {
+              "type": "string"
+            },
+            "suffix": {
+              "type": "string",
+              "description": "Unit suffix, e.g. \" hrs\"."
+            }
+          }
+        },
+        "countLabel": {
+          "type": "string",
+          "default": "Count",
+          "description": "What one count is, e.g. \"Transactions\"."
+        },
+        "markers": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "mean",
+              "median"
+            ]
+          },
+          "description": "Summary rules (raw values only)."
+        },
+        "referenceLines": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "value"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "value": {
+                "type": "number"
+              },
+              "label": {
+                "type": "string"
+              }
+            }
+          },
+          "description": "Vertical rules on the value axis."
+        },
+        "highlightRange": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Emphasise bins in this range.",
+          "properties": {
+            "from": {
+              "type": "number"
+            },
+            "to": {
+              "type": "number"
+            }
+          }
+        },
+        "color": {
+          "type": "string",
+          "enum": [
+            "purple",
+            "teal",
+            "orange",
+            "blue",
+            "neutral"
+          ]
+        },
+        "xAxis": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "label": {
+              "type": "string"
+            },
+            "show": {
+              "type": "boolean",
+              "default": true
+            }
+          }
+        },
+        "yAxis": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "label": {
+              "type": "string"
+            },
+            "show": {
+              "type": "boolean",
+              "default": true
+            },
+            "min": {
+              "type": "number"
+            },
+            "max": {
+              "type": "number"
+            },
+            "tickCount": {
+              "type": "integer",
+              "minimum": 2,
+              "maximum": 10,
+              "default": 5
+            },
+            "gridlines": {
+              "type": "boolean",
+              "default": true
+            }
+          }
+        },
+        "height": {
+          "type": "integer",
+          "minimum": 160,
+          "maximum": 800,
+          "default": 280
+        },
+        "emptyMessage": {
+          "type": "string"
+        }
+      }
+    },
+    "pie_chart": {
+      "title": "PieChartSpec",
+      "description": "Render a donut/pie showing how ONE whole splits into a few parts, read at a glance. Max 4 coloured slices; the rest fold into grey \"Other\". Do NOT use to compare close values, rank many parts, or show change over time — use a bar chart. Avoid 2-slice pies.",
+      "type": "object",
+      "required": [
+        "data"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Short title, sentence case. Say what is measured."
+        },
+        "subtitle": {
+          "type": "string",
+          "description": "Optional context: units, period, or the takeaway."
+        },
+        "data": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": [
+              "label",
+              "value"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "label": {
+                "type": "string"
+              },
+              "value": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              },
+              "color": {
+                "type": "string",
+                "enum": [
+                  "purple",
+                  "teal",
+                  "orange",
+                  "blue",
+                  "neutral"
+                ]
+              }
+            }
+          }
+        },
+        "donut": {
+          "type": "boolean",
+          "default": true,
+          "description": "Ring with the total in the centre."
+        },
+        "center": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Override the centre text (default: total).",
+          "properties": {
+            "value": {
+              "type": "string"
+            },
+            "label": {
+              "type": "string"
+            }
+          }
+        },
+        "sort": {
+          "type": "string",
+          "enum": [
+            "desc",
+            "none"
+          ],
+          "default": "desc"
+        },
+        "valueFormat": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "How numbers are printed.",
+          "properties": {
+            "style": {
+              "type": "string",
+              "enum": [
+                "number",
+                "currency",
+                "percent"
+              ],
+              "default": "number",
+              "description": "percent means values are already percentages (45 = 45%)."
+            },
+            "currency": {
+              "type": "string",
+              "description": "ISO 4217 code, default USD."
+            },
+            "decimals": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 6
+            },
+            "compact": {
+              "type": [
+                "boolean",
+                "string"
+              ],
+              "enum": [
+                true,
+                false,
+                "auto"
+              ],
+              "default": "auto",
+              "description": "12.4K / $1.2M notation. auto compacts at 10,000+."
+            },
+            "prefix": {
+              "type": "string"
+            },
+            "suffix": {
+              "type": "string",
+              "description": "Unit suffix, e.g. \" hrs\"."
+            }
+          }
+        },
+        "minSharePercent": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 50,
+          "description": "Slices below this share fold into Other."
+        },
+        "emptyMessage": {
+          "type": "string"
+        }
+      }
+    },
+    "scatter_plot": {
+      "title": "ScatterPlotSpec",
+      "description": "Render a scatter plot: the relationship between two measures (e.g. income vs savings rate per month). Up to 3 coloured groups.",
+      "type": "object",
+      "required": [],
+      "additionalProperties": false,
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Short title, sentence case. Say what is measured."
+        },
+        "subtitle": {
+          "type": "string",
+          "description": "Optional context: units, period, or the takeaway."
+        },
+        "points": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "x",
+              "y"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "x": {
+                "type": "number"
+              },
+              "y": {
+                "type": "number"
+              },
+              "label": {
+                "type": "string"
+              },
+              "size": {
+                "type": "number",
+                "minimum": 0,
+                "description": "Optional third measure drawn as dot area."
+              }
+            }
+          },
+          "description": "Single-group shorthand."
+        },
+        "series": {
+          "type": "array",
+          "maxItems": 3,
+          "description": "Grouped points. More than 3 groups fold into grey Other.",
+          "items": {
+            "type": "object",
+            "required": [
+              "name",
+              "points"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "points": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "x",
+                    "y"
+                  ],
+                  "additionalProperties": false,
+                  "properties": {
+                    "x": {
+                      "type": "number"
+                    },
+                    "y": {
+                      "type": "number"
+                    },
+                    "label": {
+                      "type": "string"
+                    },
+                    "size": {
+                      "type": "number",
+                      "minimum": 0,
+                      "description": "Optional third measure drawn as dot area."
+                    }
+                  }
+                }
+              },
+              "color": {
+                "type": "string",
+                "enum": [
+                  "purple",
+                  "teal",
+                  "orange",
+                  "blue",
+                  "neutral"
+                ]
+              }
+            }
+          }
+        },
+        "xAxis": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "label": {
+              "type": "string"
+            },
+            "show": {
+              "type": "boolean",
+              "default": true
+            },
+            "min": {
+              "type": "number"
+            },
+            "max": {
+              "type": "number"
+            },
+            "tickCount": {
+              "type": "integer",
+              "minimum": 2,
+              "maximum": 10,
+              "default": 5
+            },
+            "gridlines": {
+              "type": "boolean",
+              "default": true
+            },
+            "format": {
+              "type": "object",
+              "additionalProperties": false,
+              "description": "How numbers are printed.",
+              "properties": {
+                "style": {
+                  "type": "string",
+                  "enum": [
+                    "number",
+                    "currency",
+                    "percent"
+                  ],
+                  "default": "number",
+                  "description": "percent means values are already percentages (45 = 45%)."
+                },
+                "currency": {
+                  "type": "string",
+                  "description": "ISO 4217 code, default USD."
+                },
+                "decimals": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 6
+                },
+                "compact": {
+                  "type": [
+                    "boolean",
+                    "string"
+                  ],
+                  "enum": [
+                    true,
+                    false,
+                    "auto"
+                  ],
+                  "default": "auto",
+                  "description": "12.4K / $1.2M notation. auto compacts at 10,000+."
+                },
+                "prefix": {
+                  "type": "string"
+                },
+                "suffix": {
+                  "type": "string",
+                  "description": "Unit suffix, e.g. \" hrs\"."
+                }
+              }
+            },
+            "includeZero": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        },
+        "yAxis": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "label": {
+              "type": "string"
+            },
+            "show": {
+              "type": "boolean",
+              "default": true
+            },
+            "min": {
+              "type": "number"
+            },
+            "max": {
+              "type": "number"
+            },
+            "tickCount": {
+              "type": "integer",
+              "minimum": 2,
+              "maximum": 10,
+              "default": 5
+            },
+            "gridlines": {
+              "type": "boolean",
+              "default": true
+            },
+            "format": {
+              "type": "object",
+              "additionalProperties": false,
+              "description": "How numbers are printed.",
+              "properties": {
+                "style": {
+                  "type": "string",
+                  "enum": [
+                    "number",
+                    "currency",
+                    "percent"
+                  ],
+                  "default": "number",
+                  "description": "percent means values are already percentages (45 = 45%)."
+                },
+                "currency": {
+                  "type": "string",
+                  "description": "ISO 4217 code, default USD."
+                },
+                "decimals": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 6
+                },
+                "compact": {
+                  "type": [
+                    "boolean",
+                    "string"
+                  ],
+                  "enum": [
+                    true,
+                    false,
+                    "auto"
+                  ],
+                  "default": "auto",
+                  "description": "12.4K / $1.2M notation. auto compacts at 10,000+."
+                },
+                "prefix": {
+                  "type": "string"
+                },
+                "suffix": {
+                  "type": "string",
+                  "description": "Unit suffix, e.g. \" hrs\"."
+                }
+              }
+            },
+            "includeZero": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        },
+        "sizeLabel": {
+          "type": "string",
+          "description": "What size means."
+        },
+        "trendline": {
+          "type": "string",
+          "enum": [
+            "none",
+            "all",
+            "per-series"
+          ],
+          "default": "none",
+          "description": "Least-squares line with r²."
+        },
+        "highlight": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Point labels to emphasise."
+        },
+        "labels": {
+          "type": "string",
+          "enum": [
+            "auto",
+            "none",
+            "highlighted",
+            "all"
+          ],
+          "default": "auto"
+        },
+        "referenceLines": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "x": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "value"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "value": {
+                    "type": "number"
+                  },
+                  "label": {
+                    "type": "string"
+                  }
+                }
+              },
+              "description": "Vertical rules."
+            },
+            "y": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "value"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "value": {
+                    "type": "number"
+                  },
+                  "label": {
+                    "type": "string"
+                  }
+                }
+              },
+              "description": "Horizontal rules."
+            }
+          }
+        },
+        "height": {
+          "type": "integer",
+          "minimum": 180,
+          "maximum": 800,
+          "default": 320
+        },
+        "emptyMessage": {
+          "type": "string"
+        }
+      }
+    },
+    "gantt_chart": {
+      "title": "GanttChartSpec",
+      "description": "Render a Gantt chart: tasks, phases or goals on a calendar, with progress, milestones and dependencies.",
+      "type": "object",
+      "required": [
+        "tasks"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Short title, sentence case. Say what is measured."
+        },
+        "subtitle": {
+          "type": "string",
+          "description": "Optional context: units, period, or the takeaway."
+        },
+        "tasks": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": [
+              "name",
+              "start"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "Referenced by dependsOn. Defaults to name."
+              },
+              "name": {
+                "type": "string"
+              },
+              "start": {
+                "type": "string",
+                "description": "ISO date, e.g. 2026-03-01."
+              },
+              "end": {
+                "type": "string",
+                "description": "ISO date. Or use durationDays. Omit both for a milestone."
+              },
+              "durationDays": {
+                "type": "number",
+                "minimum": 0
+              },
+              "progress": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 100,
+                "description": "0–1 or 0–100."
+              },
+              "group": {
+                "type": "string",
+                "description": "Tasks in a group share a colour (≤4 groups coloured)."
+              },
+              "milestone": {
+                "type": "boolean"
+              },
+              "dependsOn": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "ids or names of tasks that must finish first."
+              }
+            }
+          }
+        },
+        "groupColors": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string",
+            "enum": [
+              "purple",
+              "teal",
+              "orange",
+              "blue",
+              "neutral"
+            ]
+          },
+          "description": "Pin colours by group name."
+        },
+        "today": {
+          "type": [
+            "boolean",
+            "string"
+          ],
+          "description": "Today rule: true/false or an ISO date. Default: shown when in range."
+        },
+        "markers": {
+          "type": "array",
+          "description": "Dated rules, e.g. a deadline.",
+          "items": {
+            "type": "object",
+            "required": [
+              "date"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "date": {
+                "type": "string"
+              },
+              "label": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "labels": {
+          "type": "string",
+          "enum": [
+            "auto",
+            "none",
+            "progress",
+            "duration",
+            "dates"
+          ],
+          "default": "auto",
+          "description": "Text after each bar."
+        },
+        "range": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "start": {
+              "type": "string"
+            },
+            "end": {
+              "type": "string"
+            }
+          }
+        },
+        "emptyMessage": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

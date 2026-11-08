@@ -1,0 +1,41 @@
+{
+  "as_of_date": "2026-10-31",
+  "profiles": [
+    {
+      "profile_id": "stu-001",
+      "persona_key": "utd_junior_cs",
+      "is_primary_demo": true,
+      "school": "The University of Texas at Dallas",
+      "class_year": "junior",
+      "goal": "Emergency fund",
+      "transactions": 222
+    },
+    {
+      "profile_id": "stu-002",
+      "persona_key": "unt_sophomore_business",
+      "is_primary_demo": false,
+      "school": "University of North Texas",
+      "class_year": "sophomore",
+      "goal": "First car fund",
+      "transactions": 180
+    },
+    {
+      "profile_id": "stu-003",
+      "persona_key": "tamu_senior_engineering",
+      "is_primary_demo": false,
+      "school": "Texas A&M University",
+      "class_year": "senior",
+      "goal": "Post-graduation relocation fund",
+      "transactions": 258
+    },
+    {
+      "profile_id": "stu-004",
+      "persona_key": "utaustin_freshman_bio",
+      "is_primary_demo": false,
+      "school": "The University of Texas at Austin",
+      "class_year": "freshman",
+      "goal": "Spring tuition gap",
+      "transactions": 211
+    }
+  ]
+}

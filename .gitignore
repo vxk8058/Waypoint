@@ -43,12 +43,15 @@ pnpm-debug.log*
 # Test coverage
 coverage/
 
-# Python (if a backend is added)
+# Python
 __pycache__/
 *.py[cod]
 .venv/
 venv/
 .pytest_cache/
+
+# Local runtime state
+data/local/
 
 # Local Claude Code settings
 .claude/settings.local.json
