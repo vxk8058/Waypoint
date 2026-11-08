@@ -1,8 +1,9 @@
-import { useEffect, useRef, useState, type SubmitEvent, type KeyboardEvent, type SVGProps } from "react";
+import { useRef, useState, type SubmitEvent, type KeyboardEvent, type SVGProps } from "react";
 import { AiDocument } from "../components/ai-document";
 import { Button } from "../components/button";
 import { Text } from "../components/text";
-import { sampleSimulation, simulationSuggestions } from "./simulation-sample";
+import { apiFetch } from "../lib/api";
+import { simulationSuggestions } from "./simulation-sample";
 
 function Icon(props: SVGProps<SVGSVGElement>) {
   return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" {...props} />;
@@ -24,28 +25,27 @@ function SparkleIcon(props: SVGProps<SVGSVGElement>) {
   );
 }
 
-// Stand-in for the AI call: resolves with the sample document after a short "thinking" delay.
-const GENERATE_DELAY_MS = 1200;
-
-type Result = { status: "idle" } | { status: "loading"; prompt: string } | { status: "done"; prompt: string; document: unknown };
+type Result = { status: "idle" } | { status: "loading"; prompt: string } | { status: "done"; prompt: string; document: unknown } | { status: "error"; message: string };
 
 export function Simulation() {
   const [prompt, setPrompt] = useState("");
   const [result, setResult] = useState<Result>({ status: "idle" });
-  const timer = useRef<ReturnType<typeof setTimeout>>(undefined);
   const resultsRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => () => clearTimeout(timer.current), []);
 
   const loading = result.status === "loading";
 
-  function run(text: string) {
+  async function run(text: string) {
     const value = text.trim();
     if (!value || loading) return;
     setPrompt(value);
     setResult({ status: "loading", prompt: value });
     resultsRef.current?.scrollTo({ top: 0 });
-    timer.current = setTimeout(() => setResult({ status: "done", prompt: value, document: sampleSimulation(value) }), GENERATE_DELAY_MS);
+    try {
+      const document = await apiFetch<unknown>("/api/me/agent", { method: "POST", body: { question: value } });
+      setResult({ status: "done", prompt: value, document });
+    } catch (err) {
+      setResult({ status: "error", message: err instanceof Error ? err.message : "Couldn't generate an answer. Please try again." });
+    }
   }
 
   function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
@@ -156,6 +156,11 @@ export function Simulation() {
             </div>
           )}
 
+          {result.status === "error" && (
+            <p role="alert" className="rounded-lg border border-red-vivid-700 bg-red-vivid-900/30 px-3 py-2 text-sm text-red-vivid-200">
+              {result.message}
+            </p>
+          )}
           {result.status === "done" && <AiDocument document={result.document} />}
         </div>
       </section>
