@@ -125,10 +125,14 @@ def pnc_view(profile_id: str, accounts: list[UnifiedAccount], inputs: WellnessIn
     }
 
 
-def unified_goal(profile: StudentProfile) -> UnifiedGoal:
-    g = profile.goal
-    return UnifiedGoal(**g.model_dump(), source=SourceMeta(origin=PNC, source_id=g.goal_id,
-                                                           note="current_saved is derived from goal transfers"))
+def unified_goal(profile: StudentProfile, transactions=None) -> UnifiedGoal:
+    g = profile.goal.model_dump()
+    if transactions is not None:  # live: count goal deposits actually recorded, so new ones move the goal
+        g["current_saved"] = g["initial_saved"] + sum(
+            t.amount for t in transactions
+            if t.category == "goal_contribution" and t.direction == "in" and t.account_id == g["linked_account_id"])
+    return UnifiedGoal(**g, source=SourceMeta(origin=PNC, source_id=g["goal_id"],
+                                              note="current_saved is derived from goal transfers"))
 
 
 def unified_user(profile: StudentProfile, gen: GeneratedFields, nessie_customer_id: str | None = None,
@@ -161,7 +165,7 @@ def pnc_account(a, nessie_local_key: str, nessie_resource: str, **overrides) -> 
 
 def assemble(profile: StudentProfile, data_mode: str, user: UnifiedUser, accounts, transactions, bills,
              metadata: dict) -> UnifiedProfile:
-    goal = unified_goal(profile)
+    goal = unified_goal(profile, transactions)
     summary = summarize(transactions, accounts, profile.history_start, profile.as_of_date)
     inputs = wellness_inputs(accounts, bills, summary, goal)
     return UnifiedProfile(

@@ -138,6 +138,8 @@ def build_unified_from_nessie(profile: StudentProfile, gen: GeneratedFields, id_
                 else:
                     category = {"deposit": "deposit", "withdrawal": "other",
                                 "transfer": "transfer"}.get(resource, None)
+                    if resource == "transfer" and "goal" in clean(rec.description).lower():
+                        category = "goal_contribution"  # e.g. a deposit made with scripts/demo.py
                     if resource == "purchase":
                         cat = merchant.category if merchant else None
                         category = (cat[0] if isinstance(cat, list) and cat else cat) or "other"

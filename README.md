@@ -17,6 +17,7 @@ unified profile → wellness engine → LangGraph + Nemotron simulation.**
 - **Your week:** a recap of the last 7 days or the last calendar week: spending vs a usual week, top merchant, money saved, missions and badges.
 - **Simulation:** ask any money question ("Can I afford the car by Christmas?") and get a written answer with stats and charts; any answer can become this week's mission.
 - **Accounts and transactions:** balances, history and upcoming bills from Capital One Nessie.
+- **Money at a glance:** a radar on Home comparing this month with last month on savings, checking, credit owed and number of transactions.
 
 **The one rule everywhere:** AI chooses and explains, code computes. Every number shown comes from the student's records or from maths run in code.
 
@@ -95,6 +96,21 @@ flowchart LR
 
 Badges (`GET /api/me/badges`) and the weekly recap (`GET /api/me/recap?mode=last7|calendar`) are computed in code
 only. Status and limits: `docs/BANKING_AGENT_CHECKLIST.md` and `docs/BANKING_AGENT_CALCULATE_PLAN.md`.
+
+## Demo CLI
+
+Add real activity to Nessie and watch the goal and missions update (API running on port 8000):
+
+```bash
+.venv/bin/python scripts/demo.py status             # goal progress, next checkpoint, missions
+.venv/bin/python scripts/demo.py save 25            # $25 goal deposit: the goal bar moves
+.venv/bin/python scripts/demo.py spend dining 12    # $12 purchase at a merchant you already use
+```
+
+Then reload the dashboard (or press ↻ on Missions). Options: `--email` for another demo user, `--api` for another
+URL. The goal's saved amount is its starting amount plus the goal deposits in the transactions, so new deposits
+count. Writes are permanent in the Nessie sandbox (`scripts/seed_nessie.py <profile> --reset --yes` clears them), and
+Nessie never changes account balances for new transactions.
 
 ## Phase 2 pipeline
 
