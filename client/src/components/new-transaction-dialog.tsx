@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useRef, useState, type FormEvent } from "react";
+import { Fragment, useEffect, useRef, useState, type SubmitEvent } from "react";
 import {
   createBill,
   createDeposit,
@@ -72,7 +72,7 @@ export function NewTransactionDialog({ open, onClose, onCreated, account, accoun
     loadMerchants().then(setMerchants, (err: Error) => setMerchantError(err.message));
   }, [open, kind, merchants]);
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     const form = new FormData(event.currentTarget);
     const str = (name: string) => String(form.get(name) ?? "").trim();

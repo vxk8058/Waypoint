@@ -132,3 +132,16 @@ tests/
 
 See [docs/DATA_MAPPING.md](docs/DATA_MAPPING.md) for the field mapping and the verified
 Nessie API behavior that shaped it.
+
+
+# 1. Install dependencies in a virtual environment (one time)
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+
+# 2. Set up the data (one time; it's safe to run again)
+python scripts/validate_profile.py --save-mongo   # saves the student profiles to MongoDB
+python scripts/seed_nessie.py                     # creates their accounts in Nessie
+
+# 3. Start the API
+python -m uvicorn backend.api.main:app --reload --port 8000

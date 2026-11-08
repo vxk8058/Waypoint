@@ -36,6 +36,6 @@ class Settings:
                 "CORS_ORIGINS", "http://localhost:3000,http://localhost:5173").split(",") if o.strip()),
             profile_cache_ttl=int(os.getenv("PROFILE_CACHE_TTL", "300")),
             nvidia_api_key=os.getenv("NVIDIA_API_KEY", "").strip() or None,
-            planner_model=os.getenv("PLANNER_MODEL", "").strip() or PLANNER_MODEL,
-            worker_model=os.getenv("WORKER_MODEL", "").strip() or WORKER_MODEL,
+            planner_model=os.getenv("PLANNER_MODEL", "").strip() or None,
+            worker_model=os.getenv("WORKER_MODEL", "").strip() or None,
         )
