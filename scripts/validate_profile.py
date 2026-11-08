@@ -25,8 +25,12 @@ def main():
             print(f"   [{issue.check}] {issue.message} {issue.record_id or ''}")
         failed |= not r.ok
     if args.save_mongo and not failed:
-        from backend.database.mongo import ensure_indexes, get_database, save_bundle
+        from backend.database.mongo import check_connection, ensure_indexes, get_database, save_bundle
         db = get_database()
+        try:
+            check_connection(db)
+        except RuntimeError as exc:
+            raise SystemExit(f"MongoDB connection failed: {exc}") from None
         ensure_indexes(db)
         for b in bundles:
             save_bundle(db, b)

@@ -48,3 +48,16 @@ def test_missing_uri_points_to_env_file(monkeypatch):
 def test_placeholder_uri_rejected():
     with pytest.raises(RuntimeError, match="placeholder"):
         get_database(uri="mongodb+srv://user:<db_password>@cluster0.example.mongodb.net/")
+
+
+def test_connection_errors_are_explained():
+    from backend.database.mongo import explain_connection_error
+    tls = Exception("SSL handshake failed: x:27017: [SSL: TLSV1_ALERT_INTERNAL_ERROR] tlsv1 alert internal error")
+    assert "Network Access" in explain_connection_error(tls)
+    assert "Database Access" in explain_connection_error(Exception("bad auth : Authentication failed."))
+    assert "certifi" in explain_connection_error(Exception("[SSL: CERTIFICATE_VERIFY_FAILED]"))
+
+
+def test_check_connection_ok(db):
+    from backend.database.mongo import check_connection
+    check_connection(db)

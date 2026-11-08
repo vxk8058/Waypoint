@@ -39,6 +39,33 @@ def get_database(uri: str | None = None, db_name: str | None = None, client: Mon
     return client[db_name or settings.mongodb_db]
 
 
+def explain_connection_error(exc: Exception) -> str:
+    """Turn common Atlas connection failures into an actionable hint."""
+    text = str(exc)
+    if "TLSV1_ALERT_INTERNAL_ERROR" in text or "tlsv1 alert internal error" in text:
+        return ("Atlas rejected the TLS handshake. This usually means your IP is not on the cluster's "
+                "access list: Atlas > Security > Network Access > Add Current IP Address (or 0.0.0.0/0 "
+                "for a demo), wait until it is Active, then retry. Also check the cluster is not paused.")
+    if "CERTIFICATE_VERIFY_FAILED" in text:
+        return ("Python cannot verify Atlas's TLS certificate. On macOS with python.org Python, run "
+                "'Install Certificates.command' from the Python folder in Applications, or pip install certifi.")
+    if "Authentication failed" in text or "bad auth" in text:
+        return ("Atlas rejected the username/password. Check the database user under Atlas > Security > "
+                "Database Access and URL-encode special characters in the password (',' -> %2C).")
+    if "DNS" in text or "NXDOMAIN" in text or "nodename nor servname" in text:
+        return "The cluster host name could not be resolved. Re-copy the connection string from Atlas."
+    return f"Could not reach MongoDB: {text[:300]}"
+
+
+def check_connection(db: Database) -> None:
+    """Ping the server; raise RuntimeError with a readable hint on failure."""
+    from pymongo.errors import PyMongoError
+    try:
+        db.client.admin.command("ping")
+    except PyMongoError as exc:
+        raise RuntimeError(explain_connection_error(exc)) from exc
+
+
 def ensure_indexes(db: Database) -> None:
     db.students.create_index([("profile_id", ASCENDING)], unique=True)
     db.goals.create_index([("profile_id", ASCENDING)], unique=True)
