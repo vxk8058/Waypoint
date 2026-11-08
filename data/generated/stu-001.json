@@ -1,0 +1,39 @@
+{
+  "profile_id": "stu-001",
+  "customer": {
+    "first_name": "Lucas",
+    "last_name": "Patel",
+    "street_number": "840",
+    "street_name": "Synergy Park Blvd",
+    "city": "Richardson",
+    "state": "TX",
+    "zip": "75080"
+  },
+  "account_rewards": {
+    "stu-001-checking": 0,
+    "stu-001-savings": 0,
+    "stu-001-credit-card": 1328
+  },
+  "loans": [
+    {
+      "account_id": "stu-001-student-loan",
+      "loan_type": "student",
+      "status": "in_school_deferment",
+      "credit_score": 652
+    }
+  ],
+  "transaction_medium": "balance",
+  "transaction_status": "completed",
+  "bill_status": "recurring",
+  "field_sources": {
+    "customer.first_name": "waypoint_generated",
+    "customer.last_name": "waypoint_generated",
+    "customer.address": "waypoint_generated",
+    "account_rewards": "derived",
+    "loans[*].credit_score": "waypoint_generated",
+    "loans[*].status": "pnc_generated",
+    "transaction_medium": "waypoint_generated",
+    "transaction_status": "waypoint_generated",
+    "bill_status": "waypoint_generated"
+  }
+}

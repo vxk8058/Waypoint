@@ -1,0 +1,39 @@
+{
+  "profile_id": "stu-004",
+  "customer": {
+    "first_name": "Priya",
+    "last_name": "Ramirez",
+    "street_number": "1427",
+    "street_name": "Speedway",
+    "city": "Austin",
+    "state": "TX",
+    "zip": "78705"
+  },
+  "account_rewards": {
+    "stu-004-checking": 0,
+    "stu-004-savings": 0,
+    "stu-004-credit-card": 1559
+  },
+  "loans": [
+    {
+      "account_id": "stu-004-student-loan",
+      "loan_type": "student",
+      "status": "in_school_deferment",
+      "credit_score": 627
+    }
+  ],
+  "transaction_medium": "balance",
+  "transaction_status": "completed",
+  "bill_status": "recurring",
+  "field_sources": {
+    "customer.first_name": "waypoint_generated",
+    "customer.last_name": "waypoint_generated",
+    "customer.address": "waypoint_generated",
+    "account_rewards": "derived",
+    "loans[*].credit_score": "waypoint_generated",
+    "loans[*].status": "pnc_generated",
+    "transaction_medium": "waypoint_generated",
+    "transaction_status": "waypoint_generated",
+    "bill_status": "waypoint_generated"
+  }
+}

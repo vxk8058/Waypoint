@@ -1,0 +1,5534 @@
+{
+  "profile_id": "stu-004",
+  "operations": [
+    {
+      "local_key": "stu-004:customer",
+      "resource": "customer",
+      "parent_key": null,
+      "body": {
+        "first_name": "Priya",
+        "last_name": "Ramirez",
+        "address": {
+          "street_number": "1427",
+          "street_name": "Speedway",
+          "city": "Austin",
+          "state": "TX",
+          "zip": "78705"
+        }
+      },
+      "refs": {},
+      "marker": null,
+      "source_record_id": "stu-004",
+      "source_flow_class": null,
+      "field_sources": {
+        "first_name": "waypoint_generated",
+        "last_name": "waypoint_generated",
+        "address": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "merchant:m-austin-campus-co-op-books",
+      "resource": "merchant",
+      "parent_key": null,
+      "body": {
+        "name": "Campus Co-op Books",
+        "category": "school_supplies",
+        "address": {
+          "street_number": "2576",
+          "street_name": "Guadalupe St",
+          "city": "Austin",
+          "state": "TX",
+          "zip": "78705"
+        },
+        "geocode": {
+          "lat": 30.28812,
+          "lng": -97.71289
+        }
+      },
+      "refs": {},
+      "marker": null,
+      "source_record_id": "m-austin-campus-co-op-books",
+      "source_flow_class": null,
+      "field_sources": {
+        "name": "pnc_generated",
+        "category": "pnc_generated",
+        "address": "waypoint_generated",
+        "geocode": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "merchant:m-austin-dean-keeton-thrift",
+      "resource": "merchant",
+      "parent_key": null,
+      "body": {
+        "name": "Dean Keeton Thrift",
+        "category": "shopping",
+        "address": {
+          "street_number": "1823",
+          "street_name": "Rio Grande St",
+          "city": "Austin",
+          "state": "TX",
+          "zip": "78705"
+        },
+        "geocode": {
+          "lat": 30.26658,
+          "lng": -97.74473
+        }
+      },
+      "refs": {},
+      "marker": null,
+      "source_record_id": "m-austin-dean-keeton-thrift",
+      "source_flow_class": null,
+      "field_sources": {
+        "name": "pnc_generated",
+        "category": "pnc_generated",
+        "address": "waypoint_generated",
+        "geocode": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "merchant:m-austin-drag-street-grocery",
+      "resource": "merchant",
+      "parent_key": null,
+      "body": {
+        "name": "Drag Street Grocery",
+        "category": "groceries",
+        "address": {
+          "street_number": "1118",
+          "street_name": "San Antonio St",
+          "city": "Austin",
+          "state": "TX",
+          "zip": "78705"
+        },
+        "geocode": {
+          "lat": 30.27463,
+          "lng": -97.74496
+        }
+      },
+      "refs": {},
+      "marker": null,
+      "source_record_id": "m-austin-drag-street-grocery",
+      "source_flow_class": null,
+      "field_sources": {
+        "name": "pnc_generated",
+        "category": "pnc_generated",
+        "address": "waypoint_generated",
+        "geocode": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "merchant:m-austin-forty-acres-coffee",
+      "resource": "merchant",
+      "parent_key": null,
+      "body": {
+        "name": "Forty Acres Coffee",
+        "category": "coffee",
+        "address": {
+          "street_number": "3962",
+          "street_name": "Speedway",
+          "city": "Austin",
+          "state": "TX",
+          "zip": "78705"
+        },
+        "geocode": {
+          "lat": 30.2786,
+          "lng": -97.75658
+        }
+      },
+      "refs": {},
+      "marker": null,
+      "source_record_id": "m-austin-forty-acres-coffee",
+      "source_flow_class": null,
+      "field_sources": {
+        "name": "pnc_generated",
+        "category": "pnc_generated",
+        "address": "waypoint_generated",
+        "geocode": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "merchant:m-austin-guadalupe-taqueria",
+      "resource": "merchant",
+      "parent_key": null,
+      "body": {
+        "name": "Guadalupe Taqueria",
+        "category": "dining",
+        "address": {
+          "street_number": "3392",
+          "street_name": "Dean Keeton St",
+          "city": "Austin",
+          "state": "TX",
+          "zip": "78705"
+        },
+        "geocode": {
+          "lat": 30.29987,
+          "lng": -97.74044
+        }
+      },
+      "refs": {},
+      "marker": null,
+      "source_record_id": "m-austin-guadalupe-taqueria",
+      "source_flow_class": null,
+      "field_sources": {
+        "name": "pnc_generated",
+        "category": "pnc_generated",
+        "address": "waypoint_generated",
+        "geocode": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "merchant:m-austin-hyde-park-arcade",
+      "resource": "merchant",
+      "parent_key": null,
+      "body": {
+        "name": "Hyde Park Arcade",
+        "category": "entertainment",
+        "address": {
+          "street_number": "2384",
+          "street_name": "Dean Keeton St",
+          "city": "Austin",
+          "state": "TX",
+          "zip": "78705"
+        },
+        "geocode": {
+          "lat": 30.2929,
+          "lng": -97.75066
+        }
+      },
+      "refs": {},
+      "marker": null,
+      "source_record_id": "m-austin-hyde-park-arcade",
+      "source_flow_class": null,
+      "field_sources": {
+        "name": "pnc_generated",
+        "category": "pnc_generated",
+        "address": "waypoint_generated",
+        "geocode": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "merchant:m-austin-longhorn-tech-shop",
+      "resource": "merchant",
+      "parent_key": null,
+      "body": {
+        "name": "Longhorn Tech Shop",
+        "category": "shopping",
+        "address": {
+          "street_number": "3415",
+          "street_name": "Guadalupe St",
+          "city": "Austin",
+          "state": "TX",
+          "zip": "78705"
+        },
+        "geocode": {
+          "lat": 30.30833,
+          "lng": -97.71517
+        }
+      },
+      "refs": {},
+      "marker": null,
+      "source_record_id": "m-austin-longhorn-tech-shop",
+      "source_flow_class": null,
+      "field_sources": {
+        "name": "pnc_generated",
+        "category": "pnc_generated",
+        "address": "waypoint_generated",
+        "geocode": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "merchant:m-austin-rideloop-rides",
+      "resource": "merchant",
+      "parent_key": null,
+      "body": {
+        "name": "RideLoop Rides",
+        "category": "transport",
+        "address": {
+          "street_number": "1562",
+          "street_name": "Dean Keeton St",
+          "city": "Austin",
+          "state": "TX",
+          "zip": "78705"
+        },
+        "geocode": {
+          "lat": 30.30878,
+          "lng": -97.74584
+        }
+      },
+      "refs": {},
+      "marker": null,
+      "source_record_id": "m-austin-rideloop-rides",
+      "source_flow_class": null,
+      "field_sources": {
+        "name": "pnc_generated",
+        "category": "pnc_generated",
+        "address": "waypoint_generated",
+        "geocode": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "merchant:m-austin-rio-grande-fuel",
+      "resource": "merchant",
+      "parent_key": null,
+      "body": {
+        "name": "Rio Grande Fuel",
+        "category": "transport",
+        "address": {
+          "street_number": "1657",
+          "street_name": "San Antonio St",
+          "city": "Austin",
+          "state": "TX",
+          "zip": "78705"
+        },
+        "geocode": {
+          "lat": 30.27223,
+          "lng": -97.73736
+        }
+      },
+      "refs": {},
+      "marker": null,
+      "source_record_id": "m-austin-rio-grande-fuel",
+      "source_flow_class": null,
+      "field_sources": {
+        "name": "pnc_generated",
+        "category": "pnc_generated",
+        "address": "waypoint_generated",
+        "geocode": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "merchant:m-austin-speedway-pho",
+      "resource": "merchant",
+      "parent_key": null,
+      "body": {
+        "name": "Speedway Pho",
+        "category": "dining",
+        "address": {
+          "street_number": "398",
+          "street_name": "Guadalupe St",
+          "city": "Austin",
+          "state": "TX",
+          "zip": "78705"
+        },
+        "geocode": {
+          "lat": 30.30378,
+          "lng": -97.7057
+        }
+      },
+      "refs": {},
+      "marker": null,
+      "source_record_id": "m-austin-speedway-pho",
+      "source_flow_class": null,
+      "field_sources": {
+        "name": "pnc_generated",
+        "category": "pnc_generated",
+        "address": "waypoint_generated",
+        "geocode": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "merchant:m-austin-west-campus-market",
+      "resource": "merchant",
+      "parent_key": null,
+      "body": {
+        "name": "West Campus Market",
+        "category": "groceries",
+        "address": {
+          "street_number": "2142",
+          "street_name": "Guadalupe St",
+          "city": "Austin",
+          "state": "TX",
+          "zip": "78705"
+        },
+        "geocode": {
+          "lat": 30.26963,
+          "lng": -97.7567
+        }
+      },
+      "refs": {},
+      "marker": null,
+      "source_record_id": "m-austin-west-campus-market",
+      "source_flow_class": null,
+      "field_sources": {
+        "name": "pnc_generated",
+        "category": "pnc_generated",
+        "address": "waypoint_generated",
+        "geocode": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:account:stu-004-checking",
+      "resource": "account",
+      "parent_key": "stu-004:customer",
+      "body": {
+        "type": "Checking",
+        "nickname": "Student Checking [wp:stu-004:checking]",
+        "rewards": 0,
+        "balance": 2247
+      },
+      "refs": {},
+      "marker": "[wp:stu-004:checking]",
+      "source_record_id": "stu-004-checking",
+      "source_flow_class": null,
+      "field_sources": {
+        "type": "pnc_generated",
+        "nickname": "pnc_generated",
+        "balance": "derived",
+        "rewards": "derived"
+      }
+    },
+    {
+      "local_key": "stu-004:account:stu-004-savings",
+      "resource": "account",
+      "parent_key": "stu-004:customer",
+      "body": {
+        "type": "Savings",
+        "nickname": "Goal Savings [wp:stu-004:savings]",
+        "rewards": 0,
+        "balance": 859
+      },
+      "refs": {},
+      "marker": "[wp:stu-004:savings]",
+      "source_record_id": "stu-004-savings",
+      "source_flow_class": null,
+      "field_sources": {
+        "type": "pnc_generated",
+        "nickname": "pnc_generated",
+        "balance": "derived",
+        "rewards": "derived"
+      }
+    },
+    {
+      "local_key": "stu-004:account:stu-004-credit-card",
+      "resource": "account",
+      "parent_key": "stu-004:customer",
+      "body": {
+        "type": "Credit Card",
+        "nickname": "Student Rewards Card [wp:stu-004:credit_card]",
+        "rewards": 1559,
+        "balance": 297
+      },
+      "refs": {},
+      "marker": "[wp:stu-004:credit_card]",
+      "source_record_id": "stu-004-credit-card",
+      "source_flow_class": null,
+      "field_sources": {
+        "type": "pnc_generated",
+        "nickname": "pnc_generated",
+        "balance": "derived",
+        "rewards": "derived"
+      }
+    },
+    {
+      "local_key": "stu-004:loan:stu-004-student-loan",
+      "resource": "loan",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "type": "student",
+        "status": "in_school_deferment",
+        "credit_score": 627,
+        "monthly_payment": 0,
+        "amount": 5500,
+        "description": "Subsidized Federal Student Loan [wp:stu-004:student_loan]"
+      },
+      "refs": {},
+      "marker": "[wp:stu-004:student_loan]",
+      "source_record_id": "stu-004-student-loan",
+      "source_flow_class": null,
+      "field_sources": {
+        "type": "pnc_generated",
+        "status": "pnc_generated",
+        "credit_score": "waypoint_generated",
+        "monthly_payment": "pnc_generated",
+        "amount": "derived"
+      }
+    },
+    {
+      "local_key": "stu-004:bill:stu-004-bill-phone",
+      "resource": "bill",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "status": "recurring",
+        "payee": "Lone Star Mobile",
+        "nickname": "Phone plan [wp:stu-004-bill-phone]",
+        "payment_date": "2026-11-07",
+        "recurring_date": 7,
+        "payment_amount": 30
+      },
+      "refs": {},
+      "marker": "[wp:stu-004-bill-phone]",
+      "source_record_id": "stu-004-bill-phone",
+      "source_flow_class": null,
+      "field_sources": {
+        "payee": "pnc_generated",
+        "payment_amount": "pnc_generated",
+        "recurring_date": "pnc_generated",
+        "status": "waypoint_generated",
+        "payment_date": "derived"
+      }
+    },
+    {
+      "local_key": "stu-004:bill:stu-004-bill-streaming",
+      "resource": "bill",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "status": "recurring",
+        "payee": "StreamBox",
+        "nickname": "Streaming (student) [wp:stu-004-bill-streaming]",
+        "payment_date": "2026-11-19",
+        "recurring_date": 19,
+        "payment_amount": 10
+      },
+      "refs": {},
+      "marker": "[wp:stu-004-bill-streaming]",
+      "source_record_id": "stu-004-bill-streaming",
+      "source_flow_class": null,
+      "field_sources": {
+        "payee": "pnc_generated",
+        "payment_amount": "pnc_generated",
+        "recurring_date": "pnc_generated",
+        "status": "waypoint_generated",
+        "payment_date": "derived"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00001",
+      "resource": "deposit",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "medium": "balance",
+        "transaction_date": "2026-05-01",
+        "status": "completed",
+        "amount": 297,
+        "description": "Payroll - Forty Acres Dining Hall [wp:stu-004-T00001]"
+      },
+      "refs": {},
+      "marker": "[wp:stu-004-T00001]",
+      "source_record_id": "stu-004-T00001",
+      "source_flow_class": "income",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00002",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-guadalupe-taqueria",
+        "medium": "balance",
+        "purchase_date": "2026-05-02",
+        "status": "completed",
+        "amount": 35,
+        "description": "Guadalupe Taqueria [wp:stu-004-T00002]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-guadalupe-taqueria"
+      },
+      "marker": "[wp:stu-004-T00002]",
+      "source_record_id": "stu-004-T00002",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00003",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-speedway-pho",
+        "medium": "balance",
+        "purchase_date": "2026-05-02",
+        "status": "completed",
+        "amount": 24,
+        "description": "Speedway Pho [wp:stu-004-T00003]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-speedway-pho"
+      },
+      "marker": "[wp:stu-004-T00003]",
+      "source_record_id": "stu-004-T00003",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00004",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-rideloop-rides",
+        "medium": "balance",
+        "purchase_date": "2026-05-02",
+        "status": "completed",
+        "amount": 10,
+        "description": "RideLoop Rides [wp:stu-004-T00004]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-rideloop-rides"
+      },
+      "marker": "[wp:stu-004-T00004]",
+      "source_record_id": "stu-004-T00004",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00005",
+      "resource": "deposit",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "medium": "balance",
+        "transaction_date": "2026-05-03",
+        "status": "completed",
+        "amount": 150,
+        "description": "Family support transfer [wp:stu-004-T00005]"
+      },
+      "refs": {},
+      "marker": "[wp:stu-004-T00005]",
+      "source_record_id": "stu-004-T00005",
+      "source_flow_class": "income",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00006",
+      "resource": "withdrawal",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "medium": "balance",
+        "transaction_date": "2026-05-07",
+        "status": "completed",
+        "amount": 30,
+        "description": "Lone Star Mobile [wp:stu-004-T00006]"
+      },
+      "refs": {},
+      "marker": "[wp:stu-004-T00006]",
+      "source_record_id": "stu-004-T00006",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00007",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-forty-acres-coffee",
+        "medium": "balance",
+        "purchase_date": "2026-05-07",
+        "status": "completed",
+        "amount": 4,
+        "description": "Forty Acres Coffee [wp:stu-004-T00007]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-forty-acres-coffee"
+      },
+      "marker": "[wp:stu-004-T00007]",
+      "source_record_id": "stu-004-T00007",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00008",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-forty-acres-coffee",
+        "medium": "balance",
+        "purchase_date": "2026-05-09",
+        "status": "completed",
+        "amount": 7,
+        "description": "Forty Acres Coffee [wp:stu-004-T00008]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-forty-acres-coffee"
+      },
+      "marker": "[wp:stu-004-T00008]",
+      "source_record_id": "stu-004-T00008",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00009",
+      "resource": "withdrawal",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "medium": "balance",
+        "transaction_date": "2026-05-09",
+        "status": "completed",
+        "amount": 40,
+        "description": "ATM cash withdrawal [wp:stu-004-T00009]"
+      },
+      "refs": {},
+      "marker": "[wp:stu-004-T00009]",
+      "source_record_id": "stu-004-T00009",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00010",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-hyde-park-arcade",
+        "medium": "balance",
+        "purchase_date": "2026-05-10",
+        "status": "completed",
+        "amount": 36,
+        "description": "Hyde Park Arcade [wp:stu-004-T00010]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-hyde-park-arcade"
+      },
+      "marker": "[wp:stu-004-T00010]",
+      "source_record_id": "stu-004-T00010",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00011",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-drag-street-grocery",
+        "medium": "balance",
+        "purchase_date": "2026-05-10",
+        "status": "completed",
+        "amount": 22,
+        "description": "Drag Street Grocery [wp:stu-004-T00011]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-drag-street-grocery"
+      },
+      "marker": "[wp:stu-004-T00011]",
+      "source_record_id": "stu-004-T00011",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00012",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-guadalupe-taqueria",
+        "medium": "balance",
+        "purchase_date": "2026-05-13",
+        "status": "completed",
+        "amount": 28,
+        "description": "Guadalupe Taqueria [wp:stu-004-T00012]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-guadalupe-taqueria"
+      },
+      "marker": "[wp:stu-004-T00012]",
+      "source_record_id": "stu-004-T00012",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00013",
+      "resource": "deposit",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "medium": "balance",
+        "transaction_date": "2026-05-15",
+        "status": "completed",
+        "amount": 317,
+        "description": "Payroll - Forty Acres Dining Hall [wp:stu-004-T00013]"
+      },
+      "refs": {},
+      "marker": "[wp:stu-004-T00013]",
+      "source_record_id": "stu-004-T00013",
+      "source_flow_class": "income",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00014",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-forty-acres-coffee",
+        "medium": "balance",
+        "purchase_date": "2026-05-16",
+        "status": "completed",
+        "amount": 10,
+        "description": "Forty Acres Coffee [wp:stu-004-T00014]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-forty-acres-coffee"
+      },
+      "marker": "[wp:stu-004-T00014]",
+      "source_record_id": "stu-004-T00014",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00015",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-longhorn-tech-shop",
+        "medium": "balance",
+        "purchase_date": "2026-05-16",
+        "status": "completed",
+        "amount": 33,
+        "description": "Longhorn Tech Shop [wp:stu-004-T00015]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-longhorn-tech-shop"
+      },
+      "marker": "[wp:stu-004-T00015]",
+      "source_record_id": "stu-004-T00015",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00016",
+      "resource": "transfer",
+      "parent_key": "stu-004:account:stu-004-savings",
+      "body": {
+        "transaction_date": "2026-05-16",
+        "status": "completed",
+        "amount": 100,
+        "description": "Transfer from checking - Spring tuition gap (in) [wp:stu-004-T00016]"
+      },
+      "refs": {},
+      "marker": "[wp:stu-004-T00016]",
+      "source_record_id": "stu-004-T00016",
+      "source_flow_class": "internal_transfer",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00017",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-hyde-park-arcade",
+        "medium": "balance",
+        "purchase_date": "2026-05-16",
+        "status": "completed",
+        "amount": 23,
+        "description": "Hyde Park Arcade [wp:stu-004-T00017]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-hyde-park-arcade"
+      },
+      "marker": "[wp:stu-004-T00017]",
+      "source_record_id": "stu-004-T00017",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00018",
+      "resource": "transfer",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "transaction_date": "2026-05-16",
+        "status": "completed",
+        "amount": 100,
+        "description": "Transfer to savings - Spring tuition gap (out) [wp:stu-004-T00018]"
+      },
+      "refs": {},
+      "marker": "[wp:stu-004-T00018]",
+      "source_record_id": "stu-004-T00018",
+      "source_flow_class": "internal_transfer",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00019",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-forty-acres-coffee",
+        "medium": "balance",
+        "purchase_date": "2026-05-17",
+        "status": "completed",
+        "amount": 8,
+        "description": "Forty Acres Coffee [wp:stu-004-T00019]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-forty-acres-coffee"
+      },
+      "marker": "[wp:stu-004-T00019]",
+      "source_record_id": "stu-004-T00019",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00020",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-forty-acres-coffee",
+        "medium": "balance",
+        "purchase_date": "2026-05-17",
+        "status": "completed",
+        "amount": 10,
+        "description": "Forty Acres Coffee [wp:stu-004-T00020]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-forty-acres-coffee"
+      },
+      "marker": "[wp:stu-004-T00020]",
+      "source_record_id": "stu-004-T00020",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00021",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-longhorn-tech-shop",
+        "medium": "balance",
+        "purchase_date": "2026-05-17",
+        "status": "completed",
+        "amount": 50,
+        "description": "Longhorn Tech Shop [wp:stu-004-T00021]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-longhorn-tech-shop"
+      },
+      "marker": "[wp:stu-004-T00021]",
+      "source_record_id": "stu-004-T00021",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00022",
+      "resource": "withdrawal",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "medium": "balance",
+        "transaction_date": "2026-05-19",
+        "status": "completed",
+        "amount": 10,
+        "description": "StreamBox [wp:stu-004-T00022]"
+      },
+      "refs": {},
+      "marker": "[wp:stu-004-T00022]",
+      "source_record_id": "stu-004-T00022",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00023",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-west-campus-market",
+        "medium": "balance",
+        "purchase_date": "2026-05-19",
+        "status": "completed",
+        "amount": 35,
+        "description": "West Campus Market [wp:stu-004-T00023]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-west-campus-market"
+      },
+      "marker": "[wp:stu-004-T00023]",
+      "source_record_id": "stu-004-T00023",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00024",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-rio-grande-fuel",
+        "medium": "balance",
+        "purchase_date": "2026-05-20",
+        "status": "completed",
+        "amount": 20,
+        "description": "Rio Grande Fuel [wp:stu-004-T00024]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-rio-grande-fuel"
+      },
+      "marker": "[wp:stu-004-T00024]",
+      "source_record_id": "stu-004-T00024",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00025",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-longhorn-tech-shop",
+        "medium": "balance",
+        "purchase_date": "2026-05-21",
+        "status": "completed",
+        "amount": 25,
+        "description": "Longhorn Tech Shop [wp:stu-004-T00025]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-longhorn-tech-shop"
+      },
+      "marker": "[wp:stu-004-T00025]",
+      "source_record_id": "stu-004-T00025",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00026",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-campus-co-op-books",
+        "medium": "balance",
+        "purchase_date": "2026-05-24",
+        "status": "completed",
+        "amount": 18,
+        "description": "Campus Co-op Books [wp:stu-004-T00026]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-campus-co-op-books"
+      },
+      "marker": "[wp:stu-004-T00026]",
+      "source_record_id": "stu-004-T00026",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00027",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-guadalupe-taqueria",
+        "medium": "balance",
+        "purchase_date": "2026-05-24",
+        "status": "completed",
+        "amount": 32,
+        "description": "Guadalupe Taqueria [wp:stu-004-T00027]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-guadalupe-taqueria"
+      },
+      "marker": "[wp:stu-004-T00027]",
+      "source_record_id": "stu-004-T00027",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00028",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-forty-acres-coffee",
+        "medium": "balance",
+        "purchase_date": "2026-05-24",
+        "status": "completed",
+        "amount": 5,
+        "description": "Forty Acres Coffee [wp:stu-004-T00028]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-forty-acres-coffee"
+      },
+      "marker": "[wp:stu-004-T00028]",
+      "source_record_id": "stu-004-T00028",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00029",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-guadalupe-taqueria",
+        "medium": "balance",
+        "purchase_date": "2026-05-25",
+        "status": "completed",
+        "amount": 21,
+        "description": "Guadalupe Taqueria [wp:stu-004-T00029]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-guadalupe-taqueria"
+      },
+      "marker": "[wp:stu-004-T00029]",
+      "source_record_id": "stu-004-T00029",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00031",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-rideloop-rides",
+        "medium": "balance",
+        "purchase_date": "2026-05-26",
+        "status": "completed",
+        "amount": 10,
+        "description": "RideLoop Rides [wp:stu-004-T00031]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-rideloop-rides"
+      },
+      "marker": "[wp:stu-004-T00031]",
+      "source_record_id": "stu-004-T00031",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00032",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-guadalupe-taqueria",
+        "medium": "balance",
+        "purchase_date": "2026-05-28",
+        "status": "completed",
+        "amount": 36,
+        "description": "Guadalupe Taqueria [wp:stu-004-T00032]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-guadalupe-taqueria"
+      },
+      "marker": "[wp:stu-004-T00032]",
+      "source_record_id": "stu-004-T00032",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00033",
+      "resource": "transfer",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "transaction_date": "2026-05-28",
+        "status": "completed",
+        "amount": 184,
+        "description": "Credit card payment (out) [wp:stu-004-T00033]"
+      },
+      "refs": {},
+      "marker": "[wp:stu-004-T00033]",
+      "source_record_id": "stu-004-T00033",
+      "source_flow_class": "internal_transfer",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00034",
+      "resource": "transfer",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "transaction_date": "2026-05-28",
+        "status": "completed",
+        "amount": 184,
+        "description": "Payment received - thank you (in) [wp:stu-004-T00034]"
+      },
+      "refs": {},
+      "marker": "[wp:stu-004-T00034]",
+      "source_record_id": "stu-004-T00034",
+      "source_flow_class": "internal_transfer",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00036",
+      "resource": "deposit",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "medium": "balance",
+        "transaction_date": "2026-06-01",
+        "status": "completed",
+        "amount": 294,
+        "description": "Payroll - Forty Acres Dining Hall [wp:stu-004-T00036]"
+      },
+      "refs": {},
+      "marker": "[wp:stu-004-T00036]",
+      "source_record_id": "stu-004-T00036",
+      "source_flow_class": "income",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00037",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-forty-acres-coffee",
+        "medium": "balance",
+        "purchase_date": "2026-06-02",
+        "status": "completed",
+        "amount": 7,
+        "description": "Forty Acres Coffee [wp:stu-004-T00037]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-forty-acres-coffee"
+      },
+      "marker": "[wp:stu-004-T00037]",
+      "source_record_id": "stu-004-T00037",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00038",
+      "resource": "deposit",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "medium": "balance",
+        "transaction_date": "2026-06-03",
+        "status": "completed",
+        "amount": 150,
+        "description": "Family support transfer [wp:stu-004-T00038]"
+      },
+      "refs": {},
+      "marker": "[wp:stu-004-T00038]",
+      "source_record_id": "stu-004-T00038",
+      "source_flow_class": "income",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00039",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-guadalupe-taqueria",
+        "medium": "balance",
+        "purchase_date": "2026-06-03",
+        "status": "completed",
+        "amount": 32,
+        "description": "Guadalupe Taqueria [wp:stu-004-T00039]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-guadalupe-taqueria"
+      },
+      "marker": "[wp:stu-004-T00039]",
+      "source_record_id": "stu-004-T00039",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00040",
+      "resource": "withdrawal",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "medium": "balance",
+        "transaction_date": "2026-06-07",
+        "status": "completed",
+        "amount": 30,
+        "description": "Lone Star Mobile [wp:stu-004-T00040]"
+      },
+      "refs": {},
+      "marker": "[wp:stu-004-T00040]",
+      "source_record_id": "stu-004-T00040",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00041",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-rio-grande-fuel",
+        "medium": "balance",
+        "purchase_date": "2026-06-07",
+        "status": "completed",
+        "amount": 18,
+        "description": "Rio Grande Fuel [wp:stu-004-T00041]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-rio-grande-fuel"
+      },
+      "marker": "[wp:stu-004-T00041]",
+      "source_record_id": "stu-004-T00041",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00042",
+      "resource": "withdrawal",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "medium": "balance",
+        "transaction_date": "2026-06-09",
+        "status": "completed",
+        "amount": 40,
+        "description": "ATM cash withdrawal [wp:stu-004-T00042]"
+      },
+      "refs": {},
+      "marker": "[wp:stu-004-T00042]",
+      "source_record_id": "stu-004-T00042",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00043",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-dean-keeton-thrift",
+        "medium": "balance",
+        "purchase_date": "2026-06-09",
+        "status": "completed",
+        "amount": 40,
+        "description": "Dean Keeton Thrift [wp:stu-004-T00043]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-dean-keeton-thrift"
+      },
+      "marker": "[wp:stu-004-T00043]",
+      "source_record_id": "stu-004-T00043",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00044",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-drag-street-grocery",
+        "medium": "balance",
+        "purchase_date": "2026-06-11",
+        "status": "completed",
+        "amount": 19,
+        "description": "Drag Street Grocery [wp:stu-004-T00044]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-drag-street-grocery"
+      },
+      "marker": "[wp:stu-004-T00044]",
+      "source_record_id": "stu-004-T00044",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00045",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-speedway-pho",
+        "medium": "balance",
+        "purchase_date": "2026-06-12",
+        "status": "completed",
+        "amount": 31,
+        "description": "Speedway Pho [wp:stu-004-T00045]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-speedway-pho"
+      },
+      "marker": "[wp:stu-004-T00045]",
+      "source_record_id": "stu-004-T00045",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00046",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-guadalupe-taqueria",
+        "medium": "balance",
+        "purchase_date": "2026-06-13",
+        "status": "completed",
+        "amount": 20,
+        "description": "Guadalupe Taqueria [wp:stu-004-T00046]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-guadalupe-taqueria"
+      },
+      "marker": "[wp:stu-004-T00046]",
+      "source_record_id": "stu-004-T00046",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00047",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-hyde-park-arcade",
+        "medium": "balance",
+        "purchase_date": "2026-06-13",
+        "status": "completed",
+        "amount": 27,
+        "description": "Hyde Park Arcade [wp:stu-004-T00047]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-hyde-park-arcade"
+      },
+      "marker": "[wp:stu-004-T00047]",
+      "source_record_id": "stu-004-T00047",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00048",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-speedway-pho",
+        "medium": "balance",
+        "purchase_date": "2026-06-14",
+        "status": "completed",
+        "amount": 32,
+        "description": "Speedway Pho [wp:stu-004-T00048]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-speedway-pho"
+      },
+      "marker": "[wp:stu-004-T00048]",
+      "source_record_id": "stu-004-T00048",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00049",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-drag-street-grocery",
+        "medium": "balance",
+        "purchase_date": "2026-06-14",
+        "status": "completed",
+        "amount": 37,
+        "description": "Drag Street Grocery [wp:stu-004-T00049]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-drag-street-grocery"
+      },
+      "marker": "[wp:stu-004-T00049]",
+      "source_record_id": "stu-004-T00049",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00050",
+      "resource": "deposit",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "medium": "balance",
+        "transaction_date": "2026-06-15",
+        "status": "completed",
+        "amount": 301,
+        "description": "Payroll - Forty Acres Dining Hall [wp:stu-004-T00050]"
+      },
+      "refs": {},
+      "marker": "[wp:stu-004-T00050]",
+      "source_record_id": "stu-004-T00050",
+      "source_flow_class": "income",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00051",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-rideloop-rides",
+        "medium": "balance",
+        "purchase_date": "2026-06-15",
+        "status": "completed",
+        "amount": 16,
+        "description": "RideLoop Rides [wp:stu-004-T00051]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-rideloop-rides"
+      },
+      "marker": "[wp:stu-004-T00051]",
+      "source_record_id": "stu-004-T00051",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00052",
+      "resource": "transfer",
+      "parent_key": "stu-004:account:stu-004-savings",
+      "body": {
+        "transaction_date": "2026-06-16",
+        "status": "completed",
+        "amount": 100,
+        "description": "Transfer from checking - Spring tuition gap (in) [wp:stu-004-T00052]"
+      },
+      "refs": {},
+      "marker": "[wp:stu-004-T00052]",
+      "source_record_id": "stu-004-T00052",
+      "source_flow_class": "internal_transfer",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00053",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-longhorn-tech-shop",
+        "medium": "balance",
+        "purchase_date": "2026-06-16",
+        "status": "completed",
+        "amount": 38,
+        "description": "Longhorn Tech Shop [wp:stu-004-T00053]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-longhorn-tech-shop"
+      },
+      "marker": "[wp:stu-004-T00053]",
+      "source_record_id": "stu-004-T00053",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00054",
+      "resource": "transfer",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "transaction_date": "2026-06-16",
+        "status": "completed",
+        "amount": 100,
+        "description": "Transfer to savings - Spring tuition gap (out) [wp:stu-004-T00054]"
+      },
+      "refs": {},
+      "marker": "[wp:stu-004-T00054]",
+      "source_record_id": "stu-004-T00054",
+      "source_flow_class": "internal_transfer",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00055",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-forty-acres-coffee",
+        "medium": "balance",
+        "purchase_date": "2026-06-18",
+        "status": "completed",
+        "amount": 7,
+        "description": "Forty Acres Coffee [wp:stu-004-T00055]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-forty-acres-coffee"
+      },
+      "marker": "[wp:stu-004-T00055]",
+      "source_record_id": "stu-004-T00055",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00056",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-hyde-park-arcade",
+        "medium": "balance",
+        "purchase_date": "2026-06-18",
+        "status": "completed",
+        "amount": 28,
+        "description": "Hyde Park Arcade [wp:stu-004-T00056]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-hyde-park-arcade"
+      },
+      "marker": "[wp:stu-004-T00056]",
+      "source_record_id": "stu-004-T00056",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00057",
+      "resource": "withdrawal",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "medium": "balance",
+        "transaction_date": "2026-06-19",
+        "status": "completed",
+        "amount": 10,
+        "description": "StreamBox [wp:stu-004-T00057]"
+      },
+      "refs": {},
+      "marker": "[wp:stu-004-T00057]",
+      "source_record_id": "stu-004-T00057",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00058",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-speedway-pho",
+        "medium": "balance",
+        "purchase_date": "2026-06-20",
+        "status": "completed",
+        "amount": 31,
+        "description": "Speedway Pho [wp:stu-004-T00058]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-speedway-pho"
+      },
+      "marker": "[wp:stu-004-T00058]",
+      "source_record_id": "stu-004-T00058",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00059",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-forty-acres-coffee",
+        "medium": "balance",
+        "purchase_date": "2026-06-23",
+        "status": "completed",
+        "amount": 13,
+        "description": "Forty Acres Coffee [wp:stu-004-T00059]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-forty-acres-coffee"
+      },
+      "marker": "[wp:stu-004-T00059]",
+      "source_record_id": "stu-004-T00059",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00060",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-forty-acres-coffee",
+        "medium": "balance",
+        "purchase_date": "2026-06-23",
+        "status": "completed",
+        "amount": 10,
+        "description": "Forty Acres Coffee [wp:stu-004-T00060]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-forty-acres-coffee"
+      },
+      "marker": "[wp:stu-004-T00060]",
+      "source_record_id": "stu-004-T00060",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00061",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-forty-acres-coffee",
+        "medium": "balance",
+        "purchase_date": "2026-06-25",
+        "status": "completed",
+        "amount": 6,
+        "description": "Forty Acres Coffee [wp:stu-004-T00061]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-forty-acres-coffee"
+      },
+      "marker": "[wp:stu-004-T00061]",
+      "source_record_id": "stu-004-T00061",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00062",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-rideloop-rides",
+        "medium": "balance",
+        "purchase_date": "2026-06-25",
+        "status": "completed",
+        "amount": 13,
+        "description": "RideLoop Rides [wp:stu-004-T00062]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-rideloop-rides"
+      },
+      "marker": "[wp:stu-004-T00062]",
+      "source_record_id": "stu-004-T00062",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00063",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-campus-co-op-books",
+        "medium": "balance",
+        "purchase_date": "2026-06-25",
+        "status": "completed",
+        "amount": 23,
+        "description": "Campus Co-op Books [wp:stu-004-T00063]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-campus-co-op-books"
+      },
+      "marker": "[wp:stu-004-T00063]",
+      "source_record_id": "stu-004-T00063",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00065",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-guadalupe-taqueria",
+        "medium": "balance",
+        "purchase_date": "2026-06-27",
+        "status": "completed",
+        "amount": 24,
+        "description": "Guadalupe Taqueria [wp:stu-004-T00065]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-guadalupe-taqueria"
+      },
+      "marker": "[wp:stu-004-T00065]",
+      "source_record_id": "stu-004-T00065",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00066",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-longhorn-tech-shop",
+        "medium": "balance",
+        "purchase_date": "2026-06-27",
+        "status": "completed",
+        "amount": 33,
+        "description": "Longhorn Tech Shop [wp:stu-004-T00066]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-longhorn-tech-shop"
+      },
+      "marker": "[wp:stu-004-T00066]",
+      "source_record_id": "stu-004-T00066",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00067",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-forty-acres-coffee",
+        "medium": "balance",
+        "purchase_date": "2026-06-28",
+        "status": "completed",
+        "amount": 7,
+        "description": "Forty Acres Coffee [wp:stu-004-T00067]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-forty-acres-coffee"
+      },
+      "marker": "[wp:stu-004-T00067]",
+      "source_record_id": "stu-004-T00067",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00068",
+      "resource": "transfer",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "transaction_date": "2026-06-28",
+        "status": "completed",
+        "amount": 204,
+        "description": "Credit card payment (out) [wp:stu-004-T00068]"
+      },
+      "refs": {},
+      "marker": "[wp:stu-004-T00068]",
+      "source_record_id": "stu-004-T00068",
+      "source_flow_class": "internal_transfer",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00069",
+      "resource": "transfer",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "transaction_date": "2026-06-28",
+        "status": "completed",
+        "amount": 204,
+        "description": "Payment received - thank you (in) [wp:stu-004-T00069]"
+      },
+      "refs": {},
+      "marker": "[wp:stu-004-T00069]",
+      "source_record_id": "stu-004-T00069",
+      "source_flow_class": "internal_transfer",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00071",
+      "resource": "deposit",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "medium": "balance",
+        "transaction_date": "2026-07-01",
+        "status": "completed",
+        "amount": 307,
+        "description": "Payroll - Forty Acres Dining Hall [wp:stu-004-T00071]"
+      },
+      "refs": {},
+      "marker": "[wp:stu-004-T00071]",
+      "source_record_id": "stu-004-T00071",
+      "source_flow_class": "income",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00072",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-guadalupe-taqueria",
+        "medium": "balance",
+        "purchase_date": "2026-07-02",
+        "status": "completed",
+        "amount": 27,
+        "description": "Guadalupe Taqueria [wp:stu-004-T00072]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-guadalupe-taqueria"
+      },
+      "marker": "[wp:stu-004-T00072]",
+      "source_record_id": "stu-004-T00072",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00073",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-dean-keeton-thrift",
+        "medium": "balance",
+        "purchase_date": "2026-07-02",
+        "status": "completed",
+        "amount": 48,
+        "description": "Dean Keeton Thrift [wp:stu-004-T00073]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-dean-keeton-thrift"
+      },
+      "marker": "[wp:stu-004-T00073]",
+      "source_record_id": "stu-004-T00073",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00074",
+      "resource": "deposit",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "medium": "balance",
+        "transaction_date": "2026-07-03",
+        "status": "completed",
+        "amount": 150,
+        "description": "Family support transfer [wp:stu-004-T00074]"
+      },
+      "refs": {},
+      "marker": "[wp:stu-004-T00074]",
+      "source_record_id": "stu-004-T00074",
+      "source_flow_class": "income",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00075",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-forty-acres-coffee",
+        "medium": "balance",
+        "purchase_date": "2026-07-03",
+        "status": "completed",
+        "amount": 6,
+        "description": "Forty Acres Coffee [wp:stu-004-T00075]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-forty-acres-coffee"
+      },
+      "marker": "[wp:stu-004-T00075]",
+      "source_record_id": "stu-004-T00075",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00076",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-west-campus-market",
+        "medium": "balance",
+        "purchase_date": "2026-07-04",
+        "status": "completed",
+        "amount": 21,
+        "description": "West Campus Market [wp:stu-004-T00076]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-west-campus-market"
+      },
+      "marker": "[wp:stu-004-T00076]",
+      "source_record_id": "stu-004-T00076",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00077",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-forty-acres-coffee",
+        "medium": "balance",
+        "purchase_date": "2026-07-06",
+        "status": "completed",
+        "amount": 12,
+        "description": "Forty Acres Coffee [wp:stu-004-T00077]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-forty-acres-coffee"
+      },
+      "marker": "[wp:stu-004-T00077]",
+      "source_record_id": "stu-004-T00077",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00078",
+      "resource": "withdrawal",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "medium": "balance",
+        "transaction_date": "2026-07-07",
+        "status": "completed",
+        "amount": 30,
+        "description": "Lone Star Mobile [wp:stu-004-T00078]"
+      },
+      "refs": {},
+      "marker": "[wp:stu-004-T00078]",
+      "source_record_id": "stu-004-T00078",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00079",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-rio-grande-fuel",
+        "medium": "balance",
+        "purchase_date": "2026-07-08",
+        "status": "completed",
+        "amount": 14,
+        "description": "Rio Grande Fuel [wp:stu-004-T00079]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-rio-grande-fuel"
+      },
+      "marker": "[wp:stu-004-T00079]",
+      "source_record_id": "stu-004-T00079",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00080",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-speedway-pho",
+        "medium": "balance",
+        "purchase_date": "2026-07-08",
+        "status": "completed",
+        "amount": 30,
+        "description": "Speedway Pho [wp:stu-004-T00080]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-speedway-pho"
+      },
+      "marker": "[wp:stu-004-T00080]",
+      "source_record_id": "stu-004-T00080",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00081",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-forty-acres-coffee",
+        "medium": "balance",
+        "purchase_date": "2026-07-08",
+        "status": "completed",
+        "amount": 15,
+        "description": "Forty Acres Coffee [wp:stu-004-T00081]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-forty-acres-coffee"
+      },
+      "marker": "[wp:stu-004-T00081]",
+      "source_record_id": "stu-004-T00081",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00082",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-campus-co-op-books",
+        "medium": "balance",
+        "purchase_date": "2026-07-09",
+        "status": "completed",
+        "amount": 19,
+        "description": "Campus Co-op Books [wp:stu-004-T00082]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-campus-co-op-books"
+      },
+      "marker": "[wp:stu-004-T00082]",
+      "source_record_id": "stu-004-T00082",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00083",
+      "resource": "withdrawal",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "medium": "balance",
+        "transaction_date": "2026-07-09",
+        "status": "completed",
+        "amount": 40,
+        "description": "ATM cash withdrawal [wp:stu-004-T00083]"
+      },
+      "refs": {},
+      "marker": "[wp:stu-004-T00083]",
+      "source_record_id": "stu-004-T00083",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00084",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-rideloop-rides",
+        "medium": "balance",
+        "purchase_date": "2026-07-14",
+        "status": "completed",
+        "amount": 21,
+        "description": "RideLoop Rides [wp:stu-004-T00084]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-rideloop-rides"
+      },
+      "marker": "[wp:stu-004-T00084]",
+      "source_record_id": "stu-004-T00084",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00085",
+      "resource": "deposit",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "medium": "balance",
+        "transaction_date": "2026-07-15",
+        "status": "completed",
+        "amount": 315,
+        "description": "Payroll - Forty Acres Dining Hall [wp:stu-004-T00085]"
+      },
+      "refs": {},
+      "marker": "[wp:stu-004-T00085]",
+      "source_record_id": "stu-004-T00085",
+      "source_flow_class": "income",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00086",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-hyde-park-arcade",
+        "medium": "balance",
+        "purchase_date": "2026-07-16",
+        "status": "completed",
+        "amount": 23,
+        "description": "Hyde Park Arcade [wp:stu-004-T00086]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-hyde-park-arcade"
+      },
+      "marker": "[wp:stu-004-T00086]",
+      "source_record_id": "stu-004-T00086",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00087",
+      "resource": "transfer",
+      "parent_key": "stu-004:account:stu-004-savings",
+      "body": {
+        "transaction_date": "2026-07-16",
+        "status": "completed",
+        "amount": 100,
+        "description": "Transfer from checking - Spring tuition gap (in) [wp:stu-004-T00087]"
+      },
+      "refs": {},
+      "marker": "[wp:stu-004-T00087]",
+      "source_record_id": "stu-004-T00087",
+      "source_flow_class": "internal_transfer",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00088",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-dean-keeton-thrift",
+        "medium": "balance",
+        "purchase_date": "2026-07-16",
+        "status": "completed",
+        "amount": 45,
+        "description": "Dean Keeton Thrift [wp:stu-004-T00088]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-dean-keeton-thrift"
+      },
+      "marker": "[wp:stu-004-T00088]",
+      "source_record_id": "stu-004-T00088",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00089",
+      "resource": "transfer",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "transaction_date": "2026-07-16",
+        "status": "completed",
+        "amount": 100,
+        "description": "Transfer to savings - Spring tuition gap (out) [wp:stu-004-T00089]"
+      },
+      "refs": {},
+      "marker": "[wp:stu-004-T00089]",
+      "source_record_id": "stu-004-T00089",
+      "source_flow_class": "internal_transfer",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00090",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-guadalupe-taqueria",
+        "medium": "balance",
+        "purchase_date": "2026-07-18",
+        "status": "completed",
+        "amount": 41,
+        "description": "Guadalupe Taqueria [wp:stu-004-T00090]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-guadalupe-taqueria"
+      },
+      "marker": "[wp:stu-004-T00090]",
+      "source_record_id": "stu-004-T00090",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00091",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-dean-keeton-thrift",
+        "medium": "balance",
+        "purchase_date": "2026-07-18",
+        "status": "completed",
+        "amount": 24,
+        "description": "Dean Keeton Thrift [wp:stu-004-T00091]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-dean-keeton-thrift"
+      },
+      "marker": "[wp:stu-004-T00091]",
+      "source_record_id": "stu-004-T00091",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00092",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-hyde-park-arcade",
+        "medium": "balance",
+        "purchase_date": "2026-07-18",
+        "status": "completed",
+        "amount": 29,
+        "description": "Hyde Park Arcade [wp:stu-004-T00092]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-hyde-park-arcade"
+      },
+      "marker": "[wp:stu-004-T00092]",
+      "source_record_id": "stu-004-T00092",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00093",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-guadalupe-taqueria",
+        "medium": "balance",
+        "purchase_date": "2026-07-19",
+        "status": "completed",
+        "amount": 35,
+        "description": "Guadalupe Taqueria [wp:stu-004-T00093]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-guadalupe-taqueria"
+      },
+      "marker": "[wp:stu-004-T00093]",
+      "source_record_id": "stu-004-T00093",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00094",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-speedway-pho",
+        "medium": "balance",
+        "purchase_date": "2026-07-19",
+        "status": "completed",
+        "amount": 27,
+        "description": "Speedway Pho [wp:stu-004-T00094]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-speedway-pho"
+      },
+      "marker": "[wp:stu-004-T00094]",
+      "source_record_id": "stu-004-T00094",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00095",
+      "resource": "withdrawal",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "medium": "balance",
+        "transaction_date": "2026-07-19",
+        "status": "completed",
+        "amount": 10,
+        "description": "StreamBox [wp:stu-004-T00095]"
+      },
+      "refs": {},
+      "marker": "[wp:stu-004-T00095]",
+      "source_record_id": "stu-004-T00095",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00096",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-forty-acres-coffee",
+        "medium": "balance",
+        "purchase_date": "2026-07-21",
+        "status": "completed",
+        "amount": 9,
+        "description": "Forty Acres Coffee [wp:stu-004-T00096]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-forty-acres-coffee"
+      },
+      "marker": "[wp:stu-004-T00096]",
+      "source_record_id": "stu-004-T00096",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00097",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-forty-acres-coffee",
+        "medium": "balance",
+        "purchase_date": "2026-07-21",
+        "status": "completed",
+        "amount": 7,
+        "description": "Forty Acres Coffee [wp:stu-004-T00097]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-forty-acres-coffee"
+      },
+      "marker": "[wp:stu-004-T00097]",
+      "source_record_id": "stu-004-T00097",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00098",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-west-campus-market",
+        "medium": "balance",
+        "purchase_date": "2026-07-21",
+        "status": "completed",
+        "amount": 27,
+        "description": "West Campus Market [wp:stu-004-T00098]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-west-campus-market"
+      },
+      "marker": "[wp:stu-004-T00098]",
+      "source_record_id": "stu-004-T00098",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00099",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-forty-acres-coffee",
+        "medium": "balance",
+        "purchase_date": "2026-07-22",
+        "status": "completed",
+        "amount": 6,
+        "description": "Forty Acres Coffee [wp:stu-004-T00099]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-forty-acres-coffee"
+      },
+      "marker": "[wp:stu-004-T00099]",
+      "source_record_id": "stu-004-T00099",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00100",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-guadalupe-taqueria",
+        "medium": "balance",
+        "purchase_date": "2026-07-23",
+        "status": "completed",
+        "amount": 34,
+        "description": "Guadalupe Taqueria [wp:stu-004-T00100]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-guadalupe-taqueria"
+      },
+      "marker": "[wp:stu-004-T00100]",
+      "source_record_id": "stu-004-T00100",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00102",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-rio-grande-fuel",
+        "medium": "balance",
+        "purchase_date": "2026-07-26",
+        "status": "completed",
+        "amount": 17,
+        "description": "Rio Grande Fuel [wp:stu-004-T00102]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-rio-grande-fuel"
+      },
+      "marker": "[wp:stu-004-T00102]",
+      "source_record_id": "stu-004-T00102",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00103",
+      "resource": "transfer",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "transaction_date": "2026-07-28",
+        "status": "completed",
+        "amount": 264,
+        "description": "Credit card payment (out) [wp:stu-004-T00103]"
+      },
+      "refs": {},
+      "marker": "[wp:stu-004-T00103]",
+      "source_record_id": "stu-004-T00103",
+      "source_flow_class": "internal_transfer",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00104",
+      "resource": "transfer",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "transaction_date": "2026-07-28",
+        "status": "completed",
+        "amount": 264,
+        "description": "Payment received - thank you (in) [wp:stu-004-T00104]"
+      },
+      "refs": {},
+      "marker": "[wp:stu-004-T00104]",
+      "source_record_id": "stu-004-T00104",
+      "source_flow_class": "internal_transfer",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00106",
+      "resource": "deposit",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "medium": "balance",
+        "transaction_date": "2026-08-01",
+        "status": "completed",
+        "amount": 287,
+        "description": "Payroll - Forty Acres Dining Hall [wp:stu-004-T00106]"
+      },
+      "refs": {},
+      "marker": "[wp:stu-004-T00106]",
+      "source_record_id": "stu-004-T00106",
+      "source_flow_class": "income",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00107",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-guadalupe-taqueria",
+        "medium": "balance",
+        "purchase_date": "2026-08-02",
+        "status": "completed",
+        "amount": 29,
+        "description": "Guadalupe Taqueria [wp:stu-004-T00107]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-guadalupe-taqueria"
+      },
+      "marker": "[wp:stu-004-T00107]",
+      "source_record_id": "stu-004-T00107",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00108",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-forty-acres-coffee",
+        "medium": "balance",
+        "purchase_date": "2026-08-02",
+        "status": "completed",
+        "amount": 7,
+        "description": "Forty Acres Coffee [wp:stu-004-T00108]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-forty-acres-coffee"
+      },
+      "marker": "[wp:stu-004-T00108]",
+      "source_record_id": "stu-004-T00108",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00109",
+      "resource": "deposit",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "medium": "balance",
+        "transaction_date": "2026-08-03",
+        "status": "completed",
+        "amount": 150,
+        "description": "Family support transfer [wp:stu-004-T00109]"
+      },
+      "refs": {},
+      "marker": "[wp:stu-004-T00109]",
+      "source_record_id": "stu-004-T00109",
+      "source_flow_class": "income",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00110",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-west-campus-market",
+        "medium": "balance",
+        "purchase_date": "2026-08-04",
+        "status": "completed",
+        "amount": 20,
+        "description": "West Campus Market [wp:stu-004-T00110]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-west-campus-market"
+      },
+      "marker": "[wp:stu-004-T00110]",
+      "source_record_id": "stu-004-T00110",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00111",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-rideloop-rides",
+        "medium": "balance",
+        "purchase_date": "2026-08-04",
+        "status": "completed",
+        "amount": 21,
+        "description": "RideLoop Rides [wp:stu-004-T00111]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-rideloop-rides"
+      },
+      "marker": "[wp:stu-004-T00111]",
+      "source_record_id": "stu-004-T00111",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00112",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-forty-acres-coffee",
+        "medium": "balance",
+        "purchase_date": "2026-08-07",
+        "status": "completed",
+        "amount": 7,
+        "description": "Forty Acres Coffee [wp:stu-004-T00112]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-forty-acres-coffee"
+      },
+      "marker": "[wp:stu-004-T00112]",
+      "source_record_id": "stu-004-T00112",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00113",
+      "resource": "withdrawal",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "medium": "balance",
+        "transaction_date": "2026-08-07",
+        "status": "completed",
+        "amount": 30,
+        "description": "Lone Star Mobile [wp:stu-004-T00113]"
+      },
+      "refs": {},
+      "marker": "[wp:stu-004-T00113]",
+      "source_record_id": "stu-004-T00113",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00114",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-speedway-pho",
+        "medium": "balance",
+        "purchase_date": "2026-08-08",
+        "status": "completed",
+        "amount": 24,
+        "description": "Speedway Pho [wp:stu-004-T00114]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-speedway-pho"
+      },
+      "marker": "[wp:stu-004-T00114]",
+      "source_record_id": "stu-004-T00114",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00115",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-dean-keeton-thrift",
+        "medium": "balance",
+        "purchase_date": "2026-08-08",
+        "status": "completed",
+        "amount": 37,
+        "description": "Dean Keeton Thrift [wp:stu-004-T00115]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-dean-keeton-thrift"
+      },
+      "marker": "[wp:stu-004-T00115]",
+      "source_record_id": "stu-004-T00115",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00116",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-speedway-pho",
+        "medium": "balance",
+        "purchase_date": "2026-08-09",
+        "status": "completed",
+        "amount": 23,
+        "description": "Speedway Pho [wp:stu-004-T00116]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-speedway-pho"
+      },
+      "marker": "[wp:stu-004-T00116]",
+      "source_record_id": "stu-004-T00116",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00117",
+      "resource": "withdrawal",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "medium": "balance",
+        "transaction_date": "2026-08-09",
+        "status": "completed",
+        "amount": 40,
+        "description": "ATM cash withdrawal [wp:stu-004-T00117]"
+      },
+      "refs": {},
+      "marker": "[wp:stu-004-T00117]",
+      "source_record_id": "stu-004-T00117",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00118",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-forty-acres-coffee",
+        "medium": "balance",
+        "purchase_date": "2026-08-12",
+        "status": "completed",
+        "amount": 6,
+        "description": "Forty Acres Coffee [wp:stu-004-T00118]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-forty-acres-coffee"
+      },
+      "marker": "[wp:stu-004-T00118]",
+      "source_record_id": "stu-004-T00118",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00119",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-forty-acres-coffee",
+        "medium": "balance",
+        "purchase_date": "2026-08-13",
+        "status": "completed",
+        "amount": 8,
+        "description": "Forty Acres Coffee [wp:stu-004-T00119]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-forty-acres-coffee"
+      },
+      "marker": "[wp:stu-004-T00119]",
+      "source_record_id": "stu-004-T00119",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00120",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-longhorn-tech-shop",
+        "medium": "balance",
+        "purchase_date": "2026-08-13",
+        "status": "completed",
+        "amount": 48,
+        "description": "Longhorn Tech Shop [wp:stu-004-T00120]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-longhorn-tech-shop"
+      },
+      "marker": "[wp:stu-004-T00120]",
+      "source_record_id": "stu-004-T00120",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00121",
+      "resource": "deposit",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "medium": "balance",
+        "transaction_date": "2026-08-15",
+        "status": "completed",
+        "amount": 314,
+        "description": "Payroll - Forty Acres Dining Hall [wp:stu-004-T00121]"
+      },
+      "refs": {},
+      "marker": "[wp:stu-004-T00121]",
+      "source_record_id": "stu-004-T00121",
+      "source_flow_class": "income",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00122",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-rio-grande-fuel",
+        "medium": "balance",
+        "purchase_date": "2026-08-15",
+        "status": "completed",
+        "amount": 11,
+        "description": "Rio Grande Fuel [wp:stu-004-T00122]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-rio-grande-fuel"
+      },
+      "marker": "[wp:stu-004-T00122]",
+      "source_record_id": "stu-004-T00122",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00123",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-speedway-pho",
+        "medium": "balance",
+        "purchase_date": "2026-08-16",
+        "status": "completed",
+        "amount": 28,
+        "description": "Speedway Pho [wp:stu-004-T00123]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-speedway-pho"
+      },
+      "marker": "[wp:stu-004-T00123]",
+      "source_record_id": "stu-004-T00123",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00124",
+      "resource": "transfer",
+      "parent_key": "stu-004:account:stu-004-savings",
+      "body": {
+        "transaction_date": "2026-08-16",
+        "status": "completed",
+        "amount": 100,
+        "description": "Transfer from checking - Spring tuition gap (in) [wp:stu-004-T00124]"
+      },
+      "refs": {},
+      "marker": "[wp:stu-004-T00124]",
+      "source_record_id": "stu-004-T00124",
+      "source_flow_class": "internal_transfer",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00125",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-forty-acres-coffee",
+        "medium": "balance",
+        "purchase_date": "2026-08-16",
+        "status": "completed",
+        "amount": 8,
+        "description": "Forty Acres Coffee [wp:stu-004-T00125]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-forty-acres-coffee"
+      },
+      "marker": "[wp:stu-004-T00125]",
+      "source_record_id": "stu-004-T00125",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00126",
+      "resource": "transfer",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "transaction_date": "2026-08-16",
+        "status": "completed",
+        "amount": 100,
+        "description": "Transfer to savings - Spring tuition gap (out) [wp:stu-004-T00126]"
+      },
+      "refs": {},
+      "marker": "[wp:stu-004-T00126]",
+      "source_record_id": "stu-004-T00126",
+      "source_flow_class": "internal_transfer",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00127",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-speedway-pho",
+        "medium": "balance",
+        "purchase_date": "2026-08-17",
+        "status": "completed",
+        "amount": 31,
+        "description": "Speedway Pho [wp:stu-004-T00127]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-speedway-pho"
+      },
+      "marker": "[wp:stu-004-T00127]",
+      "source_record_id": "stu-004-T00127",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00128",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-hyde-park-arcade",
+        "medium": "balance",
+        "purchase_date": "2026-08-18",
+        "status": "completed",
+        "amount": 38,
+        "description": "Hyde Park Arcade [wp:stu-004-T00128]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-hyde-park-arcade"
+      },
+      "marker": "[wp:stu-004-T00128]",
+      "source_record_id": "stu-004-T00128",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00129",
+      "resource": "withdrawal",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "medium": "balance",
+        "transaction_date": "2026-08-19",
+        "status": "completed",
+        "amount": 10,
+        "description": "StreamBox [wp:stu-004-T00129]"
+      },
+      "refs": {},
+      "marker": "[wp:stu-004-T00129]",
+      "source_record_id": "stu-004-T00129",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00130",
+      "resource": "deposit",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "medium": "balance",
+        "transaction_date": "2026-08-20",
+        "status": "completed",
+        "amount": 1800,
+        "description": "Financial aid refund - The University of Texas at Austin [wp:stu-004-T00130]"
+      },
+      "refs": {},
+      "marker": "[wp:stu-004-T00130]",
+      "source_record_id": "stu-004-T00130",
+      "source_flow_class": "income",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00131",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-hyde-park-arcade",
+        "medium": "balance",
+        "purchase_date": "2026-08-21",
+        "status": "completed",
+        "amount": 30,
+        "description": "Hyde Park Arcade [wp:stu-004-T00131]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-hyde-park-arcade"
+      },
+      "marker": "[wp:stu-004-T00131]",
+      "source_record_id": "stu-004-T00131",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00132",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-west-campus-market",
+        "medium": "balance",
+        "purchase_date": "2026-08-22",
+        "status": "completed",
+        "amount": 25,
+        "description": "West Campus Market [wp:stu-004-T00132]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-west-campus-market"
+      },
+      "marker": "[wp:stu-004-T00132]",
+      "source_record_id": "stu-004-T00132",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00133",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-forty-acres-coffee",
+        "medium": "balance",
+        "purchase_date": "2026-08-22",
+        "status": "completed",
+        "amount": 7,
+        "description": "Forty Acres Coffee [wp:stu-004-T00133]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-forty-acres-coffee"
+      },
+      "marker": "[wp:stu-004-T00133]",
+      "source_record_id": "stu-004-T00133",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00134",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-dean-keeton-thrift",
+        "medium": "balance",
+        "purchase_date": "2026-08-23",
+        "status": "completed",
+        "amount": 42,
+        "description": "Dean Keeton Thrift [wp:stu-004-T00134]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-dean-keeton-thrift"
+      },
+      "marker": "[wp:stu-004-T00134]",
+      "source_record_id": "stu-004-T00134",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00135",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-rio-grande-fuel",
+        "medium": "balance",
+        "purchase_date": "2026-08-23",
+        "status": "completed",
+        "amount": 15,
+        "description": "Rio Grande Fuel [wp:stu-004-T00135]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-rio-grande-fuel"
+      },
+      "marker": "[wp:stu-004-T00135]",
+      "source_record_id": "stu-004-T00135",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00137",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-guadalupe-taqueria",
+        "medium": "balance",
+        "purchase_date": "2026-08-26",
+        "status": "completed",
+        "amount": 32,
+        "description": "Guadalupe Taqueria [wp:stu-004-T00137]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-guadalupe-taqueria"
+      },
+      "marker": "[wp:stu-004-T00137]",
+      "source_record_id": "stu-004-T00137",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00138",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-campus-co-op-books",
+        "medium": "balance",
+        "purchase_date": "2026-08-28",
+        "status": "completed",
+        "amount": 372,
+        "description": "Campus Co-op Books [wp:stu-004-T00138]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-campus-co-op-books"
+      },
+      "marker": "[wp:stu-004-T00138]",
+      "source_record_id": "stu-004-T00138",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00139",
+      "resource": "transfer",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "transaction_date": "2026-08-28",
+        "status": "completed",
+        "amount": 288,
+        "description": "Credit card payment (out) [wp:stu-004-T00139]"
+      },
+      "refs": {},
+      "marker": "[wp:stu-004-T00139]",
+      "source_record_id": "stu-004-T00139",
+      "source_flow_class": "internal_transfer",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00140",
+      "resource": "transfer",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "transaction_date": "2026-08-28",
+        "status": "completed",
+        "amount": 288,
+        "description": "Payment received - thank you (in) [wp:stu-004-T00140]"
+      },
+      "refs": {},
+      "marker": "[wp:stu-004-T00140]",
+      "source_record_id": "stu-004-T00140",
+      "source_flow_class": "internal_transfer",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00142",
+      "resource": "deposit",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "medium": "balance",
+        "transaction_date": "2026-09-01",
+        "status": "completed",
+        "amount": 285,
+        "description": "Payroll - Forty Acres Dining Hall [wp:stu-004-T00142]"
+      },
+      "refs": {},
+      "marker": "[wp:stu-004-T00142]",
+      "source_record_id": "stu-004-T00142",
+      "source_flow_class": "income",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00143",
+      "resource": "deposit",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "medium": "balance",
+        "transaction_date": "2026-09-03",
+        "status": "completed",
+        "amount": 150,
+        "description": "Family support transfer [wp:stu-004-T00143]"
+      },
+      "refs": {},
+      "marker": "[wp:stu-004-T00143]",
+      "source_record_id": "stu-004-T00143",
+      "source_flow_class": "income",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00144",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-forty-acres-coffee",
+        "medium": "balance",
+        "purchase_date": "2026-09-03",
+        "status": "completed",
+        "amount": 9,
+        "description": "Forty Acres Coffee [wp:stu-004-T00144]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-forty-acres-coffee"
+      },
+      "marker": "[wp:stu-004-T00144]",
+      "source_record_id": "stu-004-T00144",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00145",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-forty-acres-coffee",
+        "medium": "balance",
+        "purchase_date": "2026-09-05",
+        "status": "completed",
+        "amount": 9,
+        "description": "Forty Acres Coffee [wp:stu-004-T00145]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-forty-acres-coffee"
+      },
+      "marker": "[wp:stu-004-T00145]",
+      "source_record_id": "stu-004-T00145",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00146",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-dean-keeton-thrift",
+        "medium": "balance",
+        "purchase_date": "2026-09-05",
+        "status": "completed",
+        "amount": 47,
+        "description": "Dean Keeton Thrift [wp:stu-004-T00146]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-dean-keeton-thrift"
+      },
+      "marker": "[wp:stu-004-T00146]",
+      "source_record_id": "stu-004-T00146",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00147",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-west-campus-market",
+        "medium": "balance",
+        "purchase_date": "2026-09-05",
+        "status": "completed",
+        "amount": 30,
+        "description": "West Campus Market [wp:stu-004-T00147]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-west-campus-market"
+      },
+      "marker": "[wp:stu-004-T00147]",
+      "source_record_id": "stu-004-T00147",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00148",
+      "resource": "withdrawal",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "medium": "balance",
+        "transaction_date": "2026-09-07",
+        "status": "completed",
+        "amount": 30,
+        "description": "Lone Star Mobile [wp:stu-004-T00148]"
+      },
+      "refs": {},
+      "marker": "[wp:stu-004-T00148]",
+      "source_record_id": "stu-004-T00148",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00149",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-speedway-pho",
+        "medium": "balance",
+        "purchase_date": "2026-09-07",
+        "status": "completed",
+        "amount": 28,
+        "description": "Speedway Pho [wp:stu-004-T00149]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-speedway-pho"
+      },
+      "marker": "[wp:stu-004-T00149]",
+      "source_record_id": "stu-004-T00149",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00150",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-forty-acres-coffee",
+        "medium": "balance",
+        "purchase_date": "2026-09-09",
+        "status": "completed",
+        "amount": 8,
+        "description": "Forty Acres Coffee [wp:stu-004-T00150]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-forty-acres-coffee"
+      },
+      "marker": "[wp:stu-004-T00150]",
+      "source_record_id": "stu-004-T00150",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00151",
+      "resource": "withdrawal",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "medium": "balance",
+        "transaction_date": "2026-09-09",
+        "status": "completed",
+        "amount": 40,
+        "description": "ATM cash withdrawal [wp:stu-004-T00151]"
+      },
+      "refs": {},
+      "marker": "[wp:stu-004-T00151]",
+      "source_record_id": "stu-004-T00151",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00152",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-dean-keeton-thrift",
+        "medium": "balance",
+        "purchase_date": "2026-09-10",
+        "status": "completed",
+        "amount": 39,
+        "description": "Dean Keeton Thrift [wp:stu-004-T00152]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-dean-keeton-thrift"
+      },
+      "marker": "[wp:stu-004-T00152]",
+      "source_record_id": "stu-004-T00152",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00153",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-guadalupe-taqueria",
+        "medium": "balance",
+        "purchase_date": "2026-09-12",
+        "status": "completed",
+        "amount": 21,
+        "description": "Guadalupe Taqueria [wp:stu-004-T00153]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-guadalupe-taqueria"
+      },
+      "marker": "[wp:stu-004-T00153]",
+      "source_record_id": "stu-004-T00153",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00154",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-rio-grande-fuel",
+        "medium": "balance",
+        "purchase_date": "2026-09-12",
+        "status": "completed",
+        "amount": 18,
+        "description": "Rio Grande Fuel [wp:stu-004-T00154]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-rio-grande-fuel"
+      },
+      "marker": "[wp:stu-004-T00154]",
+      "source_record_id": "stu-004-T00154",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00155",
+      "resource": "deposit",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "medium": "balance",
+        "transaction_date": "2026-09-15",
+        "status": "completed",
+        "amount": 314,
+        "description": "Payroll - Forty Acres Dining Hall [wp:stu-004-T00155]"
+      },
+      "refs": {},
+      "marker": "[wp:stu-004-T00155]",
+      "source_record_id": "stu-004-T00155",
+      "source_flow_class": "income",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00156",
+      "resource": "transfer",
+      "parent_key": "stu-004:account:stu-004-savings",
+      "body": {
+        "transaction_date": "2026-09-16",
+        "status": "completed",
+        "amount": 100,
+        "description": "Transfer from checking - Spring tuition gap (in) [wp:stu-004-T00156]"
+      },
+      "refs": {},
+      "marker": "[wp:stu-004-T00156]",
+      "source_record_id": "stu-004-T00156",
+      "source_flow_class": "internal_transfer",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00157",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-forty-acres-coffee",
+        "medium": "balance",
+        "purchase_date": "2026-09-16",
+        "status": "completed",
+        "amount": 9,
+        "description": "Forty Acres Coffee [wp:stu-004-T00157]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-forty-acres-coffee"
+      },
+      "marker": "[wp:stu-004-T00157]",
+      "source_record_id": "stu-004-T00157",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00158",
+      "resource": "transfer",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "transaction_date": "2026-09-16",
+        "status": "completed",
+        "amount": 100,
+        "description": "Transfer to savings - Spring tuition gap (out) [wp:stu-004-T00158]"
+      },
+      "refs": {},
+      "marker": "[wp:stu-004-T00158]",
+      "source_record_id": "stu-004-T00158",
+      "source_flow_class": "internal_transfer",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00159",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-speedway-pho",
+        "medium": "balance",
+        "purchase_date": "2026-09-18",
+        "status": "completed",
+        "amount": 28,
+        "description": "Speedway Pho [wp:stu-004-T00159]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-speedway-pho"
+      },
+      "marker": "[wp:stu-004-T00159]",
+      "source_record_id": "stu-004-T00159",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00160",
+      "resource": "withdrawal",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "medium": "balance",
+        "transaction_date": "2026-09-19",
+        "status": "completed",
+        "amount": 10,
+        "description": "StreamBox [wp:stu-004-T00160]"
+      },
+      "refs": {},
+      "marker": "[wp:stu-004-T00160]",
+      "source_record_id": "stu-004-T00160",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00161",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-west-campus-market",
+        "medium": "balance",
+        "purchase_date": "2026-09-20",
+        "status": "completed",
+        "amount": 20,
+        "description": "West Campus Market [wp:stu-004-T00161]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-west-campus-market"
+      },
+      "marker": "[wp:stu-004-T00161]",
+      "source_record_id": "stu-004-T00161",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00162",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-longhorn-tech-shop",
+        "medium": "balance",
+        "purchase_date": "2026-09-22",
+        "status": "completed",
+        "amount": 41,
+        "description": "Longhorn Tech Shop [wp:stu-004-T00162]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-longhorn-tech-shop"
+      },
+      "marker": "[wp:stu-004-T00162]",
+      "source_record_id": "stu-004-T00162",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00163",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-rideloop-rides",
+        "medium": "balance",
+        "purchase_date": "2026-09-22",
+        "status": "completed",
+        "amount": 18,
+        "description": "RideLoop Rides [wp:stu-004-T00163]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-rideloop-rides"
+      },
+      "marker": "[wp:stu-004-T00163]",
+      "source_record_id": "stu-004-T00163",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00164",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-forty-acres-coffee",
+        "medium": "balance",
+        "purchase_date": "2026-09-23",
+        "status": "completed",
+        "amount": 8,
+        "description": "Forty Acres Coffee [wp:stu-004-T00164]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-forty-acres-coffee"
+      },
+      "marker": "[wp:stu-004-T00164]",
+      "source_record_id": "stu-004-T00164",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00165",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-hyde-park-arcade",
+        "medium": "balance",
+        "purchase_date": "2026-09-23",
+        "status": "completed",
+        "amount": 32,
+        "description": "Hyde Park Arcade [wp:stu-004-T00165]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-hyde-park-arcade"
+      },
+      "marker": "[wp:stu-004-T00165]",
+      "source_record_id": "stu-004-T00165",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00166",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-guadalupe-taqueria",
+        "medium": "balance",
+        "purchase_date": "2026-09-24",
+        "status": "completed",
+        "amount": 31,
+        "description": "Guadalupe Taqueria [wp:stu-004-T00166]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-guadalupe-taqueria"
+      },
+      "marker": "[wp:stu-004-T00166]",
+      "source_record_id": "stu-004-T00166",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00167",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-campus-co-op-books",
+        "medium": "balance",
+        "purchase_date": "2026-09-24",
+        "status": "completed",
+        "amount": 22,
+        "description": "Campus Co-op Books [wp:stu-004-T00167]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-campus-co-op-books"
+      },
+      "marker": "[wp:stu-004-T00167]",
+      "source_record_id": "stu-004-T00167",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00168",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-forty-acres-coffee",
+        "medium": "balance",
+        "purchase_date": "2026-09-24",
+        "status": "completed",
+        "amount": 9,
+        "description": "Forty Acres Coffee [wp:stu-004-T00168]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-forty-acres-coffee"
+      },
+      "marker": "[wp:stu-004-T00168]",
+      "source_record_id": "stu-004-T00168",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00169",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-guadalupe-taqueria",
+        "medium": "balance",
+        "purchase_date": "2026-09-25",
+        "status": "completed",
+        "amount": 20,
+        "description": "Guadalupe Taqueria [wp:stu-004-T00169]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-guadalupe-taqueria"
+      },
+      "marker": "[wp:stu-004-T00169]",
+      "source_record_id": "stu-004-T00169",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00170",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-rio-grande-fuel",
+        "medium": "balance",
+        "purchase_date": "2026-09-25",
+        "status": "completed",
+        "amount": 15,
+        "description": "Rio Grande Fuel [wp:stu-004-T00170]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-rio-grande-fuel"
+      },
+      "marker": "[wp:stu-004-T00170]",
+      "source_record_id": "stu-004-T00170",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00172",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-guadalupe-taqueria",
+        "medium": "balance",
+        "purchase_date": "2026-09-28",
+        "status": "completed",
+        "amount": 23,
+        "description": "Guadalupe Taqueria [wp:stu-004-T00172]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-guadalupe-taqueria"
+      },
+      "marker": "[wp:stu-004-T00172]",
+      "source_record_id": "stu-004-T00172",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00173",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-hyde-park-arcade",
+        "medium": "balance",
+        "purchase_date": "2026-09-28",
+        "status": "completed",
+        "amount": 26,
+        "description": "Hyde Park Arcade [wp:stu-004-T00173]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-hyde-park-arcade"
+      },
+      "marker": "[wp:stu-004-T00173]",
+      "source_record_id": "stu-004-T00173",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00174",
+      "resource": "transfer",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "transaction_date": "2026-09-28",
+        "status": "completed",
+        "amount": 184,
+        "description": "Credit card payment (out) [wp:stu-004-T00174]"
+      },
+      "refs": {},
+      "marker": "[wp:stu-004-T00174]",
+      "source_record_id": "stu-004-T00174",
+      "source_flow_class": "internal_transfer",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00175",
+      "resource": "transfer",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "transaction_date": "2026-09-28",
+        "status": "completed",
+        "amount": 184,
+        "description": "Payment received - thank you (in) [wp:stu-004-T00175]"
+      },
+      "refs": {},
+      "marker": "[wp:stu-004-T00175]",
+      "source_record_id": "stu-004-T00175",
+      "source_flow_class": "internal_transfer",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00177",
+      "resource": "deposit",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "medium": "balance",
+        "transaction_date": "2026-10-01",
+        "status": "completed",
+        "amount": 283,
+        "description": "Payroll - Forty Acres Dining Hall [wp:stu-004-T00177]"
+      },
+      "refs": {},
+      "marker": "[wp:stu-004-T00177]",
+      "source_record_id": "stu-004-T00177",
+      "source_flow_class": "income",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00178",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-forty-acres-coffee",
+        "medium": "balance",
+        "purchase_date": "2026-10-02",
+        "status": "completed",
+        "amount": 10,
+        "description": "Forty Acres Coffee [wp:stu-004-T00178]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-forty-acres-coffee"
+      },
+      "marker": "[wp:stu-004-T00178]",
+      "source_record_id": "stu-004-T00178",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00179",
+      "resource": "deposit",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "medium": "balance",
+        "transaction_date": "2026-10-03",
+        "status": "completed",
+        "amount": 150,
+        "description": "Family support transfer [wp:stu-004-T00179]"
+      },
+      "refs": {},
+      "marker": "[wp:stu-004-T00179]",
+      "source_record_id": "stu-004-T00179",
+      "source_flow_class": "income",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00180",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-dean-keeton-thrift",
+        "medium": "balance",
+        "purchase_date": "2026-10-03",
+        "status": "completed",
+        "amount": 26,
+        "description": "Dean Keeton Thrift [wp:stu-004-T00180]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-dean-keeton-thrift"
+      },
+      "marker": "[wp:stu-004-T00180]",
+      "source_record_id": "stu-004-T00180",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00181",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-forty-acres-coffee",
+        "medium": "balance",
+        "purchase_date": "2026-10-05",
+        "status": "completed",
+        "amount": 9,
+        "description": "Forty Acres Coffee [wp:stu-004-T00181]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-forty-acres-coffee"
+      },
+      "marker": "[wp:stu-004-T00181]",
+      "source_record_id": "stu-004-T00181",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00182",
+      "resource": "withdrawal",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "medium": "balance",
+        "transaction_date": "2026-10-07",
+        "status": "completed",
+        "amount": 30,
+        "description": "Lone Star Mobile [wp:stu-004-T00182]"
+      },
+      "refs": {},
+      "marker": "[wp:stu-004-T00182]",
+      "source_record_id": "stu-004-T00182",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00183",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-forty-acres-coffee",
+        "medium": "balance",
+        "purchase_date": "2026-10-08",
+        "status": "completed",
+        "amount": 6,
+        "description": "Forty Acres Coffee [wp:stu-004-T00183]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-forty-acres-coffee"
+      },
+      "marker": "[wp:stu-004-T00183]",
+      "source_record_id": "stu-004-T00183",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00184",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-hyde-park-arcade",
+        "medium": "balance",
+        "purchase_date": "2026-10-08",
+        "status": "completed",
+        "amount": 33,
+        "description": "Hyde Park Arcade [wp:stu-004-T00184]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-hyde-park-arcade"
+      },
+      "marker": "[wp:stu-004-T00184]",
+      "source_record_id": "stu-004-T00184",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00185",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-forty-acres-coffee",
+        "medium": "balance",
+        "purchase_date": "2026-10-08",
+        "status": "completed",
+        "amount": 8,
+        "description": "Forty Acres Coffee [wp:stu-004-T00185]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-forty-acres-coffee"
+      },
+      "marker": "[wp:stu-004-T00185]",
+      "source_record_id": "stu-004-T00185",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00186",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-dean-keeton-thrift",
+        "medium": "balance",
+        "purchase_date": "2026-10-09",
+        "status": "completed",
+        "amount": 37,
+        "description": "Dean Keeton Thrift [wp:stu-004-T00186]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-dean-keeton-thrift"
+      },
+      "marker": "[wp:stu-004-T00186]",
+      "source_record_id": "stu-004-T00186",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00187",
+      "resource": "withdrawal",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "medium": "balance",
+        "transaction_date": "2026-10-09",
+        "status": "completed",
+        "amount": 40,
+        "description": "ATM cash withdrawal [wp:stu-004-T00187]"
+      },
+      "refs": {},
+      "marker": "[wp:stu-004-T00187]",
+      "source_record_id": "stu-004-T00187",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00188",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-speedway-pho",
+        "medium": "balance",
+        "purchase_date": "2026-10-11",
+        "status": "completed",
+        "amount": 40,
+        "description": "Speedway Pho [wp:stu-004-T00188]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-speedway-pho"
+      },
+      "marker": "[wp:stu-004-T00188]",
+      "source_record_id": "stu-004-T00188",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00189",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-hyde-park-arcade",
+        "medium": "balance",
+        "purchase_date": "2026-10-13",
+        "status": "completed",
+        "amount": 22,
+        "description": "Hyde Park Arcade [wp:stu-004-T00189]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-hyde-park-arcade"
+      },
+      "marker": "[wp:stu-004-T00189]",
+      "source_record_id": "stu-004-T00189",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00190",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-guadalupe-taqueria",
+        "medium": "balance",
+        "purchase_date": "2026-10-13",
+        "status": "completed",
+        "amount": 40,
+        "description": "Guadalupe Taqueria [wp:stu-004-T00190]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-guadalupe-taqueria"
+      },
+      "marker": "[wp:stu-004-T00190]",
+      "source_record_id": "stu-004-T00190",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00191",
+      "resource": "deposit",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "medium": "balance",
+        "transaction_date": "2026-10-15",
+        "status": "completed",
+        "amount": 310,
+        "description": "Payroll - Forty Acres Dining Hall [wp:stu-004-T00191]"
+      },
+      "refs": {},
+      "marker": "[wp:stu-004-T00191]",
+      "source_record_id": "stu-004-T00191",
+      "source_flow_class": "income",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00192",
+      "resource": "transfer",
+      "parent_key": "stu-004:account:stu-004-savings",
+      "body": {
+        "transaction_date": "2026-10-16",
+        "status": "completed",
+        "amount": 100,
+        "description": "Transfer from checking - Spring tuition gap (in) [wp:stu-004-T00192]"
+      },
+      "refs": {},
+      "marker": "[wp:stu-004-T00192]",
+      "source_record_id": "stu-004-T00192",
+      "source_flow_class": "internal_transfer",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00193",
+      "resource": "transfer",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "transaction_date": "2026-10-16",
+        "status": "completed",
+        "amount": 100,
+        "description": "Transfer to savings - Spring tuition gap (out) [wp:stu-004-T00193]"
+      },
+      "refs": {},
+      "marker": "[wp:stu-004-T00193]",
+      "source_record_id": "stu-004-T00193",
+      "source_flow_class": "internal_transfer",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00194",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-speedway-pho",
+        "medium": "balance",
+        "purchase_date": "2026-10-18",
+        "status": "completed",
+        "amount": 23,
+        "description": "Speedway Pho [wp:stu-004-T00194]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-speedway-pho"
+      },
+      "marker": "[wp:stu-004-T00194]",
+      "source_record_id": "stu-004-T00194",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00195",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-rideloop-rides",
+        "medium": "balance",
+        "purchase_date": "2026-10-18",
+        "status": "completed",
+        "amount": 15,
+        "description": "RideLoop Rides [wp:stu-004-T00195]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-rideloop-rides"
+      },
+      "marker": "[wp:stu-004-T00195]",
+      "source_record_id": "stu-004-T00195",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00196",
+      "resource": "withdrawal",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "medium": "balance",
+        "transaction_date": "2026-10-19",
+        "status": "completed",
+        "amount": 10,
+        "description": "StreamBox [wp:stu-004-T00196]"
+      },
+      "refs": {},
+      "marker": "[wp:stu-004-T00196]",
+      "source_record_id": "stu-004-T00196",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00197",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-guadalupe-taqueria",
+        "medium": "balance",
+        "purchase_date": "2026-10-20",
+        "status": "completed",
+        "amount": 22,
+        "description": "Guadalupe Taqueria [wp:stu-004-T00197]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-guadalupe-taqueria"
+      },
+      "marker": "[wp:stu-004-T00197]",
+      "source_record_id": "stu-004-T00197",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00198",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-speedway-pho",
+        "medium": "balance",
+        "purchase_date": "2026-10-21",
+        "status": "completed",
+        "amount": 19,
+        "description": "Speedway Pho [wp:stu-004-T00198]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-speedway-pho"
+      },
+      "marker": "[wp:stu-004-T00198]",
+      "source_record_id": "stu-004-T00198",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00199",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-guadalupe-taqueria",
+        "medium": "balance",
+        "purchase_date": "2026-10-21",
+        "status": "completed",
+        "amount": 32,
+        "description": "Guadalupe Taqueria [wp:stu-004-T00199]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-guadalupe-taqueria"
+      },
+      "marker": "[wp:stu-004-T00199]",
+      "source_record_id": "stu-004-T00199",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00200",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-west-campus-market",
+        "medium": "balance",
+        "purchase_date": "2026-10-21",
+        "status": "completed",
+        "amount": 24,
+        "description": "West Campus Market [wp:stu-004-T00200]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-west-campus-market"
+      },
+      "marker": "[wp:stu-004-T00200]",
+      "source_record_id": "stu-004-T00200",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00201",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-forty-acres-coffee",
+        "medium": "balance",
+        "purchase_date": "2026-10-24",
+        "status": "completed",
+        "amount": 10,
+        "description": "Forty Acres Coffee [wp:stu-004-T00201]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-forty-acres-coffee"
+      },
+      "marker": "[wp:stu-004-T00201]",
+      "source_record_id": "stu-004-T00201",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00202",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-drag-street-grocery",
+        "medium": "balance",
+        "purchase_date": "2026-10-24",
+        "status": "completed",
+        "amount": 27,
+        "description": "Drag Street Grocery [wp:stu-004-T00202]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-drag-street-grocery"
+      },
+      "marker": "[wp:stu-004-T00202]",
+      "source_record_id": "stu-004-T00202",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00203",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-campus-co-op-books",
+        "medium": "balance",
+        "purchase_date": "2026-10-25",
+        "status": "completed",
+        "amount": 21,
+        "description": "Campus Co-op Books [wp:stu-004-T00203]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-campus-co-op-books"
+      },
+      "marker": "[wp:stu-004-T00203]",
+      "source_record_id": "stu-004-T00203",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00204",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-longhorn-tech-shop",
+        "medium": "balance",
+        "purchase_date": "2026-10-26",
+        "status": "completed",
+        "amount": 53,
+        "description": "Longhorn Tech Shop [wp:stu-004-T00204]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-longhorn-tech-shop"
+      },
+      "marker": "[wp:stu-004-T00204]",
+      "source_record_id": "stu-004-T00204",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00206",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-rideloop-rides",
+        "medium": "balance",
+        "purchase_date": "2026-10-27",
+        "status": "completed",
+        "amount": 18,
+        "description": "RideLoop Rides [wp:stu-004-T00206]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-rideloop-rides"
+      },
+      "marker": "[wp:stu-004-T00206]",
+      "source_record_id": "stu-004-T00206",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00207",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-rio-grande-fuel",
+        "medium": "balance",
+        "purchase_date": "2026-10-28",
+        "status": "completed",
+        "amount": 17,
+        "description": "Rio Grande Fuel [wp:stu-004-T00207]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-rio-grande-fuel"
+      },
+      "marker": "[wp:stu-004-T00207]",
+      "source_record_id": "stu-004-T00207",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00208",
+      "resource": "purchase",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "merchant_id": "@ref:merchant:m-austin-forty-acres-coffee",
+        "medium": "balance",
+        "purchase_date": "2026-10-28",
+        "status": "completed",
+        "amount": 8,
+        "description": "Forty Acres Coffee [wp:stu-004-T00208]"
+      },
+      "refs": {
+        "merchant_id": "merchant:m-austin-forty-acres-coffee"
+      },
+      "marker": "[wp:stu-004-T00208]",
+      "source_record_id": "stu-004-T00208",
+      "source_flow_class": "expense",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00209",
+      "resource": "transfer",
+      "parent_key": "stu-004:account:stu-004-checking",
+      "body": {
+        "transaction_date": "2026-10-28",
+        "status": "completed",
+        "amount": 281,
+        "description": "Credit card payment (out) [wp:stu-004-T00209]"
+      },
+      "refs": {},
+      "marker": "[wp:stu-004-T00209]",
+      "source_record_id": "stu-004-T00209",
+      "source_flow_class": "internal_transfer",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00210",
+      "resource": "transfer",
+      "parent_key": "stu-004:account:stu-004-credit-card",
+      "body": {
+        "transaction_date": "2026-10-28",
+        "status": "completed",
+        "amount": 281,
+        "description": "Payment received - thank you (in) [wp:stu-004-T00210]"
+      },
+      "refs": {},
+      "marker": "[wp:stu-004-T00210]",
+      "source_record_id": "stu-004-T00210",
+      "source_flow_class": "internal_transfer",
+      "field_sources": {
+        "amount": "pnc_generated",
+        "date": "pnc_generated",
+        "description": "pnc_generated",
+        "medium": "waypoint_generated",
+        "status": "waypoint_generated"
+      }
+    }
+  ],
+  "skipped": [
+    {
+      "record_id": "stu-004-T00030",
+      "reason": "non-cash accrual: no Nessie equivalent (kept in Waypoint as PNC-only)"
+    },
+    {
+      "record_id": "stu-004-T00035",
+      "reason": "non-cash accrual: no Nessie equivalent (kept in Waypoint as PNC-only)"
+    },
+    {
+      "record_id": "stu-004-T00064",
+      "reason": "non-cash accrual: no Nessie equivalent (kept in Waypoint as PNC-only)"
+    },
+    {
+      "record_id": "stu-004-T00070",
+      "reason": "non-cash accrual: no Nessie equivalent (kept in Waypoint as PNC-only)"
+    },
+    {
+      "record_id": "stu-004-T00101",
+      "reason": "non-cash accrual: no Nessie equivalent (kept in Waypoint as PNC-only)"
+    },
+    {
+      "record_id": "stu-004-T00105",
+      "reason": "non-cash accrual: no Nessie equivalent (kept in Waypoint as PNC-only)"
+    },
+    {
+      "record_id": "stu-004-T00136",
+      "reason": "non-cash accrual: no Nessie equivalent (kept in Waypoint as PNC-only)"
+    },
+    {
+      "record_id": "stu-004-T00141",
+      "reason": "non-cash accrual: no Nessie equivalent (kept in Waypoint as PNC-only)"
+    },
+    {
+      "record_id": "stu-004-T00171",
+      "reason": "non-cash accrual: no Nessie equivalent (kept in Waypoint as PNC-only)"
+    },
+    {
+      "record_id": "stu-004-T00176",
+      "reason": "non-cash accrual: no Nessie equivalent (kept in Waypoint as PNC-only)"
+    },
+    {
+      "record_id": "stu-004-T00205",
+      "reason": "non-cash accrual: no Nessie equivalent (kept in Waypoint as PNC-only)"
+    },
+    {
+      "record_id": "stu-004-T00211",
+      "reason": "non-cash accrual: no Nessie equivalent (kept in Waypoint as PNC-only)"
+    }
+  ],
+  "expected_account_balances": {
+    "stu-004:account:stu-004-checking": 2247,
+    "stu-004:account:stu-004-savings": 859,
+    "stu-004:account:stu-004-credit-card": 297
+  },
+  "counts": {
+    "customer": 1,
+    "merchant": 11,
+    "account": 3,
+    "loan": 1,
+    "bill": 2,
+    "deposit": 19,
+    "purchase": 138,
+    "withdrawal": 18,
+    "transfer": 24,
+    "skipped": 12
+  },
+  "notes": [
+    "Nessie transactions do not change balances; accounts are created with closing balances.",
+    "Each internal transfer is recorded as one Transfer per Nessie account leg; pairing stays in Waypoint.",
+    "A deferred student loan has monthly_payment=0; confirm Nessie accepts 0 when seeding."
+  ]
+}
