@@ -1,26 +1,12 @@
 import type { SVGProps } from "react";
+import { BalanceHistory } from "../components/balance-history";
 import { Money } from "../components/money";
 import { Text } from "../components/text";
+import { currentBalance, fetchAccounts, signedBalance } from "../lib/accounts";
 import { getSessionUser } from "../lib/api";
+import { useAsync } from "../lib/use-async";
 
 const currency = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" });
-
-interface Account {
-  id: string;
-  type: string;
-  last4: string;
-  balance: number;
-}
-
-// Placeholder until accounts come from the API. Credit balances owed are negative.
-const accounts: Account[] = [
-  { id: "chk-7127", type: "Checking", last4: "7127", balance: 3215.47 },
-  { id: "sav-8823", type: "Savings", last4: "8823", balance: 8940.12 },
-  { id: "sav-5679", type: "Savings", last4: "5679", balance: 1500.0 },
-  { id: "cc-2502", type: "Credit card", last4: "2502", balance: -1175.27 },
-];
-
-const currentBalance = accounts.reduce((sum, account) => sum + account.balance, 0);
 
 interface Payment {
   id: string;
@@ -54,9 +40,6 @@ const dueThisMonth = payments
 // Show only the next few payments, soonest first.
 const upcomingPayments = [...payments].sort((a, b) => a.dueDate.getTime() - b.dueDate.getTime()).slice(0, 4);
 
-// What's left after this month's payments come out of the current balance.
-const leftToSpend = currentBalance - dueThisMonth;
-
 const shortDate = new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric" });
 
 function BankIcon(props: SVGProps<SVGSVGElement>) {
@@ -71,6 +54,11 @@ function BankIcon(props: SVGProps<SVGSVGElement>) {
 
 export function Home() {
   const firstName = getSessionUser()?.first_name;
+  const { data, error, loading } = useAsync(fetchAccounts, []);
+  const accounts = data?.accounts ?? [];
+  const balance = data ? currentBalance(accounts) : undefined;
+  // What's left after this month's payments come out of the current balance.
+  const leftToSpend = balance !== undefined ? balance - dueThisMonth : undefined;
 
   return (
     <div className="flex flex-col gap-10">
@@ -82,9 +70,11 @@ export function Home() {
             Current balance
           </Text>
           <Text variant="h1" as="p" className="tabular-nums">
-            {currency.format(currentBalance)}
+            {balance !== undefined ? currency.format(balance) : loading ? "…" : "—"}
           </Text>
         </section>
+
+        {data && <BalanceHistory accounts={accounts} asOf={data.data.as_of_date} />}
       </header>
 
       <div className="flex flex-col gap-6 md:flex-row md:items-start">
@@ -93,31 +83,34 @@ export function Home() {
             Accounts
           </Text>
 
+          {loading && !data && <p className="py-2.5 text-sm text-blue-grey-400">Loading accounts…</p>}
+          {error && (
+            <p role="alert" className="py-2.5 text-sm text-red-vivid-300">
+              Couldn't load accounts: {error.message}
+            </p>
+          )}
+          {data && accounts.length === 0 && <p className="py-2.5 text-sm text-blue-grey-400">No accounts yet.</p>}
+
           <ul className="flex flex-col">
-            {accounts.map((account) => (
-              <li key={account.id} className="flex items-center gap-3 py-2.5">
-                <span
-                  className={[
-                    "grid size-9 shrink-0 place-items-center rounded-full border-2",
-                    account.balance === 0 ? "border-blue-grey-700 text-blue-grey-600" : "border-blue-grey-300 text-blue-grey-100",
-                  ].join(" ")}
-                >
-                  <BankIcon className="size-[1.125rem]" />
-                </span>
-                <span className="flex-1 truncate text-base text-blue-grey-100">
-                  {account.type} <span className="text-blue-grey-400">••</span>
-                  {account.last4}
-                </span>
-                <span
-                  className={[
-                    "text-base font-medium",
-                    account.balance < 0 ? "text-red-vivid-300" : "text-blue-grey-050",
-                  ].join(" ")}
-                >
-                  <Money amount={account.balance} />
-                </span>
-              </li>
-            ))}
+            {accounts.map((account) => {
+              const amount = signedBalance(account);
+              return (
+                <li key={account.account_id} className="flex items-center gap-3 py-2.5">
+                  <span
+                    className={[
+                      "grid size-9 shrink-0 place-items-center rounded-full border-2",
+                      amount === 0 ? "border-blue-grey-700 text-blue-grey-600" : "border-blue-grey-300 text-blue-grey-100",
+                    ].join(" ")}
+                  >
+                    <BankIcon className="size-[1.125rem]" />
+                  </span>
+                  <span className="flex-1 truncate text-base text-blue-grey-100">{account.name}</span>
+                  <span className={["text-base font-medium", amount < 0 ? "text-red-vivid-300" : "text-blue-grey-050"].join(" ")}>
+                    <Money amount={amount} />
+                  </span>
+                </li>
+              );
+            })}
           </ul>
         </section>
 
@@ -141,8 +134,8 @@ export function Home() {
 
           <p className="mt-2 flex justify-between gap-3 border-t border-blue-grey-700 pt-3 text-base">
             <span className="font-medium text-blue-grey-100">Left to spend</span>
-            <span className={["font-medium", leftToSpend < 0 ? "text-red-vivid-300" : "text-blue-grey-050"].join(" ")}>
-              <Money amount={leftToSpend} />
+            <span className={["font-medium", leftToSpend !== undefined && leftToSpend < 0 ? "text-red-vivid-300" : "text-blue-grey-050"].join(" ")}>
+              {leftToSpend !== undefined ? <Money amount={leftToSpend} /> : "—"}
             </span>
           </p>
         </section>
