@@ -12,9 +12,11 @@ from typing import Annotated, Literal
 from fastapi import Depends, FastAPI, HTTPException, Query, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict, Field
 from pymongo.database import Database
 
+from ..agent.graph import build_agent_graph, run_agent
+from ..agent.state import initial_state
 from ..auth import tokens
 from ..auth.users import PublicUser, authenticate, ensure_demo_users, get_user
 from ..config import Settings
@@ -31,6 +33,12 @@ bearer = HTTPBearer(auto_error=False)
 class LoginRequest(BaseModel):
     email: str
     password: str
+
+
+class AgentRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")  # no profile_id: the agent always uses the signed-in user's profile
+
+    question: str = Field(min_length=1, max_length=1000)
 
 
 class LoginResponse(BaseModel):
@@ -87,7 +95,7 @@ def data_info(p: UnifiedProfile) -> DataInfo:
 
 # -- app factory ------------------------------------------------------------------
 def create_app(db: Database | None = None, profiles: ProfileService | None = None,
-               settings: Settings | None = None) -> FastAPI:
+               settings: Settings | None = None, agent=None) -> FastAPI:
     settings = settings or Settings.load()
     secret = settings.session_secret or secrets.token_hex(32)
     if not settings.session_secret:
@@ -109,6 +117,7 @@ def create_app(db: Database | None = None, profiles: ProfileService | None = Non
             profiles = ProfileService(db, gateway, ttl_seconds=settings.profile_cache_ttl)
         ensure_demo_users(db, settings.demo_password)
         app.state.db, app.state.profiles = db, profiles
+        app.state.agent = agent or build_agent_graph(profiles)  # models load lazily on first question
         yield
 
     app = FastAPI(title="Waypoint API", version="0.4.0", lifespan=lifespan,
@@ -204,5 +213,14 @@ def create_app(db: Database | None = None, profiles: ProfileService | None = Non
         """Monthly income/spending/debt summary and raw inputs for the wellness engine."""
         return SummaryResponse(data=data_info(p), monthly_summary=p.monthly_summary,
                                wellness_inputs=p.wellness_inputs)
+
+    @app.post("/api/me/agent", tags=["agent"])
+    def ask_agent(body: AgentRequest, request: Request, user: Annotated[PublicUser, Depends(current_user)]) -> dict:
+        """Read-only banking assistant; returns an AI document (`{"blocks": [...]}`) for the frontend renderer."""
+        try:
+            state = initial_state(body.question, user)
+        except ValueError as exc:
+            raise HTTPException(422, str(exc)) from None
+        return run_agent(request.app.state.agent, state)["final_ui"]
 
     return app

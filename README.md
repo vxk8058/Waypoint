@@ -31,6 +31,32 @@ cp .env.example .env   # then fill in NESSIE_API_KEY and MONGODB_URI
 MongoDB Atlas: URL-encode special characters in the password (`,` → `%2C`), and allow your IP
 under Atlas → Network Access.
 
+### Banking agent
+
+A read-only LangGraph agent answers questions about the signed-in user's accounts.
+
+```bash
+curl -X POST localhost:8000/api/me/agent -H "Authorization: Bearer $TOKEN" \
+     -H "Content-Type: application/json" -d '{"question": "Where did my money go in October?"}'
+```
+
+- **Setup:** set `NVIDIA_API_KEY`, `PLANNER_MODEL` and `WORKER_MODEL` in `.env` (exact IDs from NVIDIA's
+  model catalog). Models load on the first question; without them the endpoint returns a fallback answer
+  with a "Query routing is unavailable" caveat. Other routes and the tests don't need these settings.
+- **Flow** (`backend/agent/graph.py`): the planner routes the question to the Checking, Savings, Credit Card
+  and Loans branches (in parallel); Verify checks the combined results and can re-fetch products or extra
+  data (transactions, student bio) for at most three rounds; Gen UI returns an AI document.
+- **Data:** branches read through the existing `ProfileService`, so Nessie caching, stale-snapshot fallback,
+  pre-seed mode and warnings apply. Only GET requests are made. The profile always comes from the bearer
+  token; the request body accepts only `question`. Warnings become caveats in the answer.
+- **Numbers:** amounts are computed in code. The model writes text with `{fact_key}` placeholders that code
+  fills in; any digit it types is rejected (one retry, then a code-only fallback).
+- **Output:** `{"blocks": [...]}` validated against the frontend's
+  `backend/agent/ui/ai-document.schema.json` (copied from the frontend; replace it when that schema changes).
+- **Logs:** `waypoint.agent` logs each request's path (nodes, routes, Verify rounds) without question text,
+  IDs or amounts. Don't enable `LANGSMITH_TRACING`: it would send full prompts with account data.
+- **Status:** see `docs/BANKING_AGENT_CHECKLIST.md`. Live Nemotron runs and frontend rendering are unverified.
+
 ## Phase 2 pipeline
 
 ```bash

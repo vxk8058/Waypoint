@@ -1,6 +1,6 @@
 """Environment-driven configuration. Secrets live in .env (gitignored), never in code."""
 import os
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 from dotenv import load_dotenv
 
@@ -19,6 +19,9 @@ class Settings:
     demo_password: str = "waypoint-demo"
     cors_origins: tuple[str, ...] = ("http://localhost:3000", "http://localhost:5173")
     profile_cache_ttl: int = 300
+    nvidia_api_key: str | None = field(default=None, repr=False)
+    planner_model: str | None = None
+    worker_model: str | None = None
 
     @classmethod
     def load(cls) -> "Settings":
@@ -32,4 +35,7 @@ class Settings:
             cors_origins=tuple(o.strip() for o in os.getenv(
                 "CORS_ORIGINS", "http://localhost:3000,http://localhost:5173").split(",") if o.strip()),
             profile_cache_ttl=int(os.getenv("PROFILE_CACHE_TTL", "300")),
+            nvidia_api_key=os.getenv("NVIDIA_API_KEY", "").strip() or None,
+            planner_model=os.getenv("PLANNER_MODEL", "").strip() or PLANNER_MODEL,
+            worker_model=os.getenv("WORKER_MODEL", "").strip() or WORKER_MODEL,
         )

@@ -69,7 +69,8 @@ class ProfileService:
                 GeneratedFields.model_validate(student["nessie_generated_fields"]), id_map, snap)
         except (NessieError, httpx.HTTPError) as exc:
             log.warning("Nessie fetch failed for %s: %s", profile_id, exc)
-            return self._fallback(student, f"Nessie unavailable: {exc}")
+            # Users and the agent model see this warning; the request path and upstream body stay in the log above.
+            return self._fallback(student, f"Nessie unavailable ({type(exc).__name__})")
         self.db.profile_snapshots.update_one({"profile_id": profile_id}, {"$set": {
             "profile_id": profile_id, "unified_profile": unified.model_dump(mode="json"),
             "saved_at": datetime.now(timezone.utc)}}, upsert=True)
