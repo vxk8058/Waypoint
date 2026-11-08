@@ -50,6 +50,32 @@ function ProgressSteps() {
   );
 }
 
+/** Turns the question behind an answer into this week's mission; the server still checks the AI's pick. */
+function MissionFromAnswer({ question }: { question: string }) {
+  const [state, setState] = useState<"idle" | "busy" | "done" | "taken" | "error">("idle");
+  async function make() {
+    setState("busy");
+    try {
+      await apiFetch("/api/me/mission?period=week", { method: "POST", body: { hint: question } });
+      setState("done");
+    } catch (err) {
+      setState(err instanceof Error && err.message.includes("already") ? "taken" : "error");
+    }
+  }
+  const note = { done: "Mission set. Track it on your dashboard.", taken: "You already have this week's mission.",
+    error: "Couldn't set a mission right now. Try again." } as const;
+  return (
+    <div className="mt-6 flex flex-wrap items-center gap-3 border-t border-blue-grey-800 pt-4">
+      {state === "idle" || state === "busy" || state === "error" ? (
+        <Button size="sm" onClick={make} disabled={state === "busy"}>
+          {state === "busy" ? "Setting mission…" : "Make this my mission"}
+        </Button>
+      ) : null}
+      {state !== "idle" && state !== "busy" && <Text variant="small" tone="muted" role="status">{note[state]}</Text>}
+    </div>
+  );
+}
+
 type Result = { status: "idle" } | { status: "loading"; prompt: string } | { status: "done"; prompt: string; document: unknown } | { status: "error"; message: string };
 
 export function Simulation() {
@@ -188,7 +214,12 @@ export function Simulation() {
               {result.message}
             </p>
           )}
-          {result.status === "done" && <AiDocument document={result.document} />}
+          {result.status === "done" && (
+            <>
+              <AiDocument document={result.document} />
+              <MissionFromAnswer question={result.prompt} />
+            </>
+          )}
         </div>
       </section>
     </div>

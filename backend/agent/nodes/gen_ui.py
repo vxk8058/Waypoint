@@ -42,6 +42,8 @@ for each further insight a level-two heading with a short paragraph, a callout, 
 of next steps → optionally a small muted note.
 - For what-if, how-long or how-much-more questions, lead with the calc.* facts and chart before vs after (bar_chart
   facts, or the goal_projection line with the what-if).
+- For general money questions, explain in plain words, personalise with the user's facts where they help, and
+  say it is general information, not personal financial advice.
 - If the question asks to move money or change an account, say plainly that you can't do that, then show the
   relevant accounts read-only. For a broad question, give an overview and suggest a specific question to ask.
 - Only cite a fact that is exactly the number you mean. If the number you need isn't in the facts, say it couldn't
@@ -59,6 +61,12 @@ def gen_ui(state: AgentState, planner=None):
         caveats.append(verification.missing if not has_raw_number(verification.missing)
                        else "Some requested information could not be verified.")
     datasets = build_datasets(results)
+    for calc in state.get("calculations", []):  # a "top" query is chartable and each item becomes a fact
+        if calc.get("items"):
+            datasets[f"query.{calc['name']}"] = {
+                "kind": "category", "description": calc["label"], "categories": [str(k) for k, _ in calc["items"]],
+                "keys": [re.sub(r"[^a-z0-9]+", "_", str(k).lower()).strip("_") for k, _ in calc["items"]],
+                "series": [{"name": "Amount", "values": [v for _, v in calc["items"]]}]}
     facts = build_facts(results, datasets)
     for calc in state.get("calculations", []):
         if "value" in calc:

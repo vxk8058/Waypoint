@@ -57,6 +57,24 @@ class Calculation(BaseModel):
         return self
 
 
+class Query(BaseModel):
+    """A data question over the fetched transactions; backend.agent.query filters and aggregates in code."""
+
+    model_config = ConfigDict(extra="forbid", str_strip_whitespace=True)
+
+    name: str = Field(pattern=r"^[a-z][a-z0-9_]{0,39}$")
+    label: str = Field(min_length=1, max_length=80)
+    aggregate: Literal["sum", "count", "average", "min", "max", "top"] = "sum"
+    group_by: Literal["merchant", "category", "month"] | None = None  # for "top"
+    merchant: str | None = None  # case-insensitive text in the merchant name or description
+    category: str | None = None
+    account_type: str | None = None
+    direction: Literal["in", "out"] | None = None
+    flow_class: str | None = None
+    date_from: str | None = Field(default=None, pattern=r"^\d{4}-\d{2}-\d{2}$")
+    date_to: str | None = Field(default=None, pattern=r"^\d{4}-\d{2}-\d{2}$")
+
+
 class VerifyDecision(BaseModel):
     """Incomplete with no fetch targets means stop with a caveat/clarification."""
 
@@ -67,17 +85,20 @@ class VerifyDecision(BaseModel):
     need_other_data: bool = Field(default=False, strict=True)
     missing: str = ""
     calculations: list[Calculation] = Field(default_factory=list, max_length=5)
+    queries: list[Query] = Field(default_factory=list, max_length=5)
 
     @model_validator(mode="after")
     def consistent_decision(self):
         if len(self.need_products) != len(set(self.need_products)):
             raise ValueError("Requested products must be unique")
-        if len({c.name for c in self.calculations}) != len(self.calculations):
-            raise ValueError("Calculation names must be unique")
-        if self.done and (self.need_products or self.need_other_data or self.missing or self.calculations):
+        names = [c.name for c in self.calculations] + [q.name for q in self.queries]
+        if len(set(names)) != len(names):
+            raise ValueError("Calculation and query names must be unique")
+        work = self.calculations or self.queries
+        if self.done and (self.need_products or self.need_other_data or self.missing or work):
             raise ValueError("A completed decision cannot request or report missing data")
-        if self.calculations and (self.need_products or self.need_other_data):
-            raise ValueError("Fetch data first; request calculations in the next round")
+        if work and (self.need_products or self.need_other_data):
+            raise ValueError("Fetch data first; request queries and calculations in the next round")
         if not self.done and not self.missing:
             raise ValueError("An incomplete decision must explain what is missing")
         return self

@@ -1,6 +1,7 @@
 import type { SVGProps } from "react";
 import { BalanceHistory } from "../components/balance-history";
 import { Money } from "../components/money";
+import { StatsRadar } from "../components/stats-radar";
 import { Text } from "../components/text";
 import { currentBalance, fetchAccounts, signedBalance } from "../lib/accounts";
 import { getSessionUser } from "../lib/api";
@@ -121,6 +122,8 @@ export function Home() {
             </span>
           </p>
         </section>
+
+        {data && <StatsRadar accounts={accounts} asOf={data.data.as_of_date} className="max-w-lg" />}
       </div>
     </div>
   );

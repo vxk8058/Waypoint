@@ -1,4 +1,5 @@
 import type { ReactNode, SVGProps } from "react";
+import { apiFetch } from "../lib/api";
 import { fetchGoal, goalProgress, parseDate, type GoalStatus, type SavingsGoal } from "../lib/goal";
 import { useAsync } from "../lib/use-async";
 
@@ -15,6 +16,31 @@ const SEGMENTS = 20;
 
 const dollars = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
 const monthYear = new Intl.DateTimeFormat("en-US", { month: "short", year: "numeric", timeZone: "UTC" });
+const dayMonth = new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", timeZone: "UTC" });
+
+/** Percent milestones that light up as the goal fills. */
+const CHECKPOINTS = [25, 50, 75, 100];
+
+export interface Deposit {
+  date: string;
+  amount: number;
+}
+
+/** Deposits into the goal account; each goal transfer also has an outgoing half, which is skipped. */
+async function fetchDeposits(): Promise<Deposit[]> {
+  const page = await apiFetch<{ items: (Deposit & { direction: string })[] }>(
+    "/api/me/transactions?category=goal_contribution&limit=500",
+  );
+  return page.items.filter((t) => t.direction === "in"); // newest first
+}
+
+/** How many of the last six months (ending at asOf) had at least one deposit: a streak that forgives a gap. */
+function monthsWithDeposits(deposits: Deposit[], asOf: Date): number {
+  const months = new Set(deposits.map((d) => d.date.slice(0, 7)));
+  return Array.from({ length: 6 }, (_, i) =>
+    new Date(Date.UTC(asOf.getUTCFullYear(), asOf.getUTCMonth() - i, 1)).toISOString().slice(0, 7),
+  ).filter((m) => months.has(m)).length;
+}
 
 // ---------- icons ----------
 
@@ -71,7 +97,7 @@ const statusStyles: Record<GoalStatus, { label: string; className: string }> = {
   reached: { label: "Goal reached", className: "bg-teal-400/15 text-teal-200" },
   ahead: { label: "Ahead of schedule", className: "bg-teal-400/15 text-teal-200" },
   "on-track": { label: "On track", className: "bg-light-blue-vivid-400/15 text-light-blue-vivid-200" },
-  behind: { label: "Behind", className: "bg-yellow-vivid-400/15 text-yellow-vivid-200" },
+  behind: { label: "Let's adjust your plan", className: "bg-yellow-vivid-400/15 text-yellow-vivid-200" },
   stalled: { label: "No contributions", className: "bg-yellow-vivid-400/15 text-yellow-vivid-200" },
 };
 
@@ -81,11 +107,17 @@ export interface GoalBarProps {
   goal: SavingsGoal;
   /** Date the balances are from. */
   asOf: Date;
+  /** Goal deposits, newest first; shows the streak and the last deposit's effect when given. */
+  deposits?: Deposit[];
   className?: string;
 }
 
-export function GoalBar({ goal, asOf, className = "" }: GoalBarProps) {
+export function GoalBar({ goal, asOf, deposits, className = "" }: GoalBarProps) {
   const { pct, status, projected } = goalProgress(goal, asOf);
+  const next = CHECKPOINTS.find((c) => pct < c);
+  const toNext = next ? Math.max(0, Math.ceil((goal.target_amount * next) / 100 - goal.current_saved)) : 0;
+  const last = deposits?.[0];
+  const daysCloser = last && goal.monthly_contribution > 0 ? Math.round((last.amount / goal.monthly_contribution) * 30) : 0;
   // Fill whole segments only; any progress above 0 lights at least one.
   const filled = pct === 0 ? 0 : Math.max(1, Math.round((pct / 100) * SEGMENTS));
 
@@ -140,10 +172,40 @@ export function GoalBar({ goal, asOf, className = "" }: GoalBarProps) {
         ))}
       </div>
 
-      <p className="text-sm tabular-nums">
-        <span className="font-semibold text-blue-grey-100">{dollars.format(goal.current_saved)}</span> of{" "}
-        {dollars.format(goal.target_amount)} · {Math.round(pct)}%
-      </p>
+      <div className="flex flex-wrap items-center justify-between gap-2 text-sm tabular-nums">
+        <p>
+          <span className="font-semibold text-blue-grey-100">{dollars.format(goal.current_saved)}</span> of{" "}
+          {dollars.format(goal.target_amount)} · {Math.round(pct)}%
+          {next && (
+            <>
+              {" "}· next checkpoint {next}%, <span className="text-blue-grey-100">{dollars.format(toNext)} to go</span>
+            </>
+          )}
+        </p>
+        <ol aria-label="Checkpoints" className="flex gap-1.5">
+          {CHECKPOINTS.map((c) => (
+            <li
+              key={c}
+              aria-label={`${c}% checkpoint ${pct >= c ? "reached" : "not reached yet"}`}
+              className={`rounded-full px-2 py-0.5 text-xs font-semibold ${
+                pct >= c ? "bg-teal-400/15 text-teal-200" : "bg-blue-grey-800 text-blue-grey-400"
+              }`}
+            >
+              {pct >= c && "✓ "}
+              {c}%
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      {last && (
+        <p className="text-xs text-blue-grey-400">
+          Saved in <span className="font-semibold text-blue-grey-100">{monthsWithDeposits(deposits, asOf)} of the last 6 months</span>
+          {" "}· last deposit <span className="font-semibold text-teal-200">+{dollars.format(last.amount)}</span> on{" "}
+          {dayMonth.format(parseDate(last.date))}
+          {daysCloser > 0 && <> · about {daysCloser} days closer to your goal</>}
+        </p>
+      )}
     </section>
   );
 }
@@ -153,6 +215,7 @@ export function GoalBar({ goal, asOf, className = "" }: GoalBarProps) {
 /** Goal bar for the signed-in user, loaded from GET /api/me/goal. */
 export function Goal({ className = "" }: { className?: string }) {
   const { data, error, loading } = useAsync(fetchGoal, []);
+  const deposits = useAsync(fetchDeposits, []); // optional extra; the bar works without it
 
   if (loading && !data) {
     return <div aria-hidden="true" className={`h-[6.5rem] w-full animate-pulse rounded-lg bg-surface ${className}`} />;
@@ -164,7 +227,7 @@ export function Goal({ className = "" }: { className?: string }) {
       </p>
     );
   }
-  return <GoalBar goal={data.goal} asOf={parseDate(data.data.as_of_date)} className={className} />;
+  return <GoalBar goal={data.goal} asOf={parseDate(data.data.as_of_date)} deposits={deposits.data} className={className} />;
 }
 
 export default Goal;

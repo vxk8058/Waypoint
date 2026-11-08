@@ -96,13 +96,13 @@ def test_retry_replaces_stale_results_and_cap_terminates(service):
     svc, profile = service
     refreshed = profile.model_copy(deep=True)
     next(a for a in refreshed.accounts if a.type == "checking").balance += 100
-    svc.get.side_effect = [profile, refreshed, refreshed]
+    svc.get.side_effect = [profile, refreshed, refreshed, refreshed]
     planner, calls = scripted(
         RouteDecision=[{"products": ["checking"], "reasoning": "Balance"}],
         VerifyDecision=[{"done": False, "need_products": ["checking"], "missing": "Still unclear"}],
         UIPlan=[{"answer": "Your checking balance is {checking.balance}."}])
     out = run(svc, planner)
-    assert out["iterations"] == 3 and len(calls["VerifyDecision"]) == 3 and svc.get.call_count == 3
+    assert out["iterations"] == 4 and len(calls["VerifyDecision"]) == 4 and svc.get.call_count == 4
     assert len(out["results"]) == 1
     new_total = sum(a.balance for a in refreshed.accounts if a.type == "checking")
     assert out["results"][0].data["balance_total"] == new_total
@@ -149,9 +149,9 @@ def test_run_agent_logs_path_retries_and_termination_without_data(service, caplo
     lines = [r.getMessage() for r in caplog.records if r.name == "waypoint.agent"]
     nodes = [line.split()[1] for line in lines]
     assert nodes[0] == "node=eval_query" and nodes[-1] == "node=gen_ui"
-    assert nodes.count("node=verify") == 3 and nodes.count("node=eval_query") == 3
+    assert nodes.count("node=verify") == 4 and nodes.count("node=eval_query") == 4
     assert "agent node=checking confidence=0.0 errors=1" in lines  # the failed first fetch
-    assert "round=3 done=False need_products=[] need_other_data=False" in lines[-2]
+    assert "round=4 done=False need_products=[] need_other_data=False" in lines[-2]
     assert out["final_ui"]["blocks"][0]["props"]["text"].startswith("Your checking balance is $")
     balance = str(sum(a.balance for a in profile.accounts if a.type == "checking"))
     logged = "\n".join(lines)
@@ -206,7 +206,7 @@ def test_repeated_calculation_requests_stop_at_round_limit(service):
     svc, _ = service
     planner, calls = savings_route({"done": False, "missing": "More maths", "calculations": [DAYS]})
     out = build_agent_graph(svc, planner, worker()).invoke(initial_state(CAR, USER))
-    assert len(calls["VerifyDecision"]) == 3 and out["iterations"] == 3
+    assert len(calls["VerifyDecision"]) == 4 and out["iterations"] == 4
     assert not out["verify"].done and out["verify"].missing == "More maths (Verification limit reached.)"
     assert "Verification limit reached" in out["final_ui"]["blocks"][-1]["props"]["text"]
 

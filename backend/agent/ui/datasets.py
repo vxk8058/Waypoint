@@ -1,5 +1,6 @@
 """Chart datasets and headline facts computed in code from trusted product results (whole dollars)."""
 import calendar
+import re
 import statistics
 from collections import defaultdict
 from datetime import date, timedelta
@@ -19,7 +20,7 @@ def month_after(month: str) -> str:
     return f"{year + number // 12}-{number % 12 + 1:02d}"
 
 
-def _transactions(results) -> list[dict]:
+def all_transactions(results) -> list[dict]:
     by_id = {}
     for result in results:
         txns = result.data.get("transactions", [])
@@ -31,7 +32,7 @@ def _transactions(results) -> list[dict]:
 
 
 def build_datasets(results) -> dict[str, dict]:
-    txns = _transactions(results)
+    txns = all_transactions(results)
     scope = ", ".join(sorted({_label(t["account_type"]).lower() for t in txns}))
     spending, income = defaultdict(lambda: defaultdict(int)), defaultdict(int)
     for txn in txns:
@@ -102,6 +103,10 @@ def build_facts(results, datasets: dict[str, dict]) -> dict[str, dict]:
         owed = result.product in ("credit_card", "loans")
         add(f"{result.product}.balance", f"{_label(result.product)} balance{' owed' if owed else ''}",
             data["balance_total"], "down" if owed else "up")
+        if apr := max(a.get("apr_pct") or 0 for a in data["accounts"]):
+            add(f"{result.product}.apr", f"{_label(result.product)} interest rate (APR)", apr, unit="percent")
+        if owed and (payment := sum(a.get("monthly_payment") or 0 for a in data["accounts"])):
+            add(f"{result.product}.monthly_payment", f"{_label(result.product)} monthly payment", payment, "down")
         if "goal" in data:
             add("savings.goal_target", f"{data['goal']['name']} target", data["goal"]["target_amount"])
             add("savings.goal_saved", f"Saved toward {data['goal']['name']}", data["goal"]["current_saved"], "up")
@@ -110,6 +115,14 @@ def build_facts(results, datasets: dict[str, dict]) -> dict[str, dict]:
                 data["goal"]["monthly_contribution"], "up")
             add("savings.goal_target_date", f"{data['goal']['name']} target date", data["goal"]["target_date"],
                 unit="date")
+    bills = {b["bill_key"]: b for r in results if isinstance(r.data.get("bills"), list) for b in r.data["bills"]}
+    for bill in bills.values():
+        slug = re.sub(r"[^a-z0-9]+", "_", bill["payee"].lower()).strip("_")
+        add(f"bill.{slug}.amount", f"{bill['payee']} bill", bill["amount"], "down")
+        add(f"bill.{slug}.next_due", f"{bill['payee']} next due date", bill["next_due_date"], unit="date")
+    if bills:
+        add("bills.monthly_total", "Recurring bills per month",
+            sum(b["amount"] for b in bills.values() if b.get("status") in ("recurring", "pending")), "down")
     # Profile-wide monthly averages: the same in every branch's data, so take the first.
     wellness = next((r.data["wellness_inputs"] for r in results if r.data.get("wellness_inputs")), None)
     if wellness:

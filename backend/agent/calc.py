@@ -16,7 +16,8 @@ _PLACEHOLDER = re.compile(r"\{([^{}]+)\}")
 _QUESTION_NUMBER = re.compile(r"\d[\d,]*(?:\.\d+)?")
 _BINARY = {ast.Add: operator.add, ast.Sub: operator.sub, ast.Mult: operator.mul,
            ast.Div: operator.truediv, ast.FloorDiv: operator.floordiv}
-_FUNCTIONS = {"min": min, "max": max, "round": round, "ceil": math.ceil, "floor": math.floor, "abs": abs}
+_FUNCTIONS = {"min": min, "max": max, "round": round, "ceil": math.ceil, "floor": math.floor, "abs": abs,
+              "log": math.log}
 
 
 class CalcError(ValueError):
@@ -63,11 +64,13 @@ def evaluate(formula: str, facts: dict, question: str, as_of: date, earlier: dic
     allowed = CONSTANTS | question_numbers(question)
     try:
         value = _eval(tree.body, env, allowed, as_of)
+    except CalcError:
+        raise
     except ZeroDivisionError:
         raise CalcError("Division by zero") from None
-    except (TypeError, OverflowError):
-        raise CalcError("Formula mixes incompatible values") from None
-    if isinstance(value, str) or not math.isfinite(value) or abs(value) >= MAX_RESULT:
+    except (TypeError, OverflowError, ValueError):  # ValueError: log of zero or a negative number
+        raise CalcError("Formula mixes incompatible values or is outside a function's range") from None
+    if not isinstance(value, (int, float)) or not math.isfinite(value) or abs(value) >= MAX_RESULT:
         raise CalcError("Result is not a usable number")
     return int(value) if float(value).is_integer() else value
 
@@ -97,6 +100,11 @@ def _eval(node, env, allowed, as_of):
             return env[name]
         case ast.Name(id=name):
             raise CalcError(f"Unknown name {name}")
+        case ast.BinOp(op=ast.Pow(), left=left, right=right):  # compound interest, loan payoff
+            base, power = _eval(left, env, allowed, as_of), _eval(right, env, allowed, as_of)
+            if abs(base) > 1e6 or abs(power) > 1200:
+                raise CalcError("Power is too large")
+            return base ** power
         case ast.BinOp(op=op, left=left, right=right) if type(op) in _BINARY:
             return _BINARY[type(op)](_eval(left, env, allowed, as_of), _eval(right, env, allowed, as_of))
         case ast.UnaryOp(op=ast.USub(), operand=operand):

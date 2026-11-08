@@ -42,7 +42,7 @@ def test_number_grounding():
 
 
 @pytest.mark.parametrize("formula", [
-    "__import__('os').system('ls')", "().__class__", "{savings.goal_remaining}.real", "100 ** 2",
+    "__import__('os').system('ls')", "().__class__", "{savings.goal_remaining}.real", "2 ** 5000",
     "100 if 1 else 30", "(lambda: 1)()", "[x for x in (1, 2)]", "max(1, 2, key=abs)", "round(100 / 7, 2)",
     "True + 1", "'abc'", "100 < 30", "open('x')",
 ])

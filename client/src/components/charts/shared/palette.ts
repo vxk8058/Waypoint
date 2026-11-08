@@ -11,7 +11,7 @@ export const SERIES_COLORS: Record<SeriesColor, { fill: string; hex: string }> =
   teal: { fill: "var(--color-teal-500)", hex: "#27AB83" },
   orange: { fill: "var(--color-yellow-vivid-700)", hex: "#CB6E17" },
   blue: { fill: "var(--color-light-blue-vivid-600)", hex: "#1992D4" },
-  neutral: { fill: "var(--color-blue-grey-500)", hex: "#627D98" },
+  neutral: { fill: "var(--color-blue-grey-500)", hex: "#7A93AC" },
 };
 
 /** Fixed assignment order — never cycled. */

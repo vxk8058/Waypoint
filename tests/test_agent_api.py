@@ -102,7 +102,7 @@ def test_5_vague_query_asks_for_clarification_and_repeated_gaps_stop_at_three(wo
     r, calls = ask(service, "Help me with my money", RouteDecision=route("checking"),
                    VerifyDecision=[{"done": False, "need_products": ["checking"], "missing": "Unclear goal"}],
                    UIPlan=[{"answer": "Here is your checking account."}])
-    assert len(calls["VerifyDecision"]) == 3 and "Verification limit reached" in r.text
+    assert len(calls["VerifyDecision"]) == 4 and "Verification limit reached" in r.text
 
 
 def test_6_october_spending_chart_uses_exact_totals(world):
