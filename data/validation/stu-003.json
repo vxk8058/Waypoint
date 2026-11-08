@@ -1,0 +1,36 @@
+{
+  "profile_id": "stu-003",
+  "ok": true,
+  "errors": [],
+  "warnings": [],
+  "checks_run": [
+    "whole_dollars",
+    "unique_ids",
+    "account_references",
+    "ledger_reconciliation",
+    "running_balances",
+    "statement_reconciliation",
+    "no_negative_assets",
+    "credit_limit",
+    "transfer_pairs",
+    "flow_class_rules",
+    "bill_payments",
+    "merchant_references",
+    "goal_consistency",
+    "assumptions_vs_observed",
+    "student_realism",
+    "seed_plan_bodies",
+    "seed_plan_references",
+    "seed_plan_coverage",
+    "seed_plan_balances"
+  ],
+  "stats": {
+    "transactions": 258,
+    "months": 6,
+    "observed_monthly_income": 2598,
+    "observed_monthly_spending": 2107,
+    "internal_transfer_pairs": 18,
+    "plan_operations": 255,
+    "plan_skipped": 24
+  }
+}
