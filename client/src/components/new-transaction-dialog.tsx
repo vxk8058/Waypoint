@@ -11,11 +11,27 @@ import {
   type LoanType,
   type Merchant,
 } from "../lib/nessie";
-import { accountLabel, transactionKinds, type TransactionKind } from "../lib/transactions";
 import { Button } from "./button";
 import { Select } from "./select";
 import { Text } from "./text";
 import { TextField } from "./text-field";
+
+export type TransactionKind = "deposit" | "withdrawal" | "transfer" | "purchase" | "bill" | "loan";
+
+export const transactionKinds: { kind: TransactionKind; label: string }[] = [
+  { kind: "deposit", label: "Deposit" },
+  { kind: "withdrawal", label: "Withdrawal" },
+  { kind: "transfer", label: "Transfer" },
+  { kind: "purchase", label: "Purchase" },
+  { kind: "bill", label: "Bill" },
+  { kind: "loan", label: "Loan" },
+];
+
+function accountLabel(account: Account) {
+  const name = account.nickname?.trim() || account.type;
+  const last4 = account.account_number?.slice(-4);
+  return last4 ? `${name} ••${last4}` : name;
+}
 
 export interface NewTransactionDialogProps {
   open: boolean;

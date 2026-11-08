@@ -72,14 +72,16 @@ export function ChartFrame({
           {subtitle && <p className="mt-0.5 text-sm text-blue-grey-300">{subtitle}</p>}
         </div>
         {!empty && (
-          <button
-            type="button"
-            onClick={() => setShowTable((s) => !s)}
-            aria-pressed={showTable}
-            className="shrink-0 cursor-pointer rounded-md px-2 py-1 text-xs font-medium text-blue-grey-300 transition-colors hover:bg-surface-raised hover:text-blue-grey-050 focus-visible:outline-2 focus-visible:outline-purple-400"
-          >
-            {showTable ? "Chart" : "Table"}
-          </button>
+          <div role="group" aria-label="View" className="flex shrink-0 gap-0.5 rounded-lg border border-blue-grey-800 p-0.5">
+            <ViewButton label="Chart view" active={!showTable} onClick={() => setShowTable(false)}>
+              <path d="M4 4v16h16" />
+              <path d="m7 15 4-5 3 3 5-6" />
+            </ViewButton>
+            <ViewButton label="Table view" active={showTable} onClick={() => setShowTable(true)}>
+              <rect x="3.5" y="5" width="17" height="14" rx="2" />
+              <path d="M3.5 10h17M12 10v9" />
+            </ViewButton>
+          </div>
         )}
       </header>
 
@@ -132,6 +134,26 @@ export function ChartFrame({
         )}
       </div>
     </figure>
+  );
+}
+
+function ViewButton({ label, active, onClick, children }: { label: string; active: boolean; onClick: () => void; children: ReactNode }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-label={label}
+      aria-pressed={active}
+      title={label}
+      className={[
+        "grid size-7 cursor-pointer place-items-center rounded-md transition-colors focus-visible:outline-2 focus-visible:outline-purple-400",
+        active ? "bg-surface-raised text-purple-300" : "text-blue-grey-400 hover:text-blue-grey-050",
+      ].join(" ")}
+    >
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className="size-4">
+        {children}
+      </svg>
+    </button>
   );
 }
 

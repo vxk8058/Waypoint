@@ -99,6 +99,26 @@ Log in at `http://localhost:8000/docs` with **poyo@waypoint.demo / waypoint-demo
 demo user is linked to `stu-002`, Poyo de Avon. Banking data is read live from Nessie and
 merged with PNC-only data from MongoDB. See [docs/API.md](docs/API.md).
 
+## Run the frontend
+
+The React app lives in `client/`. Start the API (above) first, then in a second terminal:
+
+```bash
+cd client
+npm install      # first time, or after package.json changes
+npm run dev      # http://localhost:5173
+```
+
+Sign in with **poyo@waypoint.demo / waypoint-demo**.
+
+- In dev, Vite proxies `/auth` and `/api` to `http://localhost:8000` (`client/vite.config.ts`), so no
+  CORS setup is needed. For a backend elsewhere: `WAYPOINT_API_URL=http://host:port npm run dev`.
+- "Can't reach the Waypoint server" on sign-in means the API isn't running on port 8000.
+- The session token is kept in `localStorage` (`waypoint.session`). Use **Sign out** in the sidebar's
+  account menu, or delete that key, to log out.
+- Production: `npm run build` outputs `client/dist`. The proxy only exists in dev, so set
+  `VITE_API_BASE_URL` to the API's URL at build time and add the site's origin to the API's `CORS_ORIGINS`.
+
 ## Demo profiles
 
 | ID | Student | Highlights |

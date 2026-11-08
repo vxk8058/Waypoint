@@ -3,8 +3,8 @@ import { useSearchParams } from "react-router";
 import { Money } from "../components/money";
 import { ChevronDownIcon } from "../components/select";
 import { Text } from "../components/text";
-import { getAccounts } from "../lib/nessie";
-import { accountLabel, getAccountTransactions, transactionKinds, type Transaction, type TransactionKind } from "../lib/transactions";
+import { fetchAccounts, signedBalance } from "../lib/accounts";
+import { getAccountTransactions, humanize, transactionKinds, type Transaction, type TransactionKind } from "../lib/transactions";
 import { useAsync } from "../lib/use-async";
 
 // ---------- Icons ----------
@@ -47,12 +47,12 @@ const kindIcons: Record<TransactionKind, ReactNode> = {
       <path d="M9 8h6M9 12h6" />
     </>
   ),
-  // Bank
-  loan: (
+  // Percent sign
+  interest: (
     <>
-      <path d="M3 9.5 12 4l9 5.5" />
-      <path d="M5 10v8M9.5 10v8M14.5 10v8M19 10v8" />
-      <path d="M3 20h18" />
+      <path d="M19 5 5 19" />
+      <circle cx="7" cy="7" r="2.5" />
+      <circle cx="17" cy="17" r="2.5" />
     </>
   ),
 };
@@ -72,21 +72,9 @@ function formatDay(date: Date) {
   return date.getFullYear() === today.getFullYear() ? shortDate.format(date) : longDate.format(date);
 }
 
-const kindLabel = Object.fromEntries(transactionKinds.map((t) => [t.kind, t.label])) as Record<TransactionKind, string>;
-
-// Statuses where the money hasn't (or won't) actually move.
-const inactiveStatuses = new Set(["cancelled", "declined"]);
-const softStatuses = new Set(["pending", "recurring", ...inactiveStatuses]);
-
 // ---------- Rows ----------
 
 function TransactionRow({ transaction: t }: { transaction: Transaction }) {
-  const soft = softStatuses.has(t.status);
-  const inactive = inactiveStatuses.has(t.status);
-  const meta = [soft && t.status.charAt(0).toUpperCase() + t.status.slice(1), kindLabel[t.kind], t.date && formatDay(t.date)]
-    .filter(Boolean)
-    .join(" · ");
-
   return (
     <li className="flex items-center gap-3 py-2.5">
       <span className="grid size-9 shrink-0 place-items-center rounded-full border-2 border-blue-grey-300 text-blue-grey-100">
@@ -94,17 +82,11 @@ function TransactionRow({ transaction: t }: { transaction: Transaction }) {
       </span>
       <span className="flex min-w-0 flex-1 flex-col">
         <span className="truncate text-base text-blue-grey-100">{t.title}</span>
-        <span className="truncate text-sm text-blue-grey-400">{meta}</span>
+        <span className="truncate text-sm text-blue-grey-400">
+          {t.category} · {formatDay(t.date)}
+        </span>
       </span>
-      <span
-        className={[
-          "self-start pt-0.5 text-base font-medium",
-          inactive && "line-through",
-          soft ? "text-blue-grey-400" : t.amount > 0 ? "text-teal-300" : "text-blue-grey-050",
-        ]
-          .filter(Boolean)
-          .join(" ")}
-      >
+      <span className={["self-start pt-0.5 text-base font-medium", t.amount > 0 ? "text-teal-300" : "text-blue-grey-050"].join(" ")}>
         <Money amount={t.amount} signed />
       </span>
     </li>
@@ -149,14 +131,14 @@ export function Transactions() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [filter, setFilter] = useState<Filter>("all");
 
-  const accounts = useAsync(getAccounts, []);
-  const accountList = accounts.data ?? [];
+  const accounts = useAsync(fetchAccounts, []);
+  const accountList = accounts.data?.accounts ?? [];
   // The selected account lives in the URL (?account=…) so it survives reloads and can be linked to.
-  const account = accountList.find((a) => a._id === searchParams.get("account")) ?? accountList[0];
+  const account = accountList.find((a) => a.account_id === searchParams.get("account")) ?? accountList[0];
 
   const transactions = useAsync(
-    () => (account ? getAccountTransactions(account, accountList) : Promise.resolve([])),
-    [account?._id],
+    () => (account ? getAccountTransactions(account.account_id) : Promise.resolve([])),
+    [account?.account_id],
   );
 
   const visible = (transactions.data ?? []).filter((t) => filter === "all" || t.kind === filter);
@@ -175,7 +157,7 @@ export function Transactions() {
   if (accounts.error) {
     body = <Notice title="Couldn't load your accounts">{accounts.error.message}</Notice>;
   } else if (!accounts.loading && !account) {
-    body = <Notice title="No accounts yet">Create an account in Nessie to start tracking transactions.</Notice>;
+    body = <Notice title="No accounts yet">Accounts linked to your profile will show up here.</Notice>;
   } else if (transactions.error) {
     body = <Notice title="Couldn't load transactions">{transactions.error.message}</Notice>;
   } else if (!account || !transactions.data) {
@@ -183,14 +165,14 @@ export function Transactions() {
   } else if (visible.length === 0) {
     body = (
       <Notice title={filter === "all" ? "No transactions yet" : `No ${transactionKinds.find((t) => t.kind === filter)?.plural.toLowerCase()}`}>
-        Transactions you add to this account will show up here.
+        Activity on this account will show up here.
       </Notice>
     );
   } else {
     body = (
       <ul className="flex flex-col">
         {visible.map((t) => (
-          <TransactionRow key={`${t.kind}-${t.id}`} transaction={t} />
+          <TransactionRow key={t.id} transaction={t} />
         ))}
       </ul>
     );
@@ -209,7 +191,7 @@ export function Transactions() {
               Balance
             </Text>
             <Text variant="h1" as="p" className="tabular-nums" aria-live="polite">
-              {account ? <Money amount={account.balance} /> : <span className="text-blue-grey-600">—</span>}
+              {account ? <Money amount={signedBalance(account)} /> : <span className="text-blue-grey-600">—</span>}
             </Text>
 
             {accountList.length > 0 && (
@@ -217,13 +199,13 @@ export function Transactions() {
               <label className="relative -ml-1 inline-flex w-fit items-center rounded-lg text-blue-grey-300 transition-colors focus-within:ring-2 focus-within:ring-purple-400/40 hover:text-blue-grey-100">
                 <span className="sr-only">Account</span>
                 <select
-                  value={account?._id}
+                  value={account?.account_id}
                   onChange={(e) => selectAccount(e.target.value)}
                   className="cursor-pointer appearance-none bg-transparent py-0.5 pr-6 pl-1 text-base outline-none"
                 >
                   {accountList.map((a) => (
-                    <option key={a._id} value={a._id} className="bg-surface text-blue-grey-050">
-                      {accountLabel(a)} · {a.type}
+                    <option key={a.account_id} value={a.account_id} className="bg-surface text-blue-grey-050">
+                      {a.name} · {humanize(a.type)}
                     </option>
                   ))}
                 </select>
