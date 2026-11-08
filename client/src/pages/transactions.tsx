@@ -1,5 +1,6 @@
 import { useState, type ReactNode, type SVGProps } from "react";
 import { useSearchParams } from "react-router";
+import { Button } from "../components/button";
 import { Money } from "../components/money";
 import { ChevronDownIcon } from "../components/select";
 import { Text } from "../components/text";
@@ -127,6 +128,8 @@ function Notice({ title, children }: { title: string; children: ReactNode }) {
 
 type Filter = TransactionKind | "all";
 
+const PAGE_SIZE = 20;
+
 export function Transactions() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [filter, setFilter] = useState<Filter>("all");
@@ -142,6 +145,12 @@ export function Transactions() {
   );
 
   const visible = (transactions.data ?? []).filter((t) => filter === "all" || t.kind === filter);
+
+  // How many rows to show; goes back to the first page whenever the account or filter changes.
+  const listKey = `${account?.account_id}|${filter}`;
+  const [shown, setShown] = useState({ key: listKey, count: PAGE_SIZE });
+  const count = shown.key === listKey ? shown.count : PAGE_SIZE;
+  const remaining = visible.length - count;
 
   function selectAccount(id: string) {
     setSearchParams(
@@ -170,11 +179,20 @@ export function Transactions() {
     );
   } else {
     body = (
-      <ul className="flex flex-col">
-        {visible.map((t) => (
-          <TransactionRow key={t.id} transaction={t} />
-        ))}
-      </ul>
+      <>
+        <ul className="flex flex-col">
+          {visible.slice(0, count).map((t) => (
+            <TransactionRow key={t.id} transaction={t} />
+          ))}
+        </ul>
+        {remaining > 0 && (
+          <div className="flex justify-center border-t border-blue-grey-700 py-3">
+            <Button variant="ghost" size="sm" onClick={() => setShown({ key: listKey, count: count + PAGE_SIZE })}>
+              Show more ({remaining} left)
+            </Button>
+          </div>
+        )}
+      </>
     );
   }
 
