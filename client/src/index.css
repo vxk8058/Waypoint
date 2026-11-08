@@ -5,7 +5,6 @@
   --font-sans: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
   --font-grotesk: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
 
-  /* Dark surfaces (canvas matches the logo background) */
   --color-canvas: #010614;
   --color-surface: #0A1628;
   --color-surface-raised: #13223A;
@@ -80,7 +79,6 @@
   --color-yellow-vivid-900: #8D2B0B;
 }
 
-/* The whole app is dark */
 @layer base {
   :root {
     color-scheme: dark;

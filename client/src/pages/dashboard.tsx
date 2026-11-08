@@ -1,5 +1,6 @@
 import { Link, NavLink, Outlet } from "react-router";
 import logo from "../assets/logo.png";
+import { Goal } from "../components/goal";
 
 const tabs = [
   { to: "/dashboard", label: "Home", end: true },
@@ -41,6 +42,7 @@ export function Dashboard() {
       </aside>
 
       <main className="flex-1 p-8">
+        <Goal className="mb-8" />
         <Outlet />
       </main>
     </div>
