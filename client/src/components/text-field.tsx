@@ -42,19 +42,19 @@ export function TextField({
   const message = error ?? hint;
 
   const wrapper = [
-    "flex items-center gap-2 rounded-lg border bg-white transition-colors",
-    "focus-within:ring-2 focus-within:ring-offset-1",
+    "flex items-center gap-2 rounded-lg border bg-canvas transition-colors",
+    "focus-within:ring-2 focus-within:ring-offset-1 focus-within:ring-offset-canvas",
     error
-      ? "border-red-vivid-500 focus-within:ring-red-vivid-300"
-      : "border-blue-grey-300 hover:border-blue-grey-400 focus-within:border-purple-500 focus-within:ring-purple-200",
-    disabled && "cursor-not-allowed bg-blue-grey-050 opacity-60",
+      ? "border-red-vivid-400 focus-within:ring-red-vivid-400/50"
+      : "border-blue-grey-600 hover:border-blue-grey-500 focus-within:border-purple-400 focus-within:ring-purple-400/40",
+    disabled && "cursor-not-allowed bg-surface opacity-60",
     sizes[size],
   ]
     .filter(Boolean)
     .join(" ");
 
   const input = [
-    "min-w-0 flex-1 bg-transparent text-blue-grey-900 outline-none placeholder:text-blue-grey-400",
+    "min-w-0 flex-1 bg-transparent text-blue-grey-050 outline-none placeholder:text-blue-grey-500",
     "disabled:cursor-not-allowed",
     className,
   ]
@@ -68,14 +68,14 @@ export function TextField({
         .join(" ")}
     >
       {label && (
-        <label htmlFor={inputId} className="text-sm font-medium text-blue-grey-800">
+        <label htmlFor={inputId} className="text-sm font-medium text-blue-grey-100">
           {label}
-          {required && <span className="ml-0.5 text-red-vivid-600">*</span>}
+          {required && <span className="ml-0.5 text-red-vivid-400">*</span>}
         </label>
       )}
 
       <div className={wrapper}>
-        {leading && <span className="flex shrink-0 text-blue-grey-500">{leading}</span>}
+        {leading && <span className="flex shrink-0 text-blue-grey-400">{leading}</span>}
         <input
           id={inputId}
           type={type}
@@ -86,13 +86,13 @@ export function TextField({
           className={input}
           {...props}
         />
-        {trailing && <span className="flex shrink-0 text-blue-grey-500">{trailing}</span>}
+        {trailing && <span className="flex shrink-0 text-blue-grey-400">{trailing}</span>}
       </div>
 
       {message && (
         <p
           id={messageId}
-          className={`text-sm ${error ? "text-red-vivid-600" : "text-blue-grey-500"}`}
+          className={`text-sm ${error ? "text-red-vivid-300" : "text-blue-grey-400"}`}
         >
           {message}
         </p>

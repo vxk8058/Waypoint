@@ -54,14 +54,14 @@ const defaultTones: Partial<Record<Variant, Tone>> = {
 };
 
 const tones: Record<Tone, string> = {
-  default: "text-blue-grey-900",
-  muted: "text-blue-grey-600",
-  subtle: "text-blue-grey-400",
-  primary: "text-purple-600",
-  accent: "text-teal-600",
-  danger: "text-red-vivid-600",
-  warning: "text-yellow-vivid-700",
-  inverse: "text-white",
+  default: "text-blue-grey-050",
+  muted: "text-blue-grey-300",
+  subtle: "text-blue-grey-500",
+  primary: "text-purple-300",
+  accent: "text-teal-300",
+  danger: "text-red-vivid-300",
+  warning: "text-yellow-vivid-300",
+  inverse: "text-blue-grey-900",
 };
 
 const weights: Record<Weight, string> = {
