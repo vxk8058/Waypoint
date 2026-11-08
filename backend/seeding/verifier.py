@@ -8,6 +8,7 @@ from pymongo.database import Database
 
 from ..integrations.nessie.client import NessieClient
 from ..integrations.nessie.resources import ACCOUNT_CHILDREN, LIST_PATHS
+from ..mapping.nessie_to_unified import nessie_balance_change
 from ..schemas.seed_plan import SeedPlan
 from ..schemas.student import StudentProfile
 from .seeder import GLOBAL, find_marker, map_scope
@@ -56,19 +57,7 @@ def _norm_addr(v):
 
 
 def _signed(resource: str, account_type: str, record: dict) -> int:
-    """Balance effect of a Nessie record on its account, mirroring PNC balance_change."""
-    amount = int(record.get("amount", 0))
-    liability = account_type == "credit_card"
-    if resource == "deposit":
-        return amount
-    if resource in ("withdrawal", "purchase"):
-        return amount if (liability and resource == "purchase") else -amount
-    if resource == "transfer":
-        incoming = "(in)" in (record.get("description") or "")
-        if liability:
-            return -amount if incoming else amount
-        return amount if incoming else -amount
-    return 0
+    return nessie_balance_change(resource, account_type, int(record.get("amount", 0)), record.get("description"))
 
 
 def verify_profile(profile: StudentProfile, plan: SeedPlan, client: NessieClient, db: Database) -> VerificationReport:

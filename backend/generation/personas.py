@@ -73,6 +73,9 @@ class Persona:
     goal_initial: int = 0
     goal_monthly: int = 0
     goal_target_date: str = ""
+    # Optional fixed customer name (otherwise generated in mapping/missing_fields.py)
+    first_name: str | None = None
+    last_name: str | None = None
 
 
 PERSONAS = (
@@ -118,6 +121,7 @@ PERSONAS = (
             SpendSpec("transport", 120, 4), SpendSpec("dining", 140, 6), SpendSpec("coffee", 30, 4),
             SpendSpec("shopping", 110, 3), SpendSpec("entertainment", 50, 2), SpendSpec("groceries", 60, 2),
         ),
+        first_name="Poyo", last_name="de Avon",  # demo login user
         goal_name="First car fund", goal_type="vehicle", goal_target=6000,
         goal_initial=1800, goal_monthly=400, goal_target_date="2027-12-31",
     ),

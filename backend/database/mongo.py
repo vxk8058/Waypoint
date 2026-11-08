@@ -8,6 +8,8 @@ Collections:
 - nessie_id_map  local_key -> Nessie _id (filled in Phase 3). Unique: (profile_id, local_key);
                  merchants use profile_id "global".
 - seed_runs      seed / verify run log (Phase 3). Unique: run_id.
+- users          login users linked to a profile (Phase 4). Unique: user_id, email.
+- profile_snapshots  last unified profile built from Nessie, served if Nessie is down. Unique: profile_id.
 
 All writes are upserts keyed on unique indexes, so re-running a script never duplicates data.
 """
@@ -19,7 +21,7 @@ from pymongo.database import Database
 from .. import ROOT
 from ..config import Settings
 
-COLLECTIONS = ("students", "goals", "seed_plans", "nessie_id_map", "seed_runs")
+COLLECTIONS = ("students", "goals", "seed_plans", "nessie_id_map", "seed_runs", "users", "profile_snapshots")
 
 
 def get_database(uri: str | None = None, db_name: str | None = None, client: MongoClient | None = None,
@@ -73,6 +75,9 @@ def ensure_indexes(db: Database) -> None:
     db.nessie_id_map.create_index([("profile_id", ASCENDING), ("local_key", ASCENDING)], unique=True)
     db.nessie_id_map.create_index([("nessie_id", ASCENDING)])
     db.seed_runs.create_index([("run_id", ASCENDING)], unique=True)
+    db.users.create_index([("user_id", ASCENDING)], unique=True)
+    db.users.create_index([("email", ASCENDING)], unique=True)
+    db.profile_snapshots.create_index([("profile_id", ASCENDING)], unique=True)
 
 
 def _now() -> datetime:

@@ -6,8 +6,8 @@
       "resource": "customer",
       "parent_key": null,
       "body": {
-        "first_name": "Marcus",
-        "last_name": "Brooks",
+        "first_name": "Poyo",
+        "last_name": "de Avon",
         "address": {
           "street_number": "315",
           "street_name": "Hickory St",

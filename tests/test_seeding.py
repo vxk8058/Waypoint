@@ -111,3 +111,34 @@ def test_merchants_shared_across_profiles(env, bundles):
     unique = {m.merchant_key for b in bundles for m in b.profile.merchants}
     assert fake.count("merchant") == len(unique)
     assert fake.count("customer") == len(bundles)
+
+
+def _rename(plan, first, last):
+    plan = plan.model_copy(deep=True)
+    op = next(o for o in plan.operations if o.resource == "customer")
+    op.body = {**op.body, "first_name": first, "last_name": last}
+    return plan
+
+
+def test_renamed_customer_is_updated_in_place(env, bundles):
+    fake, client, db = env
+    b = next(b for b in bundles if b.profile.profile_id == "stu-002")
+    old = _rename(b.plan, "Marcus", "Brooks")
+    Seeder(client, db).seed(old)
+    result = Seeder(client, db).seed(b.plan)
+    assert result.ok and result.created == 0 and result.updated == 1
+    assert fake.count("customer") == 1
+    cust = next(iter(fake.store["customer"].values()))
+    assert (cust["first_name"], cust["last_name"]) == ("Poyo", "de Avon")
+    assert verify_profile(b.profile, b.plan, client, db).ok
+
+
+def test_renamed_customer_adopted_without_id_map(env, bundles):
+    fake, client, db = env
+    b = next(b for b in bundles if b.profile.profile_id == "stu-002")
+    Seeder(client, db).seed(_rename(b.plan, "Marcus", "Brooks"))
+    db.nessie_id_map.delete_many({})  # fresh database (e.g. Atlas) after the rename
+    result = Seeder(client, db).seed(b.plan)
+    assert result.ok and result.created == 0 and result.updated == 1
+    assert fake.count("customer") == 1
+    assert verify_profile(b.profile, b.plan, client, db).ok

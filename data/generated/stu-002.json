@@ -1,8 +1,8 @@
 {
   "profile_id": "stu-002",
   "customer": {
-    "first_name": "Marcus",
-    "last_name": "Brooks",
+    "first_name": "Poyo",
+    "last_name": "de Avon",
     "street_number": "315",
     "street_name": "Hickory St",
     "city": "Denton",
@@ -18,8 +18,8 @@
   "transaction_status": "completed",
   "bill_status": "recurring",
   "field_sources": {
-    "customer.first_name": "waypoint_generated",
-    "customer.last_name": "waypoint_generated",
+    "customer.first_name": "pnc_generated",
+    "customer.last_name": "pnc_generated",
     "customer.address": "waypoint_generated",
     "account_rewards": "derived",
     "loans[*].credit_score": "waypoint_generated",

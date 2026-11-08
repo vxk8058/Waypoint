@@ -93,6 +93,11 @@ class FakeNessie:
             obj = self.store[kind].get(parts[1])
             if method == "GET":
                 return httpx.Response(200, json=obj) if obj else httpx.Response(404, json="not found")
+            if method == "PUT":
+                if not obj:
+                    return httpx.Response(404, json="not found")
+                obj.update(body)
+                return httpx.Response(202, json={"code": 202, "message": "Accepted update", "objectUpdated": obj})
             if method == "DELETE":
                 self.store[kind].pop(parts[1], None)  # never cascades, like the live API
                 return httpx.Response(200)

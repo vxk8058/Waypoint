@@ -10,6 +10,7 @@ import random
 from pydantic import BaseModel
 
 from ..generation.catalog import CITIES
+from ..generation.personas import PERSONAS
 from ..schemas.common import Origin
 from ..schemas.student import StudentProfile
 
@@ -59,6 +60,13 @@ def generate_missing_fields(profile: StudentProfile) -> GeneratedFields:
         first_name=rng.choice(FIRST_NAMES), last_name=rng.choice(LAST_NAMES),
         street_number=str(rng.randint(100, 2999)), street_name=rng.choice(city["streets"]),
         city=profile.student.city, state=city["state"], zip=city["zip"])
+    # A persona may pin its name (e.g. the demo login user). The random draws above still
+    # happen so the address stays identical to earlier runs.
+    persona = next((p for p in PERSONAS if p.profile_id == profile.profile_id), None)
+    name_source = Origin.WAYPOINT_GENERATED
+    if persona and persona.first_name and persona.last_name:
+        customer = customer.model_copy(update={"first_name": persona.first_name, "last_name": persona.last_name})
+        name_source = Origin.PNC_GENERATED
 
     rewards = {}
     for acct in profile.accounts:
@@ -82,7 +90,7 @@ def generate_missing_fields(profile: StudentProfile) -> GeneratedFields:
     return GeneratedFields(
         profile_id=profile.profile_id, customer=customer, account_rewards=rewards, loans=loans,
         field_sources={
-            "customer.first_name": Origin.WAYPOINT_GENERATED, "customer.last_name": Origin.WAYPOINT_GENERATED,
+            "customer.first_name": name_source, "customer.last_name": name_source,
             "customer.address": Origin.WAYPOINT_GENERATED, "account_rewards": Origin.DERIVED,
             "loans[*].credit_score": Origin.WAYPOINT_GENERATED, "loans[*].status": Origin.PNC_GENERATED,
             "transaction_medium": Origin.WAYPOINT_GENERATED, "transaction_status": Origin.WAYPOINT_GENERATED,

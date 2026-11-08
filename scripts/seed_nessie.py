@@ -56,13 +56,14 @@ def main():
                                  progress=lambda i, n, r: print(f"  {pid}: {i}/{n} (created {r.created}, "
                                                                 f"adopted {r.adopted}, existing {r.existing})"))
             run.update(finished_at=datetime.now(timezone.utc), ok=result.ok, created=result.created,
-                       adopted=result.adopted, existing=result.existing, failed=result.failed,
+                       adopted=result.adopted, existing=result.existing, updated=result.updated,
+                       failed=result.failed,
                        by_resource=result.by_resource, errors=result.errors, warnings=result.warnings,
                        api_calls=client.calls)
             db.seed_runs.insert_one(run)
             export_id_map(db, plan)
             print(f"{pid}: {'OK' if result.ok else 'FAILED'} - created {result.created}, adopted {result.adopted}, "
-                  f"existing {result.existing}, failed {result.failed}")
+                  f"existing {result.existing}, updated {result.updated}, failed {result.failed}")
             for item in result.errors + result.warnings:
                 print(f"   {item}")
             failed |= not result.ok

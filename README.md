@@ -15,8 +15,9 @@ unified profile → wellness engine → LangGraph + Nemotron simulation.**
 | 1 | Repository and API inspection | Done |
 | 2 | Student profile generation, mapping, validation | Done |
 | 3 | Nessie seeding and verification | Done |
-| 4 | Nessie retrieval and unified profile API | Next |
-| 5–7 | Wellness engine, simulation, integration | Planned |
+| 4 | Nessie retrieval, unified profile, API with demo login | Done |
+| 5 | Financial wellness engine | Next |
+| 6–7 | Simulation, integration | Planned |
 
 ## Setup
 
@@ -59,12 +60,24 @@ python scripts/seed_nessie.py stu-001 --reset --yes   # delete stu-001's Nessie 
   `data/verification/` and the `seed_runs` collection.
 - Seeding is a setup step only. Simulations never write to Nessie.
 
+## Phase 4: run the API
+
+```bash
+python scripts/validate_profile.py --save-mongo   # profiles in MongoDB
+python scripts/seed_nessie.py                     # Nessie ids in MongoDB
+uvicorn backend.api.main:app --reload --port 8000
+```
+
+Log in at `http://localhost:8000/docs` with **poyo@waypoint.demo / waypoint-demo**. This
+demo user is linked to `stu-002`, Poyo de Avon. Banking data is read live from Nessie and
+merged with PNC-only data from MongoDB. See [docs/API.md](docs/API.md).
+
 ## Demo profiles
 
 | ID | Student | Highlights |
 |---|---|---|
 | `stu-001` (primary) | UT Dallas junior, CS, library job + family support | Card paid in full, deferred unsubsidized loan, emergency-fund goal |
-| `stu-002` | UNT sophomore, lives at home, retail job | No card, saving for a first car |
+| `stu-002` (demo login) | Poyo de Avon, UNT sophomore, lives at home, retail job | No card, saving for a first car |
 | `stu-003` | Texas A&M senior, co-op internship | Auto loan, card carried at ~28% utilization, relocation goal |
 | `stu-004` | UT Austin freshman, dining job + aid refund | Subsidized loan, card carried, tuition-gap goal |
 
@@ -77,8 +90,11 @@ backend/
   validation/   financial consistency checks
   schemas/      Pydantic models (student profile, Nessie bodies, seed plan, unified profile)
   database/     MongoDB persistence (students, goals, seed_plans, nessie_id_map, seed_runs)
-  integrations/nessie/  Nessie HTTP client (retries, timeouts, normalization) and resource paths
+  integrations/nessie/  Nessie HTTP client, response schemas, retrieval gateway
   seeding/      idempotent Nessie seeder, reset, read-back verifier
+  services/     ProfileService: cached Nessie retrieval with snapshot and pre-seed fallbacks
+  auth/         demo user, password hashing, signed session tokens
+  api/          FastAPI app (uvicorn backend.api.main:app)
   pipeline.py   generate → fill → map → normalize → validate
 scripts/        runnable pipeline steps
 data/           generated sample outputs, Nessie id maps and verification reports (committed)

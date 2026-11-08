@@ -27,6 +27,9 @@ from ..schemas.nessie import CREATE_PATHS, REF_PREFIX
 from ..schemas.seed_plan import SeedOperation, SeedPlan
 
 GLOBAL = "global"
+# Resources Nessie can update in place with PUT (they cannot be deleted, so updating is the
+# only way to apply plan changes such as a renamed customer).
+UPDATABLE = {"customer": ("first_name", "last_name", "address"), "merchant": ("name", "category", "address", "geocode")}
 MARKER_RE = re.compile(r"\[wp:[^\]]+\]")
 
 
@@ -70,6 +73,7 @@ class SeedResult:
     created: int = 0
     adopted: int = 0
     existing: int = 0
+    updated: int = 0
     failed: int = 0
     errors: list[dict] = field(default_factory=list)
     warnings: list[dict] = field(default_factory=list)
@@ -116,8 +120,32 @@ class Seeder:
             self._lists[key] = self.client.list(LIST_PATHS[resource].format(parent=parent_id))
         return self._lists[key]
 
-    def _find_existing(self, op: SeedOperation, parent_id: str | None, refresh=False) -> list[dict]:
-        return [r for r in self._listing(op.resource, parent_id, refresh) if matches(op, r)]
+    def _find_existing(self, op: SeedOperation, parent_id: str | None, refresh=False,
+                       profile_id: str | None = None) -> list[dict]:
+        rows = self._listing(op.resource, parent_id, refresh)
+        found = [r for r in rows if matches(op, r)]
+        if not found and op.resource == "customer" and profile_id:
+            # Renamed customer: same address and owns this profile's marker-tagged accounts.
+            prefix = f"[wp:{profile_id}:"
+            for r in rows:
+                if _same_address(r.get("address"), op.body["address"]) and any(
+                        (find_marker(a, "account") or "").startswith(prefix)
+                        for a in self.client.list(LIST_PATHS["account"].format(parent=r["_id"]))):
+                    found.append(r)
+        return found
+
+    def _apply_update(self, op: SeedOperation, nessie_id: str, record: dict | None, result: SeedResult) -> bool:
+        """PUT changed fields for updatable resources. Returns True if an update was sent."""
+        fields = UPDATABLE.get(op.resource)
+        if not fields:
+            return False
+        if record is not None and all(
+                (_same_address(record.get(f), op.body[f]) if f == "address" else record.get(f) == op.body[f])
+                for f in fields):
+            return False
+        self.client.update(ITEM_PATHS[op.resource].format(id=nessie_id), {f: op.body[f] for f in fields})
+        result.updated += 1
+        return True
 
     def _resolve_body(self, profile_id: str, op: SeedOperation) -> dict:
         body = dict(op.body)
@@ -150,17 +178,21 @@ class Seeder:
         if existing:
             if not self.revalidate or self.client.get_or_none(ITEM_PATHS[op.resource].format(id=existing["nessie_id"])):
                 if existing.get("body_hash") != body_hash(op.body):
-                    result.warnings.append({"local_key": op.local_key,
-                                            "warning": "plan changed since this record was seeded; use --reset to recreate"})
+                    if self._apply_update(op, existing["nessie_id"], None, result):
+                        self._record(scope, op, existing["nessie_id"], parent_id, existing.get("status", "created"))
+                    else:
+                        result.warnings.append({"local_key": op.local_key,
+                                                "warning": "plan changed since this record was seeded; use --reset to recreate"})
                 result.bump(op.resource, "existing")
                 return
             self.db.nessie_id_map.delete_one({"_id": existing["_id"]})
 
-        found = self._find_existing(op, parent_id)
+        found = self._find_existing(op, parent_id, profile_id=profile_id)
         if found:
             if len(found) > 1:
                 result.warnings.append({"local_key": op.local_key,
                                         "warning": f"{len(found)} matching records in Nessie; adopted the first"})
+            self._apply_update(op, found[0]["_id"], found[0], result)
             self._record(scope, op, found[0]["_id"], parent_id, "adopted")
             result.bump(op.resource, "adopted")
             return

@@ -122,6 +122,12 @@ class NessieClient:
             raise NessieError("POST", path, status, f"no objectCreated._id in response: {data}")
         return normalize(created)
 
+    def update(self, path: str, body: dict) -> dict | None:
+        """PUT (Nessie returns 202 with objectUpdated)."""
+        _, data = self.request("PUT", path, json=body)
+        updated = data.get("objectUpdated") if isinstance(data, dict) else None
+        return normalize(updated) if updated else None
+
     def delete(self, path: str) -> bool:
         try:
             self.request("DELETE", path, retry=True)  # DELETE is idempotent
