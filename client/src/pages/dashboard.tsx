@@ -42,8 +42,10 @@ export function Dashboard() {
       </aside>
 
       <main className="flex-1 p-8">
-        <Goal className="mb-8" />
-        <Outlet />
+        <div className="mx-auto w-full max-w-5xl">
+          <Goal className="mb-8" />
+          <Outlet />
+        </div>
       </main>
     </div>
   );
