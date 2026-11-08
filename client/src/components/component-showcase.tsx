@@ -67,6 +67,105 @@ const chartExamples = [
       height: 260,
     },
   },
+  {
+    type: 'line_chart',
+    props: {
+      title: 'Projected savings',
+      subtitle: 'Shaded band is the 10th–90th percentile of 1,000 simulations',
+      x: ['2026-01', '2026-02', '2026-03', '2026-04', '2026-05', '2026-06', '2026-07', '2026-08', '2026-09', '2026-10', '2026-11', '2026-12'],
+      forecastFrom: '2026-08',
+      valueFormat: { style: 'currency' },
+      referenceLines: [{ value: 12000, label: 'Car fund goal' }],
+      series: [
+        {
+          name: 'Savings',
+          values: [4200, 4900, 5300, 6100, 6650, 7400, 8100, 8900, 9700, 10500, 11300, 12100],
+          band: {
+            lower: [null, null, null, null, null, null, null, 8900, 9300, 9800, 10300, 10800],
+            upper: [null, null, null, null, null, null, null, 8900, 10100, 11200, 12300, 13400],
+          },
+        },
+      ],
+    },
+  },
+  {
+    type: 'line_chart',
+    props: {
+      title: 'Spending by category',
+      x: ['Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov'],
+      valueFormat: { style: 'currency' },
+      series: [
+        { name: 'Groceries', values: [420, 455, 390, 410, 386, 430] },
+        { name: 'Dining', values: [260, 310, 380, 290, 512, 340] },
+        { name: 'Transport', values: [150, 140, 160, 120, 142, 135] },
+      ],
+      highlight: ['Dining'],
+    },
+  },
+  {
+    type: 'histogram',
+    props: {
+      title: 'Transaction sizes, last 90 days',
+      valueFormat: { style: 'currency' },
+      countLabel: 'Transactions',
+      markers: ['median', 'mean'],
+      values: [4.5, 6.2, 8, 9.99, 11.5, 12, 12.75, 14, 15.3, 16, 18.4, 19.99, 21, 22.5, 23, 24.1, 25, 26.8, 28, 29.5, 31, 33, 34.2, 36, 38.5, 41, 44, 47.25, 52, 55, 58.9, 63, 68, 74.5, 82, 89, 96, 112, 128, 145, 162, 189, 240, 12.5, 18, 21.5, 24, 27, 9.5, 14.5, 16.8, 19, 22, 31.5, 35, 42, 48, 13, 17, 20, 23.5],
+    },
+  },
+  {
+    type: 'pie_chart',
+    props: {
+      title: 'Where October went',
+      valueFormat: { style: 'currency' },
+      data: [
+        { label: 'Rent', value: 1450 },
+        { label: 'Groceries', value: 386.4 },
+        { label: 'Dining', value: 512.75 },
+        { label: 'Transport', value: 142 },
+        { label: 'Subscriptions', value: 64.97 },
+        { label: 'Gifts', value: 90 },
+      ],
+    },
+  },
+  {
+    type: 'scatter_plot',
+    props: {
+      title: 'Income vs savings rate',
+      subtitle: 'Each dot is a month',
+      xAxis: { label: 'Monthly income', format: { style: 'currency' } },
+      yAxis: { label: 'Savings rate', format: { style: 'percent' } },
+      trendline: 'all',
+      highlight: ['Oct 2026'],
+      points: [
+        { x: 4200, y: 8, label: 'Jan 2026' },
+        { x: 4200, y: 11, label: 'Feb 2026' },
+        { x: 4350, y: 9, label: 'Mar 2026' },
+        { x: 4200, y: 14, label: 'Apr 2026' },
+        { x: 4650, y: 16, label: 'May 2026' },
+        { x: 4200, y: 6, label: 'Jun 2026' },
+        { x: 4650, y: 20, label: 'Jul 2026' },
+        { x: 4200, y: 12, label: 'Aug 2026' },
+        { x: 4800, y: 18, label: 'Sep 2026' },
+        { x: 5100, y: 29, label: 'Oct 2026' },
+      ],
+    },
+  },
+  {
+    type: 'gantt_chart',
+    props: {
+      title: 'Christmas car plan',
+      today: '2026-11-07',
+      markers: [{ date: '2026-12-20', label: 'Purchase' }],
+      tasks: [
+        { id: 'budget', name: 'Set budget', start: '2026-08-01', end: '2026-08-14', progress: 100, group: 'Plan' },
+        { id: 'save', name: 'Save down payment', start: '2026-08-15', end: '2026-12-10', progress: 72, group: 'Save', dependsOn: ['budget'] },
+        { id: 'research', name: 'Research models', start: '2026-09-01', end: '2026-10-31', progress: 100, group: 'Plan' },
+        { id: 'loan', name: 'Get loan pre-approval', start: '2026-11-01', durationDays: 21, progress: 30, group: 'Plan', dependsOn: ['research'] },
+        { id: 'test', name: 'Test drives', start: '2026-11-15', end: '2026-12-05', group: 'Buy', dependsOn: ['research'] },
+        { name: 'Buy the car', start: '2026-12-20', milestone: true, group: 'Buy', dependsOn: ['save', 'loan', 'test'] },
+      ],
+    },
+  },
 ]
 
 const variants: NonNullable<ButtonProps['variant']>[] = [
@@ -262,7 +361,7 @@ export function ComponentShowcase() {
         </section>
 
         <section className="space-y-4">
-          <h2 className="text-lg font-semibold">Bar chart (AI-driven)</h2>
+          <h2 className="text-lg font-semibold">Charts (AI-driven)</h2>
           <div className="grid gap-6 lg:grid-cols-2">
             {chartExamples.map((block, i) => (
               <AiComponent key={i} block={block} />

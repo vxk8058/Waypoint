@@ -1,0 +1,343 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ScatterPlotSpec",
+  "description": "Render a scatter plot: the relationship between two measures (e.g. income vs savings rate per month). Up to 3 coloured groups.",
+  "type": "object",
+  "required": [],
+  "additionalProperties": false,
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Short title, sentence case. Say what is measured."
+    },
+    "subtitle": {
+      "type": "string",
+      "description": "Optional context: units, period, or the takeaway."
+    },
+    "points": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "x",
+          "y"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "x": {
+            "type": "number"
+          },
+          "y": {
+            "type": "number"
+          },
+          "label": {
+            "type": "string"
+          },
+          "size": {
+            "type": "number",
+            "minimum": 0,
+            "description": "Optional third measure drawn as dot area."
+          }
+        }
+      },
+      "description": "Single-group shorthand."
+    },
+    "series": {
+      "type": "array",
+      "maxItems": 3,
+      "description": "Grouped points. More than 3 groups fold into grey Other.",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "points"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "points": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "x",
+                "y"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "x": {
+                  "type": "number"
+                },
+                "y": {
+                  "type": "number"
+                },
+                "label": {
+                  "type": "string"
+                },
+                "size": {
+                  "type": "number",
+                  "minimum": 0,
+                  "description": "Optional third measure drawn as dot area."
+                }
+              }
+            }
+          },
+          "color": {
+            "type": "string",
+            "enum": [
+              "purple",
+              "teal",
+              "orange",
+              "blue",
+              "neutral"
+            ]
+          }
+        }
+      }
+    },
+    "xAxis": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "label": {
+          "type": "string"
+        },
+        "show": {
+          "type": "boolean",
+          "default": true
+        },
+        "min": {
+          "type": "number"
+        },
+        "max": {
+          "type": "number"
+        },
+        "tickCount": {
+          "type": "integer",
+          "minimum": 2,
+          "maximum": 10,
+          "default": 5
+        },
+        "gridlines": {
+          "type": "boolean",
+          "default": true
+        },
+        "format": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "How numbers are printed.",
+          "properties": {
+            "style": {
+              "type": "string",
+              "enum": [
+                "number",
+                "currency",
+                "percent"
+              ],
+              "default": "number",
+              "description": "percent means values are already percentages (45 = 45%)."
+            },
+            "currency": {
+              "type": "string",
+              "description": "ISO 4217 code, default USD."
+            },
+            "decimals": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 6
+            },
+            "compact": {
+              "type": [
+                "boolean",
+                "string"
+              ],
+              "enum": [
+                true,
+                false,
+                "auto"
+              ],
+              "default": "auto",
+              "description": "12.4K / $1.2M notation. auto compacts at 10,000+."
+            },
+            "prefix": {
+              "type": "string"
+            },
+            "suffix": {
+              "type": "string",
+              "description": "Unit suffix, e.g. \" hrs\"."
+            }
+          }
+        },
+        "includeZero": {
+          "type": "boolean",
+          "default": false
+        }
+      }
+    },
+    "yAxis": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "label": {
+          "type": "string"
+        },
+        "show": {
+          "type": "boolean",
+          "default": true
+        },
+        "min": {
+          "type": "number"
+        },
+        "max": {
+          "type": "number"
+        },
+        "tickCount": {
+          "type": "integer",
+          "minimum": 2,
+          "maximum": 10,
+          "default": 5
+        },
+        "gridlines": {
+          "type": "boolean",
+          "default": true
+        },
+        "format": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "How numbers are printed.",
+          "properties": {
+            "style": {
+              "type": "string",
+              "enum": [
+                "number",
+                "currency",
+                "percent"
+              ],
+              "default": "number",
+              "description": "percent means values are already percentages (45 = 45%)."
+            },
+            "currency": {
+              "type": "string",
+              "description": "ISO 4217 code, default USD."
+            },
+            "decimals": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 6
+            },
+            "compact": {
+              "type": [
+                "boolean",
+                "string"
+              ],
+              "enum": [
+                true,
+                false,
+                "auto"
+              ],
+              "default": "auto",
+              "description": "12.4K / $1.2M notation. auto compacts at 10,000+."
+            },
+            "prefix": {
+              "type": "string"
+            },
+            "suffix": {
+              "type": "string",
+              "description": "Unit suffix, e.g. \" hrs\"."
+            }
+          }
+        },
+        "includeZero": {
+          "type": "boolean",
+          "default": false
+        }
+      }
+    },
+    "sizeLabel": {
+      "type": "string",
+      "description": "What size means."
+    },
+    "trendline": {
+      "type": "string",
+      "enum": [
+        "none",
+        "all",
+        "per-series"
+      ],
+      "default": "none",
+      "description": "Least-squares line with r²."
+    },
+    "highlight": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Point labels to emphasise."
+    },
+    "labels": {
+      "type": "string",
+      "enum": [
+        "auto",
+        "none",
+        "highlighted",
+        "all"
+      ],
+      "default": "auto"
+    },
+    "referenceLines": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "x": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "value"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "value": {
+                "type": "number"
+              },
+              "label": {
+                "type": "string"
+              }
+            }
+          },
+          "description": "Vertical rules."
+        },
+        "y": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "value"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "value": {
+                "type": "number"
+              },
+              "label": {
+                "type": "string"
+              }
+            }
+          },
+          "description": "Horizontal rules."
+        }
+      }
+    },
+    "height": {
+      "type": "integer",
+      "minimum": 180,
+      "maximum": 800,
+      "default": 320
+    },
+    "emptyMessage": {
+      "type": "string"
+    }
+  }
+}

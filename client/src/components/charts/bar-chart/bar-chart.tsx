@@ -1,8 +1,12 @@
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { useChartWarnings, useHiddenSeries } from "../shared/hooks";
+import { HALO, FONT } from "../shared/layout";
+import { useMemo, useRef, useState } from "react";
 import type { KeyboardEvent } from "react";
 import { normalizeBarChartSpec } from "./normalize";
-import { CHART_TOKENS, SERIES_COLORS, inkOn } from "./palette";
-import { makeFormatter, measureText, niceTicks, truncateToWidth } from "./scale";
+import { ChartFrame } from "../shared/chart-frame";
+import { CHART_TOKENS, SERIES_COLORS, inkOn } from "../shared/palette";
+import { makeFormatter, measureText, niceTicks, truncateToWidth } from "../shared/scale";
+import { ChartTooltip } from "../shared/tooltip";
 import type { BarChartSpec, ResolvedBarChartSpec, ValueLabels } from "./types";
 
 export interface BarChartClickEvent {
@@ -26,9 +30,6 @@ export interface BarChartProps {
 const BAR_MAX = 24; // px, bars never fill their slot
 const GAP = 2; // px surface gap between touching marks
 const RADIUS = 4; // px rounded data-end
-const FONT = 12;
-// A surface-coloured outline so text stays legible where it crosses a line or bar.
-const HALO = { stroke: "var(--color-surface)", strokeWidth: 3, strokeLinejoin: "round", paintOrder: "stroke" } as const;
 
 interface Row {
   category: string;
@@ -58,39 +59,15 @@ interface Label {
 
 export function BarChart({ spec: input, className = "", loading = false, onWarnings, onCategoryClick }: BarChartProps) {
   const { spec, warnings } = useMemo(() => normalizeBarChartSpec(input), [input]);
+  useChartWarnings("BarChart", warnings, onWarnings);
 
-  const onWarningsRef = useRef(onWarnings);
-  useLayoutEffect(() => {
-    onWarningsRef.current = onWarnings;
-  });
-  useEffect(() => {
-    if (!warnings.length) return;
-    onWarningsRef.current?.(warnings);
-    if (import.meta.env.DEV) console.warn("[BarChart] spec adjusted:", warnings);
-  }, [warnings]);
-
-  const [hidden, setHidden] = useState<Set<string>>(() => new Set());
+  const [hidden, toggleSeries] = useHiddenSeries(spec.series.length);
   const [active, setActive] = useState<number | null>(null);
-  const [showTable, setShowTable] = useState(false);
-  const [measureRef, width] = useElementWidth<HTMLDivElement>();
   const hitRefs = useRef<(SVGRectElement | null)[]>([]);
 
   const visible = useMemo(() => spec.series.filter((s) => !hidden.has(s.name)), [spec, hidden]);
   const rows = useMemo(() => buildRows(spec, visible), [spec, visible]);
   const isEmpty = rows.length === 0 || rows.every((r) => r.raw.every((v) => v === null));
-
-  const toggleSeries = (name: string) =>
-    setHidden((prev) => {
-      const next = new Set(prev);
-      if (next.has(name)) next.delete(name);
-      else if (spec.series.length - next.size > 1) next.add(name); // keep at least one
-      return next;
-    });
-
-  const geo = useMemo(
-    () => (width > 0 && !isEmpty ? layoutChart(spec, visible, rows, width) : null),
-    [spec, visible, rows, width, isEmpty],
-  );
 
   const onKeyDown = (e: KeyboardEvent<SVGSVGElement>) => {
     if (active === null) return;
@@ -112,260 +89,168 @@ export function BarChart({ spec: input, className = "", loading = false, onWarni
     });
 
   const stackedTotal = spec.layout !== "grouped" && visible.length > 1;
+  const fmtCell = (v: number | null) => (v === null ? "—" : tooltipFmt(v));
 
   return (
-    <figure
-      className={[
-        "m-0 rounded-xl border border-blue-grey-800 bg-surface p-5 transition-opacity",
-        loading ? "opacity-50" : "",
-        className,
-      ]
-        .filter(Boolean)
-        .join(" ")}
-      aria-busy={loading || undefined}
+    <ChartFrame
+      title={spec.title}
+      subtitle={spec.subtitle}
+      className={className}
+      loading={loading}
+      empty={isEmpty}
+      emptyMessage={spec.emptyMessage}
+      emptyHeight={spec.orientation === "vertical" ? spec.height : 160}
+      legend={
+        spec.legend.show
+          ? { items: spec.series.map((s) => ({ name: s.name, color: s.color, off: hidden.has(s.name) })), onToggle: toggleSeries }
+          : null
+      }
+      table={{
+        columns: [spec.categoryAxis.label ?? "Category", ...visible.map((s) => s.name), ...(stackedTotal ? ["Total"] : [])],
+        rows: rows.map((r) => [r.category, ...r.raw.map(fmtCell), ...(stackedTotal ? [tooltipFmt(r.total)] : [])]),
+        numeric: visible.map((_, i) => i + 1).concat(stackedTotal ? [visible.length + 1] : []),
+      }}
     >
-      {(spec.title || spec.subtitle || !isEmpty) && (
-        <header className="mb-4 flex items-start justify-between gap-4">
-          <div className="min-w-0">
-            {spec.title && <h3 className="text-base font-semibold text-blue-grey-050">{spec.title}</h3>}
-            {spec.subtitle && <p className="mt-0.5 text-sm text-blue-grey-300">{spec.subtitle}</p>}
-          </div>
-          {!isEmpty && (
-            <button
-              type="button"
-              onClick={() => setShowTable((s) => !s)}
-              aria-pressed={showTable}
-              className="shrink-0 cursor-pointer rounded-md px-2 py-1 text-xs font-medium text-blue-grey-300 transition-colors hover:bg-surface-raised hover:text-blue-grey-050 focus-visible:outline-2 focus-visible:outline-purple-400"
+      {(width) => {
+        const geo = layoutChart(spec, visible, rows, width);
+        return (
+          <>
+            <svg
+              width={width}
+              height={geo.height}
+              role="group"
+              aria-label={describe(spec, visible.map((s) => s.name))}
+              onKeyDown={onKeyDown}
+              className="block overflow-visible select-none"
+              style={{ fontFamily: "inherit", fontSize: FONT }}
             >
-              {showTable ? "Chart" : "Table"}
-            </button>
-          )}
-        </header>
-      )}
+          {/* Gridlines + value ticks */}
+          {spec.valueAxis.gridlines &&
+            geo.ticks.map((t) => <line key={`g${t.value}`} {...t.grid} stroke={CHART_TOKENS.grid} strokeWidth={1} shapeRendering="crispEdges" />)}
+          {spec.valueAxis.show &&
+            geo.ticks.map((t) => (
+              <text key={`t${t.value}`} {...t.label} fill={CHART_TOKENS.textMuted} style={{ fontVariantNumeric: "tabular-nums" }}>
+                {t.text}
+              </text>
+            ))}
 
-      {spec.legend.show && spec.series.length > 0 && !showTable && (
-        <ul className="mb-3 flex flex-wrap gap-x-4 gap-y-1.5" aria-label="Series">
-          {spec.series.map((s) => {
-            const off = hidden.has(s.name);
+          {/* Hover wash behind the active category */}
+          {active !== null && geo.bands[active] && <rect {...geo.bands[active]} rx={6} fill={CHART_TOKENS.hoverWash} opacity={0.7} />}
+
+          {/* Bars */}
+          {geo.bars.map((b) => {
+            const dimmed = spec.highlight.length > 0 && !spec.highlight.includes(rows[b.row].category);
             return (
-              <li key={s.name}>
-                <button
-                  type="button"
-                  onClick={() => toggleSeries(s.name)}
-                  aria-pressed={!off}
-                  title={off ? `Show ${s.name}` : `Hide ${s.name}`}
-                  className={[
-                    "flex cursor-pointer items-center gap-1.5 rounded text-xs text-blue-grey-300 transition-opacity hover:text-blue-grey-050 focus-visible:outline-2 focus-visible:outline-purple-400",
-                    off ? "opacity-40" : "",
-                  ].join(" ")}
-                >
-                  <span aria-hidden className="size-2.5 rounded-sm" style={{ background: SERIES_COLORS[s.color].fill }} />
-                  {s.name}
-                </button>
-              </li>
+              <path
+                key={b.key}
+                d={b.path}
+                fill={b.fill}
+                opacity={dimmed ? 0.35 : 1}
+                className="motion-safe:transition-[d,opacity,filter] motion-safe:duration-300"
+                style={{ filter: active === b.row ? "brightness(1.15)" : undefined }}
+              />
             );
           })}
-        </ul>
-      )}
 
-      <div ref={measureRef} className="relative">
-        {isEmpty ? (
-          <div
-            className="flex items-center justify-center rounded-lg border border-dashed border-blue-grey-800 text-sm text-blue-grey-500"
-            style={{ height: spec.orientation === "vertical" ? spec.height : 160 }}
-          >
-            {spec.emptyMessage}
-          </div>
-        ) : (
-          geo &&
-          !showTable && (
-            <>
-              <svg
-                width={width}
-                height={geo.height}
-                role="group"
-                aria-label={describe(spec, visible.map((s) => s.name))}
-                onKeyDown={onKeyDown}
-                className="block overflow-visible select-none"
-                style={{ fontFamily: "inherit", fontSize: FONT }}
-              >
-                {/* Gridlines + value ticks */}
-                {spec.valueAxis.gridlines &&
-                  geo.ticks.map((t) => <line key={`g${t.value}`} {...t.grid} stroke={CHART_TOKENS.grid} strokeWidth={1} shapeRendering="crispEdges" />)}
-                {spec.valueAxis.show &&
-                  geo.ticks.map((t) => (
-                    <text key={`t${t.value}`} {...t.label} fill={CHART_TOKENS.textMuted} style={{ fontVariantNumeric: "tabular-nums" }}>
-                      {t.text}
-                    </text>
-                  ))}
+          {/* Zero baseline — bars grow from here */}
+          <line {...geo.baseline} stroke={CHART_TOKENS.baseline} strokeWidth={1} shapeRendering="crispEdges" />
 
-                {/* Hover wash behind the active category */}
-                {active !== null && geo.bands[active] && <rect {...geo.bands[active]} rx={6} fill={CHART_TOKENS.hoverWash} opacity={0.7} />}
-
-                {/* Bars */}
-                {geo.bars.map((b) => {
-                  const dimmed = spec.highlight.length > 0 && !spec.highlight.includes(rows[b.row].category);
-                  return (
-                    <path
-                      key={b.key}
-                      d={b.path}
-                      fill={b.fill}
-                      opacity={dimmed ? 0.35 : 1}
-                      className="motion-safe:transition-[d,opacity,filter] motion-safe:duration-300"
-                      style={{ filter: active === b.row ? "brightness(1.15)" : undefined }}
-                    />
-                  );
-                })}
-
-                {/* Zero baseline — bars grow from here */}
-                <line {...geo.baseline} stroke={CHART_TOKENS.baseline} strokeWidth={1} shapeRendering="crispEdges" />
-
-                {/* Reference lines (targets, budgets) */}
-                {geo.references.map((r, i) => (
-                  <g key={`r${i}`}>
-                    <line {...r.line} stroke={CHART_TOKENS.reference} strokeWidth={1} strokeDasharray="4 3" shapeRendering="crispEdges" />
-                    {r.label && (
-                      <text {...r.label} fill={CHART_TOKENS.textSecondary} fontSize={11} {...HALO}>
-                        {r.label.text}
-                      </text>
-                    )}
-                  </g>
-                ))}
-
-                {/* Labels printed inside stacked segments (only where they fit) */}
-                {geo.bars.map(
-                  (b) =>
-                    b.inside && (
-                      <text key={`in${b.key}`} x={b.inside.x} y={b.inside.y} fill={b.inside.color} fontSize={11} fontWeight={600} textAnchor="middle" pointerEvents="none">
-                        {b.inside.text}
-                      </text>
-                    ),
-                )}
-
-                {/* Value labels at bar tips */}
-                {geo.valueLabels.map((l) => (
-                  <text key={l.key} x={l.x} y={l.y} textAnchor={l.anchor} fill={CHART_TOKENS.textPrimary} fontWeight={600} pointerEvents="none" {...HALO}>
-                    {l.text}
-                  </text>
-                ))}
-
-                {/* Category labels */}
-                {spec.categoryAxis.show &&
-                  geo.categoryLabels.map((l) => (
-                    <text key={l.key} x={l.x} y={l.y} textAnchor={l.anchor} fill={CHART_TOKENS.textSecondary}>
-                      <title>{rows[Number(l.key)].category}</title>
-                      {l.text}
-                    </text>
-                  ))}
-
-                {/* Axis titles */}
-                {geo.axisTitles.map((a) => (
-                  <text key={a.key} x={a.x} y={a.y} transform={a.rotate ? `rotate(-90 ${a.x} ${a.y})` : undefined} textAnchor="middle" fill={CHART_TOKENS.textMuted} fontSize={11}>
-                    {a.text}
-                  </text>
-                ))}
-
-                {/* Hit targets: the whole category band, larger than any bar */}
-                {geo.bands.map((band, i) => (
-                  <rect
-                    key={`hit${i}`}
-                    ref={(el) => {
-                      hitRefs.current[i] = el;
-                    }}
-                    {...band}
-                    fill="transparent"
-                    tabIndex={0}
-                    role={onCategoryClick ? "button" : "img"}
-                    aria-label={`${rows[i].category}: ${visible
-                      .map((s, j) => `${s.name} ${rows[i].raw[j] === null ? "no data" : tooltipFmt(rows[i].raw[j]!)}`)
-                      .join(", ")}`}
-                    className={["outline-none", onCategoryClick ? "cursor-pointer" : ""].join(" ")}
-                    onPointerEnter={() => setActive(i)}
-                    onPointerLeave={() => setActive((a) => (a === i ? null : a))}
-                    onFocus={() => setActive(i)}
-                    onBlur={() => setActive((a) => (a === i ? null : a))}
-                    onClick={() => fireClick(i)}
-                    onKeyDown={(e) => {
-                      if (e.key === "Escape") e.currentTarget.blur();
-                      if (onCategoryClick && (e.key === "Enter" || e.key === " ")) {
-                        e.preventDefault();
-                        fireClick(i);
-                      }
-                    }}
-                  />
-                ))}
-              </svg>
-
-              {active !== null && rows[active] && geo.tooltips[active] && (
-                <div
-                  role="tooltip"
-                  className="pointer-events-none absolute z-10 min-w-36 rounded-lg border border-blue-grey-700 bg-surface-raised px-3 py-2 shadow-lg shadow-black/40"
-                  style={{ left: geo.tooltips[active].x, top: geo.tooltips[active].y, transform: geo.tooltips[active].transform }}
-                >
-                  <p className="mb-1.5 text-xs text-blue-grey-300">{rows[active].category}</p>
-                  <ul className="space-y-1">
-                    {visible.map((s, j) => {
-                      const v = rows[active].raw[j];
-                      const share = spec.layout === "percent" ? rows[active].display[j] : null;
-                      return (
-                        <li key={s.name} className="flex items-center gap-2 text-sm">
-                          <span aria-hidden className="h-0.5 w-3 shrink-0 rounded-full" style={{ background: SERIES_COLORS[s.color].fill }} />
-                          <span className="font-semibold tabular-nums text-blue-grey-050">
-                            {v === null ? "—" : tooltipFmt(v)}
-                            {share !== null && <span className="ml-1 font-normal text-blue-grey-300">({Math.round(share)}%)</span>}
-                          </span>
-                          <span className="truncate text-blue-grey-300">{s.name}</span>
-                        </li>
-                      );
-                    })}
-                    {stackedTotal && (
-                      <li className="mt-1 flex items-center gap-2 border-t border-blue-grey-700 pt-1 text-sm">
-                        <span className="w-3 shrink-0" />
-                        <span className="font-semibold tabular-nums text-blue-grey-050">{tooltipFmt(rows[active].total)}</span>
-                        <span className="text-blue-grey-300">Total</span>
-                      </li>
-                    )}
-                  </ul>
-                </div>
+          {/* Reference lines (targets, budgets) */}
+          {geo.references.map((r, i) => (
+            <g key={`r${i}`}>
+              <line {...r.line} stroke={CHART_TOKENS.reference} strokeWidth={1} strokeDasharray="4 3" shapeRendering="crispEdges" />
+              {r.label && (
+                <text {...r.label} fill={CHART_TOKENS.textSecondary} fontSize={11} {...HALO}>
+                  {r.label.text}
+                </text>
               )}
-            </>
-          )
-        )}
+            </g>
+          ))}
 
-        {/* Table view: visible when toggled, always available to screen readers */}
-        {!isEmpty && (
-          <div className={showTable ? "overflow-x-auto" : "sr-only"}>
-            <table className="w-full text-sm">
-              {spec.title && <caption className="sr-only">{spec.title}</caption>}
-              <thead>
-                <tr className="border-b border-blue-grey-800 text-left text-xs text-blue-grey-400">
-                  <th className="py-2 pr-4 font-medium">{spec.categoryAxis.label ?? "Category"}</th>
-                  {visible.map((s) => (
-                    <th key={s.name} className="py-2 pr-4 text-right font-medium">
-                      {s.name}
-                    </th>
-                  ))}
-                  {stackedTotal && <th className="py-2 text-right font-medium">Total</th>}
-                </tr>
-              </thead>
-              <tbody>
-                {rows.map((r) => (
-                  <tr key={r.category} className="border-b border-blue-grey-800/60 last:border-0">
-                    <td className="py-2 pr-4 text-blue-grey-300">{r.category}</td>
-                    {r.raw.map((v, j) => (
-                      <td key={j} className="py-2 pr-4 text-right tabular-nums text-blue-grey-050">
-                        {v === null ? "—" : tooltipFmt(v)}
-                      </td>
-                    ))}
-                    {stackedTotal && <td className="py-2 text-right font-semibold tabular-nums text-blue-grey-050">{tooltipFmt(r.total)}</td>}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
-      </div>
-    </figure>
+          {/* Labels printed inside stacked segments (only where they fit) */}
+          {geo.bars.map(
+            (b) =>
+              b.inside && (
+                <text key={`in${b.key}`} x={b.inside.x} y={b.inside.y} fill={b.inside.color} fontSize={11} fontWeight={600} textAnchor="middle" pointerEvents="none">
+                  {b.inside.text}
+                </text>
+              ),
+          )}
+
+          {/* Value labels at bar tips */}
+          {geo.valueLabels.map((l) => (
+            <text key={l.key} x={l.x} y={l.y} textAnchor={l.anchor} fill={CHART_TOKENS.textPrimary} fontWeight={600} pointerEvents="none" {...HALO}>
+              {l.text}
+            </text>
+          ))}
+
+          {/* Category labels */}
+          {spec.categoryAxis.show &&
+            geo.categoryLabels.map((l) => (
+              <text key={l.key} x={l.x} y={l.y} textAnchor={l.anchor} fill={CHART_TOKENS.textSecondary}>
+                <title>{rows[Number(l.key)].category}</title>
+                {l.text}
+              </text>
+            ))}
+
+          {/* Axis titles */}
+          {geo.axisTitles.map((a) => (
+            <text key={a.key} x={a.x} y={a.y} transform={a.rotate ? `rotate(-90 ${a.x} ${a.y})` : undefined} textAnchor="middle" fill={CHART_TOKENS.textMuted} fontSize={11}>
+              {a.text}
+            </text>
+          ))}
+
+          {/* Hit targets: the whole category band, larger than any bar */}
+          {geo.bands.map((band, i) => (
+            <rect
+              key={`hit${i}`}
+              ref={(el) => {
+                hitRefs.current[i] = el;
+              }}
+              {...band}
+              fill="transparent"
+              tabIndex={0}
+              role={onCategoryClick ? "button" : "img"}
+              aria-label={`${rows[i].category}: ${visible
+                .map((s, j) => `${s.name} ${rows[i].raw[j] === null ? "no data" : tooltipFmt(rows[i].raw[j]!)}`)
+                .join(", ")}`}
+              className={["outline-none", onCategoryClick ? "cursor-pointer" : ""].join(" ")}
+              onPointerEnter={() => setActive(i)}
+              onPointerLeave={() => setActive((a) => (a === i ? null : a))}
+              onFocus={() => setActive(i)}
+              onBlur={() => setActive((a) => (a === i ? null : a))}
+              onClick={() => fireClick(i)}
+              onKeyDown={(e) => {
+                if (e.key === "Escape") e.currentTarget.blur();
+                if (onCategoryClick && (e.key === "Enter" || e.key === " ")) {
+                  e.preventDefault();
+                  fireClick(i);
+                }
+              }}
+            />
+          ))}
+            </svg>
+
+            {active !== null && rows[active] && geo.tooltips[active] && (
+              <ChartTooltip
+                {...geo.tooltips[active]}
+                title={rows[active].category}
+                rows={visible.map((s, j) => {
+                  const share = spec.layout === "percent" ? rows[active].display[j] : null;
+                  return {
+                    color: s.color,
+                    value: fmtCell(rows[active].raw[j]),
+                    extra: share !== null ? `(${Math.round(share)}%)` : undefined,
+                    label: s.name,
+                  };
+                })}
+                footer={stackedTotal ? { value: tooltipFmt(rows[active].total), label: "Total" } : undefined}
+              />
+            )}
+          </>
+        );
+      }}
+    </ChartFrame>
   );
 }
 
@@ -690,16 +575,3 @@ function describe(spec: ResolvedBarChartSpec, names: string[]): string {
   return `${what}. ${spec.categories.length} categories${names.length > 1 ? `, series: ${names.join(", ")}` : ""}. Use arrow keys to move between categories.`;
 }
 
-function useElementWidth<T extends HTMLElement>() {
-  const ref = useRef<T>(null);
-  const [width, setWidth] = useState(0);
-  useLayoutEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    setWidth(el.getBoundingClientRect().width);
-    const ro = new ResizeObserver(([entry]) => setWidth(Math.floor(entry.contentRect.width)));
-    ro.observe(el);
-    return () => ro.disconnect();
-  }, []);
-  return [ref, width] as const;
-}

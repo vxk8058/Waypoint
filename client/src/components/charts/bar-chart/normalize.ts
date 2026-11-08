@@ -1,4 +1,19 @@
-import { CATEGORICAL_ORDER, MAX_COLORED_SERIES, SERIES_COLORS } from "./palette";
+import {
+  assignColors,
+  clamp,
+  isObject,
+  normalizeFormat,
+  normalizeReferenceLines,
+  optionalNumber,
+  optionalString,
+  pickColor,
+  pickEnum,
+  sumNullable,
+  toArray,
+  toNumber,
+  uniqueNames,
+} from "../shared/coerce";
+import { MAX_COLORED_SERIES } from "../shared/palette";
 import type {
   BarLayout,
   NormalizeResult,
@@ -6,7 +21,6 @@ import type {
   ResolvedBarChartSpec,
   SeriesColor,
   SortOrder,
-  ValueFormat,
   ValueLabels,
 } from "./types";
 
@@ -48,7 +62,7 @@ export function normalizeBarChartSpec(input: unknown): NormalizeResult {
         {
           name: typeof s.name === "string" && s.name.trim() ? s.name : `Series ${i + 1}`,
           values: Array.from(values, (v) => v ?? null),
-          color: pickEnum(s.color, Object.keys(SERIES_COLORS) as SeriesColor[], undefined, `series[${i}].color`, warnings),
+          color: pickColor(s.color, `series[${i}].color`, warnings),
         },
       ];
     });
@@ -66,18 +80,11 @@ export function normalizeBarChartSpec(input: unknown): NormalizeResult {
   }
 
   // Duplicate category names would collide as keys and confuse the tooltip.
-  const seen = new Map<string, number>();
-  categories = categories.map((c) => {
-    const n = seen.get(c) ?? 0;
-    seen.set(c, n + 1);
-    if (n > 0) warnings.push(`Duplicate category "${c}" renamed to "${c} (${n + 1})".`);
-    return n > 0 ? `${c} (${n + 1})` : c;
-  });
+  categories = uniqueNames(categories, warnings, "category");
 
   // Colour: explicit pins first, then fill remaining series from the palette in order.
-  const pinned = new Set(series.map((s) => s.color).filter(Boolean));
-  const free = CATEGORICAL_ORDER.filter((c) => !pinned.has(c));
-  let resolved = series.map((s) => ({ ...s, color: s.color ?? free.shift() ?? ("neutral" as SeriesColor) }));
+  const colors = assignColors(series.map((s) => s.color));
+  let resolved = series.map((s, i) => ({ ...s, color: colors[i] }));
 
   // More than four hues stop being distinguishable — fold the tail into "Other".
   if (resolved.length > MAX_COLORED_SERIES + 1) {
@@ -155,96 +162,11 @@ export function normalizeBarChartSpec(input: unknown): NormalizeResult {
         if (!categorySet.has(h)) warnings.push(`highlight "${h}" is not a category; ignored.`);
         return categorySet.has(h);
       }),
-    referenceLines: toArray(raw.referenceLines).flatMap((r, i) => {
-      const value = isObject(r) ? toNumber(r.value, `referenceLines[${i}].value`, warnings) : null;
-      if (value === null) return [];
-      return [{ value, label: isObject(r) ? optionalString(r.label) : undefined }];
-    }),
+    referenceLines: normalizeReferenceLines(raw.referenceLines, warnings),
     sort,
     height: clamp(optionalNumber(raw.height) ?? 320, 160, 800),
     emptyMessage: optionalString(raw.emptyMessage) ?? "No data to show yet.",
   };
 
   return { spec, warnings };
-}
-
-function normalizeFormat(input: unknown): ValueFormat {
-  if (!isObject(input)) return {};
-  const style = input.style === "currency" || input.style === "percent" ? input.style : "number";
-  const decimals = optionalNumber(input.decimals);
-  return {
-    style,
-    currency: typeof input.currency === "string" && /^[A-Za-z]{3}$/.test(input.currency) ? input.currency.toUpperCase() : "USD",
-    decimals: decimals === undefined ? undefined : clamp(Math.round(decimals), 0, 6),
-    compact: typeof input.compact === "boolean" ? input.compact : "auto",
-    prefix: optionalString(input.prefix),
-    suffix: optionalString(input.suffix),
-  };
-}
-
-// ---------- small coercion helpers ----------
-
-function isObject(v: unknown): v is Record<string, unknown> {
-  return typeof v === "object" && v !== null && !Array.isArray(v);
-}
-
-function toArray(v: unknown): unknown[] {
-  return Array.isArray(v) ? v : [];
-}
-
-function optionalString(v: unknown): string | undefined {
-  return typeof v === "string" && v.trim() ? v : undefined;
-}
-
-function optionalNumber(v: unknown): number | undefined {
-  const n = typeof v === "string" ? Number(v) : v;
-  return typeof n === "number" && Number.isFinite(n) ? n : undefined;
-}
-
-function toNumber(v: unknown, path: string, warnings: string[]): number | null {
-  if (v === null || v === undefined || v === "") return null;
-  if (typeof v === "number") return Number.isFinite(v) ? v : null;
-  if (typeof v === "string") {
-    const cleaned = v.replace(/[\s,$€£¥%]/g, "");
-    const n = Number(cleaned);
-    if (cleaned && Number.isFinite(n)) return n;
-  }
-  warnings.push(`${path} is not a number (${JSON.stringify(v)}); treated as no data.`);
-  return null;
-}
-
-function pickEnum<T extends string>(
-  v: unknown,
-  allowed: readonly T[],
-  fallback: T,
-  path: string,
-  warnings: string[],
-): T;
-function pickEnum<T extends string>(
-  v: unknown,
-  allowed: readonly T[],
-  fallback: undefined,
-  path: string,
-  warnings: string[],
-): T | undefined;
-function pickEnum<T extends string>(
-  v: unknown,
-  allowed: readonly T[],
-  fallback: T | undefined,
-  path: string,
-  warnings: string[],
-): T | undefined {
-  if (v === undefined || v === null) return fallback;
-  if (typeof v === "string" && (allowed as readonly string[]).includes(v)) return v as T;
-  warnings.push(`${path} "${String(v)}" is not one of ${allowed.join(", ")}; using ${fallback ?? "default"}.`);
-  return fallback;
-}
-
-function sumNullable(values: (number | null)[]): number | null {
-  const present = values.filter((v): v is number => v !== null);
-  return present.length ? present.reduce((a, b) => a + b, 0) : null;
-}
-
-function clamp(n: number, lo: number, hi: number) {
-  return Math.min(hi, Math.max(lo, n));
 }

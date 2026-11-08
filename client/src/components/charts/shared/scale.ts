@@ -1,19 +1,42 @@
 import type { ValueFormat } from "./types";
 
-/** Round, human-friendly ticks covering [min, max]. Always includes 0. */
-export function niceTicks(min: number, max: number, count: number): number[] {
-  let lo = Math.min(0, min);
-  let hi = Math.max(0, max);
-  if (lo === hi) hi = 1;
-  const raw = (hi - lo) / Math.max(1, count - 1);
-  const mag = 10 ** Math.floor(Math.log10(raw));
-  const norm = raw / mag;
-  const step = (norm <= 1 ? 1 : norm <= 2 ? 2 : norm <= 2.5 ? 2.5 : norm <= 5 ? 5 : 10) * mag;
+
+/**
+ * Round, human-friendly ticks covering [min, max].
+ * includeZero (default true) — bars and histograms must start at zero; lines and
+ * scatter may not.
+ */
+export function niceTicks(min: number, max: number, count: number, includeZero = true): number[] {
+  let lo = includeZero ? Math.min(0, min) : min;
+  let hi = includeZero ? Math.max(0, max) : max;
+  if (lo === hi) {
+    if (lo === 0) hi = 1;
+    else {
+      const pad = Math.abs(lo) * 0.1;
+      lo -= pad;
+      hi += pad;
+    }
+  }
+  const step = niceStep((hi - lo) / Math.max(1, count - 1));
   lo = Math.floor(lo / step + 1e-9) * step;
   hi = Math.ceil(hi / step - 1e-9) * step;
   const ticks: number[] = [];
   for (let v = lo; v <= hi + step / 2; v += step) ticks.push(Number(v.toPrecision(12)));
   return ticks;
+}
+
+/** Snap a raw step to 1, 2, 2.5 or 5 × 10ⁿ. */
+export function niceStep(raw: number): number {
+  if (!(raw > 0)) return 1;
+  const mag = 10 ** Math.floor(Math.log10(raw));
+  const norm = raw / mag;
+  return (norm <= 1 ? 1 : norm <= 2 ? 2 : norm <= 2.5 ? 2.5 : norm <= 5 ? 5 : 10) * mag;
+}
+
+/** Linear map from a domain to a pixel range. */
+export function linear(d0: number, d1: number, r0: number, r1: number) {
+  const span = d1 - d0 || 1;
+  return (v: number) => r0 + ((v - d0) / span) * (r1 - r0);
 }
 
 export interface Formatter {

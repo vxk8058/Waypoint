@@ -5,8 +5,8 @@
  * directly as a tool call. Keep this file in sync with `bar-chart.schema.json`.
  */
 
-/** Categorical colours, validated for colour-blind separation on the dark surface. */
-export type SeriesColor = "purple" | "teal" | "orange" | "blue" | "neutral";
+import type { AxisOptions, ReferenceLine, SeriesColor, ValueFormat } from "../shared/types";
+export type { AxisOptions, ReferenceLine, SeriesColor, ValueFormat };
 
 export type Orientation = "vertical" | "horizontal";
 
@@ -21,30 +21,12 @@ export type ValueLabels = "auto" | "none" | "all" | "max" | "min-max" | "last" |
 
 export type SortOrder = "none" | "asc" | "desc";
 
-export interface ValueFormat {
-  /** number (default) · currency · percent (values are already percentages: 45 → "45%"). */
-  style?: "number" | "currency" | "percent";
-  /** ISO 4217 code, used when style is "currency". Default "USD". */
-  currency?: string;
-  /** Fixed number of decimals. Default: up to 2 (0 for currency when compact). */
-  decimals?: number;
-  /** Compact notation (12.4K, $1.2M). "auto" (default) compacts once values reach 10,000. */
-  compact?: boolean | "auto";
-  prefix?: string;
-  suffix?: string;
-}
-
 export interface BarSeries {
   name: string;
   /** One value per category, in the same order as `categories`. null = no data. */
   values: (number | null)[];
   /** Pin a colour so an entity keeps it across charts. Defaults to palette order. */
   color?: SeriesColor;
-}
-
-export interface AxisOptions {
-  label?: string;
-  show?: boolean;
 }
 
 export interface ValueAxisOptions extends AxisOptions {
@@ -55,11 +37,6 @@ export interface ValueAxisOptions extends AxisOptions {
   /** Approximate number of ticks. Default 5. */
   tickCount?: number;
   gridlines?: boolean;
-}
-
-export interface ReferenceLine {
-  value: number;
-  label?: string;
 }
 
 export interface BarChartSpec {
@@ -101,8 +78,4 @@ export interface ResolvedBarChartSpec
   legend: { show: boolean };
 }
 
-export interface NormalizeResult {
-  spec: ResolvedBarChartSpec;
-  /** Everything that was coerced or dropped — log it or return it to the model. */
-  warnings: string[];
-}
+export type NormalizeResult = import("../shared/types").Normalized<ResolvedBarChartSpec>;
