@@ -1,11 +1,8 @@
-import { ComponentShowcase } from './components/component-showcase'
-import { SignIn } from './pages/sign-in'
+import { RouterProvider } from 'react-router/dom'
+import { router } from './router'
 
 function App() {
-  // Temporary until a router is added: visit /components to see the component showcase.
-  if (window.location.pathname === '/components') return <ComponentShowcase />
-
-  return <SignIn />
+  return <RouterProvider router={router} />
 }
 
 export default App

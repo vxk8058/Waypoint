@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router";
 import type { SubmitEvent, SVGProps } from "react";
 import logo from "../assets/logo.png";
 import { Button } from "../components/button";
@@ -36,6 +37,7 @@ function EyeIcon({ off = false, ...props }: SVGProps<SVGSVGElement> & { off?: bo
 
 export function SignIn() {
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
 
   function handleSubmit(e: SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -45,6 +47,7 @@ export function SignIn() {
       username: data.get("username"),
       remember: data.get("remember") === "on",
     });
+    navigate("/dashboard");
   }
 
   return (
