@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import type { SubmitEvent, SVGProps } from "react";
 import logo from "../assets/logo.png";
 import { Button } from "../components/button";
 import { Text } from "../components/text";
 import { TextField } from "../components/text-field";
+import { login } from "../lib/api";
 
 function UserIcon(props: SVGProps<SVGSVGElement>) {
   return (
@@ -37,17 +38,24 @@ function EyeIcon({ off = false, ...props }: SVGProps<SVGSVGElement> & { off?: bo
 
 export function SignIn() {
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState<string>();
+  const [submitting, setSubmitting] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = (location.state as { from?: string } | null)?.from ?? "/dashboard";
 
-  function handleSubmit(e: SubmitEvent<HTMLFormElement>) {
+  async function handleSubmit(e: SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
-    // TODO: hook up authentication
-    console.log("sign in", {
-      username: data.get("username"),
-      remember: data.get("remember") === "on",
-    });
-    navigate("/dashboard");
+    setError(undefined);
+    setSubmitting(true);
+    try {
+      await login(String(data.get("email") ?? ""), String(data.get("password") ?? ""));
+      navigate(from, { replace: true });
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Sign in failed");
+      setSubmitting(false);
+    }
   }
 
   return (
@@ -61,8 +69,9 @@ export function SignIn() {
 
         <form onSubmit={handleSubmit} className="mt-8 space-y-5">
           <TextField
-            label="Username"
-            name="username"
+            label="Email"
+            name="email"
+            type="email"
             autoComplete="username"
             size="lg"
             leading={<UserIcon />}
@@ -88,12 +97,13 @@ export function SignIn() {
                 <EyeIcon off={showPassword} />
               </button>
             }
+            error={error}
             required
             fullWidth
           />
 
-          <Button type="submit" size="lg" fullWidth className="mt-8 font-semibold">
-            Sign in
+          <Button type="submit" size="lg" fullWidth disabled={submitting} className="mt-8 font-semibold">
+            {submitting ? "Signing in…" : "Sign in"}
           </Button>
         </form>
       </div>

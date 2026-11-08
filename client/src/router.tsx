@@ -1,4 +1,5 @@
 import { createBrowserRouter, Navigate } from "react-router";
+import { RequireAuth } from "./components/require-auth";
 import { ComponentShowcase } from "./components/component-showcase";
 import { Dashboard } from "./pages/dashboard";
 import { Home } from "./pages/home";
@@ -11,7 +12,11 @@ export const router = createBrowserRouter([
   { path: "/sign-in", element: <SignIn /> },
   {
     path: "/dashboard",
-    element: <Dashboard />,
+    element: (
+      <RequireAuth>
+        <Dashboard />
+      </RequireAuth>
+    ),
     children: [
       { index: true, element: <Home /> },
       { path: "transactions", element: <Transactions /> },
