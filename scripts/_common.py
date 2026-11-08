@@ -31,8 +31,9 @@ def profile_ids() -> list[str]:
     return sorted(p.stem for p in PROFILES_DIR.glob("stu-*.json"))
 
 
-NESSIE_DIR = DATA / "nessie"
-VERIFICATION_DIR = DATA / "verification"
+# Run outputs that change on every run (or per Nessie key) stay local: data/local/ is gitignored.
+NESSIE_DIR = DATA / "local" / "nessie"
+VERIFICATION_DIR = DATA / "local" / "verification"
 
 
 def read_plan(profile_id: str):

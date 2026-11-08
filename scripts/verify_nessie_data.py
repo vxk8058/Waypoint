@@ -1,6 +1,6 @@
 """Phase 3: read seeded data back from Nessie and verify it against the plan and ledger.
 
-Writes data/verification/<id>.json, logs to MongoDB seed_runs and records the Nessie
+Writes data/local/verification/<id>_nessie.json (gitignored), logs to MongoDB seed_runs and records the Nessie
 customer id on the student document. Exit code 1 if any profile fails.
 """
 import argparse

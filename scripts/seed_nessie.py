@@ -5,7 +5,7 @@
     python scripts/seed_nessie.py stu-001 --reset --yes   # delete this profile's Nessie accounts
                                                           # and records, then seed again
 
-Nessie ids are stored in MongoDB (nessie_id_map) and exported to data/nessie/.
+Nessie ids are stored in MongoDB (nessie_id_map) and exported to data/local/nessie/ (gitignored).
 """
 import argparse
 import uuid

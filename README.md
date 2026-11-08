@@ -52,12 +52,12 @@ python scripts/seed_nessie.py stu-001 --reset --yes   # delete stu-001's Nessie 
 ```
 
 - Seeding is idempotent. Each plan step has a stable key. Nessie ids are stored in MongoDB
-  (`nessie_id_map`) the moment they are created, and exported to `data/nessie/`.
+  (`nessie_id_map`) the moment they are created, and exported to `data/local/nessie/` (gitignored).
 - If MongoDB has no id for a step (fresh database, crash, another machine), the seeder finds
   the existing Nessie record by its `[wp:...]` marker and reuses it instead of duplicating it.
 - Verification checks every record and field, account balances, each account's net activity
   against the ledger, monthly income, and stray marker-tagged records. Reports go to
-  `data/verification/` and the `seed_runs` collection.
+  `data/local/verification/` (gitignored) and the `seed_runs` collection.
 - Seeding is a setup step only. Simulations never write to Nessie.
 
 ## Phase 4: run the API
@@ -97,7 +97,7 @@ backend/
   api/          FastAPI app (uvicorn backend.api.main:app)
   pipeline.py   generate → fill → map → normalize → validate
 scripts/        runnable pipeline steps
-data/           generated sample outputs, Nessie id maps and verification reports (committed)
+data/           generated sample outputs (committed); data/local/ holds run reports and id maps (gitignored)
 docs/           DATA_MAPPING.md
 third_party/pnc_wellness/   vendored PNC toolkit (Apache-2.0, unmodified)
 tests/
