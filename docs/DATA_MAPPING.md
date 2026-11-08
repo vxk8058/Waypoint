@@ -76,3 +76,15 @@ Same rules as PNC `Lab_Package/financial_tools.summarize_transaction_history`:
 - Debt payments count on the liability side only.
 - Interest and fees are reported separately; savings interest is non-cash.
 - The goal earmark (`current_saved`) is part of the savings balance, never all of it.
+
+## Seeding (Phase 3)
+
+| Concern | Approach |
+|---|---|
+| Order | Customer → merchants → accounts → loans → bills → transactions (chronological) |
+| Duplicates | Use the stored id; else adopt a Nessie record with the same marker (customers and merchants: same name and address); else create |
+| Crashes | Each id is saved right after its create call, so a re-run resumes where it stopped |
+| Ambiguous failures | A POST that times out or returns 5xx is not blindly retried: Nessie is re-checked for the marker first |
+| Stale ids | `--revalidate` GETs each stored id and recreates records deleted in Nessie |
+| Reset | `--reset` deletes the profile's marker-tagged records under its accounts, then the accounts (Nessie does not cascade); customers and merchants are kept and reused |
+| Bills | Nessie computes `upcoming_payment_date` itself from today's date; use it for upcoming obligations |

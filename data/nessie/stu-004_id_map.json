@@ -1,0 +1,1308 @@
+{
+  "profile_id": "stu-004",
+  "nessie_customer_id": "6abbf9f3-9e2b-4e39-9ed0-22f44e418462",
+  "records": [
+    {
+      "local_key": "stu-004:customer",
+      "nessie_id": "6abbf9f3-9e2b-4e39-9ed0-22f44e418462",
+      "resource": "customer",
+      "source_record_id": "stu-004"
+    },
+    {
+      "local_key": "merchant:m-austin-campus-co-op-books",
+      "nessie_id": "d5c9dd24-2708-409c-8f2f-dca9f660824a",
+      "resource": "merchant",
+      "source_record_id": "m-austin-campus-co-op-books"
+    },
+    {
+      "local_key": "merchant:m-austin-dean-keeton-thrift",
+      "nessie_id": "dddb6e44-6f5a-4e7a-9cdf-5e64c228d369",
+      "resource": "merchant",
+      "source_record_id": "m-austin-dean-keeton-thrift"
+    },
+    {
+      "local_key": "merchant:m-austin-drag-street-grocery",
+      "nessie_id": "b5dc0f02-d150-44f1-8ef8-760ff036fb76",
+      "resource": "merchant",
+      "source_record_id": "m-austin-drag-street-grocery"
+    },
+    {
+      "local_key": "merchant:m-austin-forty-acres-coffee",
+      "nessie_id": "17493c70-f0a3-4ba5-aa09-d9715a9157aa",
+      "resource": "merchant",
+      "source_record_id": "m-austin-forty-acres-coffee"
+    },
+    {
+      "local_key": "merchant:m-austin-guadalupe-taqueria",
+      "nessie_id": "cdf595d1-5fa0-4ded-86d5-b7e1dad0843e",
+      "resource": "merchant",
+      "source_record_id": "m-austin-guadalupe-taqueria"
+    },
+    {
+      "local_key": "merchant:m-austin-hyde-park-arcade",
+      "nessie_id": "f0a16de2-560c-43e0-afab-eccf9c1bfde9",
+      "resource": "merchant",
+      "source_record_id": "m-austin-hyde-park-arcade"
+    },
+    {
+      "local_key": "merchant:m-austin-longhorn-tech-shop",
+      "nessie_id": "27018718-ee98-4e69-9104-4257a7c639a2",
+      "resource": "merchant",
+      "source_record_id": "m-austin-longhorn-tech-shop"
+    },
+    {
+      "local_key": "merchant:m-austin-rideloop-rides",
+      "nessie_id": "4b573684-788c-481e-8a71-13d6558a51e0",
+      "resource": "merchant",
+      "source_record_id": "m-austin-rideloop-rides"
+    },
+    {
+      "local_key": "merchant:m-austin-rio-grande-fuel",
+      "nessie_id": "511ba99c-edff-4d89-bfbf-f46e2e7da87c",
+      "resource": "merchant",
+      "source_record_id": "m-austin-rio-grande-fuel"
+    },
+    {
+      "local_key": "merchant:m-austin-speedway-pho",
+      "nessie_id": "737e8461-1741-4f5e-9c56-01007f558ea1",
+      "resource": "merchant",
+      "source_record_id": "m-austin-speedway-pho"
+    },
+    {
+      "local_key": "merchant:m-austin-west-campus-market",
+      "nessie_id": "9b2e6891-1156-452d-863a-311ed8db5a08",
+      "resource": "merchant",
+      "source_record_id": "m-austin-west-campus-market"
+    },
+    {
+      "local_key": "stu-004:account:stu-004-checking",
+      "nessie_id": "a97f7017-33c5-4612-adfc-d60cbd30d6ec",
+      "resource": "account",
+      "source_record_id": "stu-004-checking"
+    },
+    {
+      "local_key": "stu-004:account:stu-004-savings",
+      "nessie_id": "314d8486-f553-4d71-b956-4cb09ba9e725",
+      "resource": "account",
+      "source_record_id": "stu-004-savings"
+    },
+    {
+      "local_key": "stu-004:account:stu-004-credit-card",
+      "nessie_id": "b086d074-f265-4229-9426-b9803ab06cde",
+      "resource": "account",
+      "source_record_id": "stu-004-credit-card"
+    },
+    {
+      "local_key": "stu-004:loan:stu-004-student-loan",
+      "nessie_id": "6697b8aa-b881-44ff-aa54-516237c3696b",
+      "resource": "loan",
+      "source_record_id": "stu-004-student-loan"
+    },
+    {
+      "local_key": "stu-004:bill:stu-004-bill-phone",
+      "nessie_id": "be760445-f0e5-4040-a604-2dbbb2e35a5e",
+      "resource": "bill",
+      "source_record_id": "stu-004-bill-phone"
+    },
+    {
+      "local_key": "stu-004:bill:stu-004-bill-streaming",
+      "nessie_id": "c075a27f-f8c7-4592-9136-47f67f304be0",
+      "resource": "bill",
+      "source_record_id": "stu-004-bill-streaming"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00001",
+      "nessie_id": "c956adbf-51e8-4528-b9d3-d5f801cdcef8",
+      "resource": "deposit",
+      "source_record_id": "stu-004-T00001"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00002",
+      "nessie_id": "cf02a0bd-035c-477b-98cb-adfecc01198b",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00002"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00003",
+      "nessie_id": "7f698d46-dc02-404b-9550-264cf4c3c889",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00003"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00004",
+      "nessie_id": "36c99721-dd74-471c-8a6b-9af790777fbc",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00004"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00005",
+      "nessie_id": "98b8b41c-6a01-4ad6-94ec-806c69731481",
+      "resource": "deposit",
+      "source_record_id": "stu-004-T00005"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00006",
+      "nessie_id": "18d4aacb-4b46-4cc1-934c-bb67aa95b35e",
+      "resource": "withdrawal",
+      "source_record_id": "stu-004-T00006"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00007",
+      "nessie_id": "94ccad33-0e7f-4d6d-b4dd-60456a06da27",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00007"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00008",
+      "nessie_id": "78253b32-bcdc-4466-bb5d-5ad4230add20",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00008"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00009",
+      "nessie_id": "fc47b021-e64d-4598-a610-c43cb993886d",
+      "resource": "withdrawal",
+      "source_record_id": "stu-004-T00009"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00010",
+      "nessie_id": "f7a6067a-61c3-42d5-a590-02843b8d3756",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00010"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00011",
+      "nessie_id": "75d66385-1322-4070-b94a-110ae6ee0932",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00011"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00012",
+      "nessie_id": "7f639439-edaa-4f15-9ce6-b6b6921fc294",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00012"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00013",
+      "nessie_id": "b1bcd818-e7fa-4f38-a684-5a20eacbf0ac",
+      "resource": "deposit",
+      "source_record_id": "stu-004-T00013"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00014",
+      "nessie_id": "e5620363-318d-4770-980d-f773b7f003ee",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00014"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00015",
+      "nessie_id": "95f59f78-36c8-46da-930e-3789be39b2ae",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00015"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00016",
+      "nessie_id": "dc29a269-4bf4-4ba3-a16a-2f6a74daffd7",
+      "resource": "transfer",
+      "source_record_id": "stu-004-T00016"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00017",
+      "nessie_id": "d4571153-6e58-4a8a-9168-6520a6973936",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00017"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00018",
+      "nessie_id": "1dc0758a-6d55-4c70-8f59-15a885508fde",
+      "resource": "transfer",
+      "source_record_id": "stu-004-T00018"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00019",
+      "nessie_id": "b74a2b90-8dca-42e7-b6e3-49516c2de1c6",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00019"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00020",
+      "nessie_id": "0763ad3a-5412-4cad-a044-a354a7969992",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00020"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00021",
+      "nessie_id": "33c7d2ff-d394-4a21-9517-98cd902e3a64",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00021"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00022",
+      "nessie_id": "e901eb9b-116a-4961-ab7b-ed102ffc4343",
+      "resource": "withdrawal",
+      "source_record_id": "stu-004-T00022"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00023",
+      "nessie_id": "c14531a7-266f-4a1f-af93-2233b18e7290",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00023"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00024",
+      "nessie_id": "edca5312-47b2-4555-988a-1e215e6ab292",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00024"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00025",
+      "nessie_id": "8aefad6d-63fc-42f2-970f-11685cd45839",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00025"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00026",
+      "nessie_id": "88104032-2e74-45a3-9157-c0f070fc90ad",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00026"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00027",
+      "nessie_id": "eac181a6-c38b-4ff0-816e-90fc38afc17a",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00027"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00028",
+      "nessie_id": "5e730aa6-bb7c-4b1e-b661-114c934bd7a4",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00028"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00029",
+      "nessie_id": "ffa52a89-5218-4969-a551-52e7b14264df",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00029"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00031",
+      "nessie_id": "12d6d902-a404-4e24-90df-72b1fa63fad4",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00031"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00032",
+      "nessie_id": "716614ee-43c1-481b-a945-031b040ec458",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00032"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00033",
+      "nessie_id": "23c51a3b-bd66-442d-9e20-f48e62e0eb9e",
+      "resource": "transfer",
+      "source_record_id": "stu-004-T00033"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00034",
+      "nessie_id": "4015f79e-9707-4638-ae77-7bc56ce35be8",
+      "resource": "transfer",
+      "source_record_id": "stu-004-T00034"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00036",
+      "nessie_id": "4650f30d-107a-42be-8831-7a99026a05be",
+      "resource": "deposit",
+      "source_record_id": "stu-004-T00036"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00037",
+      "nessie_id": "69f86af8-0506-4173-86b8-de22b72f6f78",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00037"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00038",
+      "nessie_id": "8d5ec993-2ccc-4825-ba75-5c3353a65fa7",
+      "resource": "deposit",
+      "source_record_id": "stu-004-T00038"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00039",
+      "nessie_id": "1843de64-eaa5-40c3-ba40-0bce64abc1dd",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00039"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00040",
+      "nessie_id": "dba322bc-669c-4d96-b8bf-f51f2750c9ce",
+      "resource": "withdrawal",
+      "source_record_id": "stu-004-T00040"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00041",
+      "nessie_id": "b1554d16-335b-47e6-90ec-855f701e25b8",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00041"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00042",
+      "nessie_id": "49e9dfe2-4167-4521-abaa-416584684f08",
+      "resource": "withdrawal",
+      "source_record_id": "stu-004-T00042"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00043",
+      "nessie_id": "ed4c1ca5-7ec4-4273-8a6f-30e6941a9951",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00043"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00044",
+      "nessie_id": "844b2cce-e390-4a4f-a727-2af5fa9ad065",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00044"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00045",
+      "nessie_id": "4ec79c86-f92c-4849-8546-09d48ef4e3ff",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00045"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00046",
+      "nessie_id": "18ef4cde-89bb-4639-ada6-33f2e5f95a68",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00046"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00047",
+      "nessie_id": "e0ccb705-5cae-42e4-a2b8-3b5bfad471af",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00047"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00048",
+      "nessie_id": "dead65f3-2798-417d-aca3-da976ed1fee0",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00048"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00049",
+      "nessie_id": "f5f15f6f-2a75-4857-809c-85e419e27cea",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00049"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00050",
+      "nessie_id": "7b616b4b-bbe8-4bb2-9ea2-b4a4a8c5dcb9",
+      "resource": "deposit",
+      "source_record_id": "stu-004-T00050"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00051",
+      "nessie_id": "e0887f00-a30d-4631-a573-dcee02a4b725",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00051"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00052",
+      "nessie_id": "fc9b3fc3-5cb6-4106-95e0-213317f92de9",
+      "resource": "transfer",
+      "source_record_id": "stu-004-T00052"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00053",
+      "nessie_id": "c5ebe2d8-7e09-4cbd-88c3-0e21ef291d4f",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00053"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00054",
+      "nessie_id": "1dfff36a-a9f6-4f16-9945-4ffd9592d979",
+      "resource": "transfer",
+      "source_record_id": "stu-004-T00054"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00055",
+      "nessie_id": "d29134ab-33a5-441e-9ffa-faec8fb2ae07",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00055"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00056",
+      "nessie_id": "fafac35b-09dd-47c1-8cfc-9ee70998bccf",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00056"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00057",
+      "nessie_id": "3fc93215-abdf-447c-aadb-a47113db281f",
+      "resource": "withdrawal",
+      "source_record_id": "stu-004-T00057"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00058",
+      "nessie_id": "4f4a4532-a498-4e90-9562-21befdc0d6c9",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00058"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00059",
+      "nessie_id": "54adfe0d-a57c-4185-8101-2e3fbb9c0014",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00059"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00060",
+      "nessie_id": "885326a1-e57c-4b88-9c9a-02f53566b36c",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00060"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00061",
+      "nessie_id": "5d4f64f3-a3ae-4b99-8d1c-713d24c2ccc6",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00061"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00062",
+      "nessie_id": "23bd696a-ee8a-49ee-8f43-1c86ee86330d",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00062"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00063",
+      "nessie_id": "ff802b97-e463-4d8e-8ffb-cb3ad287f0f9",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00063"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00065",
+      "nessie_id": "ae6f04cd-2c87-4de2-afd2-1f29cad77e30",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00065"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00066",
+      "nessie_id": "23322617-5553-40df-abe1-7e0f83c4ea67",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00066"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00067",
+      "nessie_id": "fb555579-2189-4df8-a7ae-d948536e8734",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00067"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00068",
+      "nessie_id": "4c76bd6f-2f71-4980-afe4-7a4c49773c86",
+      "resource": "transfer",
+      "source_record_id": "stu-004-T00068"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00069",
+      "nessie_id": "0ce49db0-c993-4ef8-89a8-417ce1ff29e2",
+      "resource": "transfer",
+      "source_record_id": "stu-004-T00069"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00071",
+      "nessie_id": "d4edc938-7553-4a19-a4c4-f9b98a3c1850",
+      "resource": "deposit",
+      "source_record_id": "stu-004-T00071"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00072",
+      "nessie_id": "a624ed2e-7869-46af-a033-6725b80cc41e",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00072"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00073",
+      "nessie_id": "e4a48807-d459-4a33-9be8-19bbfe3b84d9",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00073"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00074",
+      "nessie_id": "d8d77ec6-600e-43fd-a70d-2a5370585882",
+      "resource": "deposit",
+      "source_record_id": "stu-004-T00074"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00075",
+      "nessie_id": "d97d2635-3f61-4846-b83b-a129228087db",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00075"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00076",
+      "nessie_id": "27f4e284-1fc1-48af-a0e4-4139c4f74c68",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00076"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00077",
+      "nessie_id": "7ca02c7e-0e2b-4740-b514-f06f4310f04b",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00077"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00078",
+      "nessie_id": "5cc7f17b-c6c2-4f5f-82c1-efe186ccbc06",
+      "resource": "withdrawal",
+      "source_record_id": "stu-004-T00078"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00079",
+      "nessie_id": "ee32a6c9-5229-42fa-a3f3-ffca4fba2aa0",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00079"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00080",
+      "nessie_id": "5d3a8d44-a965-4bf3-b418-13e3848b453a",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00080"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00081",
+      "nessie_id": "d7b27294-05b4-4550-b04b-fef05b420ded",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00081"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00082",
+      "nessie_id": "d9b95d5d-6148-43f8-b11a-9a27c245fb17",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00082"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00083",
+      "nessie_id": "6036a2a7-bafc-41bf-b2fa-5187741b3d1a",
+      "resource": "withdrawal",
+      "source_record_id": "stu-004-T00083"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00084",
+      "nessie_id": "6f4be640-92dc-4a8e-9cbf-50a4a9057c95",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00084"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00085",
+      "nessie_id": "f4d0f7b8-17d1-40ae-bf55-5def1cee08fb",
+      "resource": "deposit",
+      "source_record_id": "stu-004-T00085"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00086",
+      "nessie_id": "880c0993-47ec-4af3-ab9b-63e713282cfb",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00086"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00087",
+      "nessie_id": "608d8aa7-27d4-4ccb-aad4-abcf21c959d0",
+      "resource": "transfer",
+      "source_record_id": "stu-004-T00087"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00088",
+      "nessie_id": "9d915138-4170-463b-9115-4dc0d2cd1b9b",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00088"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00089",
+      "nessie_id": "a17e2c53-0c53-48f5-b2e6-c82079535daa",
+      "resource": "transfer",
+      "source_record_id": "stu-004-T00089"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00090",
+      "nessie_id": "cd29555d-987f-4132-85f4-48c3ac84eddd",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00090"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00091",
+      "nessie_id": "bb48cf51-4ff7-450f-91ac-039c0f311816",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00091"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00092",
+      "nessie_id": "e817ff9a-8bf9-47a9-aece-1aaed386a2cd",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00092"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00093",
+      "nessie_id": "07861176-dc3f-47ab-9f22-e9c98b8f2fdb",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00093"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00094",
+      "nessie_id": "de02d3da-787d-4527-b2fb-85727f2636c4",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00094"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00095",
+      "nessie_id": "472a86c0-3b18-4d4f-92b8-802ecafeed5f",
+      "resource": "withdrawal",
+      "source_record_id": "stu-004-T00095"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00096",
+      "nessie_id": "5078bf7e-6c09-4c12-a204-a665678dffab",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00096"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00097",
+      "nessie_id": "dd11af0f-fd03-4af0-ba07-c1ffe88fbb28",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00097"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00098",
+      "nessie_id": "6aa3043f-dbf8-4ed4-a548-362b8efcfda2",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00098"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00099",
+      "nessie_id": "c80c94e4-67e3-42cd-9891-dbf7fbc4741f",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00099"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00100",
+      "nessie_id": "bde51caf-a498-4891-ae9c-1a3143ee7a79",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00100"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00102",
+      "nessie_id": "5c5e6cdf-c865-47b8-b3dd-841eb5ed1364",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00102"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00103",
+      "nessie_id": "de1a2c16-568a-4533-a17d-6818a358106d",
+      "resource": "transfer",
+      "source_record_id": "stu-004-T00103"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00104",
+      "nessie_id": "b375b64c-9076-42f1-a12d-3a0491e90641",
+      "resource": "transfer",
+      "source_record_id": "stu-004-T00104"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00106",
+      "nessie_id": "d7178bc8-a709-4265-8288-b95b28ff1663",
+      "resource": "deposit",
+      "source_record_id": "stu-004-T00106"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00107",
+      "nessie_id": "5b0f1770-712e-47e3-a5e7-9508cfcacbd2",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00107"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00108",
+      "nessie_id": "3de0beb6-2dfb-4b0d-b708-5664af27477b",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00108"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00109",
+      "nessie_id": "b28f1df7-3664-463c-80b8-7dcd7bd3df3a",
+      "resource": "deposit",
+      "source_record_id": "stu-004-T00109"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00110",
+      "nessie_id": "a84fceea-f277-49cb-9a7b-1d405aa1b855",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00110"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00111",
+      "nessie_id": "e0781d3c-ec3b-47fb-8064-98061da5f39e",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00111"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00112",
+      "nessie_id": "093d99f9-d9d7-45ff-bb8c-4ad27d09ae7a",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00112"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00113",
+      "nessie_id": "0fdc2559-4760-4ef4-9b99-13fa5fbe3bb6",
+      "resource": "withdrawal",
+      "source_record_id": "stu-004-T00113"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00114",
+      "nessie_id": "fe08d54a-1b52-4bd8-b185-b3f845a60ee8",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00114"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00115",
+      "nessie_id": "d7e90a12-a35e-4ca9-a1a2-0a61dea44dba",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00115"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00116",
+      "nessie_id": "4d3e3938-8376-4340-89ff-c1e94ab837a1",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00116"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00117",
+      "nessie_id": "6a83f24d-fcd2-4f7b-9a1a-2d732ef92a35",
+      "resource": "withdrawal",
+      "source_record_id": "stu-004-T00117"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00118",
+      "nessie_id": "6f4c11f7-48e9-49dc-a57a-95d888a17919",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00118"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00119",
+      "nessie_id": "816fcdbe-3b65-40fc-8647-2df2f037e79e",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00119"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00120",
+      "nessie_id": "5f7895d7-bb5c-4cfb-8f6f-c29369d86b18",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00120"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00121",
+      "nessie_id": "e6f6ad4f-ab27-4649-8c60-fd2889890cb8",
+      "resource": "deposit",
+      "source_record_id": "stu-004-T00121"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00122",
+      "nessie_id": "5b9d7ec8-6952-45f0-a75a-cb3bff44ab94",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00122"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00123",
+      "nessie_id": "57c08ae7-ff5d-4409-b72f-3e1859dd2514",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00123"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00124",
+      "nessie_id": "ec997a2b-a41e-414b-867d-1f2100bd5048",
+      "resource": "transfer",
+      "source_record_id": "stu-004-T00124"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00125",
+      "nessie_id": "50bf57ad-f74a-4c7a-9155-fe09c4e249a0",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00125"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00126",
+      "nessie_id": "03673529-87c1-4017-8bee-8bdfbb3c0351",
+      "resource": "transfer",
+      "source_record_id": "stu-004-T00126"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00127",
+      "nessie_id": "f5aa72a5-4500-4a5a-8e7f-70d01880e2c0",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00127"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00128",
+      "nessie_id": "8ce5286d-7f8e-4c05-8ef9-0801816b17bd",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00128"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00129",
+      "nessie_id": "ef10289f-e66b-484e-bf28-c60188cb74bd",
+      "resource": "withdrawal",
+      "source_record_id": "stu-004-T00129"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00130",
+      "nessie_id": "a27d105f-80f1-41ba-b7d0-25834ac6c756",
+      "resource": "deposit",
+      "source_record_id": "stu-004-T00130"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00131",
+      "nessie_id": "e1543421-2517-4871-ba0d-2edd2995be14",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00131"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00132",
+      "nessie_id": "3324841c-1498-4efa-aff2-1cad1fafa68a",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00132"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00133",
+      "nessie_id": "49cc8e3f-2005-42aa-b48e-4e8e043adab4",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00133"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00134",
+      "nessie_id": "a4fd2425-4570-423a-95be-5944586eb324",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00134"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00135",
+      "nessie_id": "226ff1d5-2ab9-4884-bd89-1b5eee2e543c",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00135"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00137",
+      "nessie_id": "1963c267-4958-4bc6-825f-98b3125affd3",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00137"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00138",
+      "nessie_id": "7a4a5948-447f-4125-b672-cac93945101e",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00138"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00139",
+      "nessie_id": "0119adf2-7599-42fd-8571-8e6ef7cd7b12",
+      "resource": "transfer",
+      "source_record_id": "stu-004-T00139"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00140",
+      "nessie_id": "f6368e9c-068d-4d25-b412-117d68dbf1e1",
+      "resource": "transfer",
+      "source_record_id": "stu-004-T00140"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00142",
+      "nessie_id": "2990daeb-66e2-42ce-bc30-0cc5d5a7351f",
+      "resource": "deposit",
+      "source_record_id": "stu-004-T00142"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00143",
+      "nessie_id": "1d58dd67-e8e6-4b21-ac62-a876619ec84b",
+      "resource": "deposit",
+      "source_record_id": "stu-004-T00143"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00144",
+      "nessie_id": "68095894-57a9-469c-a237-e24ec716afe1",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00144"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00145",
+      "nessie_id": "d9098ff9-99d0-4d61-a4b1-e39c33f113d1",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00145"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00146",
+      "nessie_id": "1b741920-01bc-40c0-b57e-66358d6e016b",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00146"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00147",
+      "nessie_id": "dd0dd6fc-7ecf-4a66-a08c-490cfc979767",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00147"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00148",
+      "nessie_id": "b8ac27c5-678c-45ac-b0c0-c523f563a72e",
+      "resource": "withdrawal",
+      "source_record_id": "stu-004-T00148"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00149",
+      "nessie_id": "7d9e78e2-7c1f-4fa0-9d24-c5b2a97f6791",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00149"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00150",
+      "nessie_id": "d021dc91-8dd5-4772-858a-4053f06ce38e",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00150"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00151",
+      "nessie_id": "f06440ea-c6fc-46ff-9d91-6aadc76586a6",
+      "resource": "withdrawal",
+      "source_record_id": "stu-004-T00151"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00152",
+      "nessie_id": "d1533df1-67cf-4870-94e9-51f84c6c37c8",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00152"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00153",
+      "nessie_id": "ef204fd9-0ee8-4ca0-8b53-9f399d13f352",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00153"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00154",
+      "nessie_id": "338c9886-7dac-4b09-8e04-2e8ede67c433",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00154"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00155",
+      "nessie_id": "fa3a5a18-1126-419f-99c7-545c875f439a",
+      "resource": "deposit",
+      "source_record_id": "stu-004-T00155"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00156",
+      "nessie_id": "27f012b3-532b-4457-a191-0864c0007488",
+      "resource": "transfer",
+      "source_record_id": "stu-004-T00156"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00157",
+      "nessie_id": "c46a5b9f-9e97-4b8e-96b8-ce23c17974ed",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00157"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00158",
+      "nessie_id": "67471639-c719-4681-89d2-60aa44deb776",
+      "resource": "transfer",
+      "source_record_id": "stu-004-T00158"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00159",
+      "nessie_id": "7d13c341-e0fc-40b8-889a-a54cf0fcb403",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00159"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00160",
+      "nessie_id": "c4b4b365-58e7-46d7-9aaa-01d8454c975a",
+      "resource": "withdrawal",
+      "source_record_id": "stu-004-T00160"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00161",
+      "nessie_id": "7f444229-6913-40f6-9ff2-fb4fa14d74bf",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00161"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00162",
+      "nessie_id": "8bc88a15-7e0d-411a-8064-5542dde41429",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00162"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00163",
+      "nessie_id": "31d94643-1db5-49dc-9545-9f05065ac05a",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00163"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00164",
+      "nessie_id": "c0838932-598c-4ed0-9191-01caeabf7668",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00164"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00165",
+      "nessie_id": "bbbdf24c-0e9a-434e-9d25-53fdc35a3fd7",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00165"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00166",
+      "nessie_id": "3d056154-5262-44cb-a714-062a793a5914",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00166"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00167",
+      "nessie_id": "5fe8793d-acef-4496-bc6a-79a3bca0b296",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00167"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00168",
+      "nessie_id": "00237792-9e5f-45eb-97d6-fc8537e0f4e8",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00168"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00169",
+      "nessie_id": "e4d2c4df-38b3-4434-9dfd-c2b26846d500",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00169"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00170",
+      "nessie_id": "d0ea992f-9c71-4376-bcf1-bf783cecfe4f",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00170"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00172",
+      "nessie_id": "680db41a-b9b3-4975-8c08-f1087873be58",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00172"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00173",
+      "nessie_id": "67896e7c-9bd4-4f2e-a9ab-84ffb6e04aba",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00173"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00174",
+      "nessie_id": "d5b13f74-ffde-4f5e-8fc1-4748e32c5c40",
+      "resource": "transfer",
+      "source_record_id": "stu-004-T00174"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00175",
+      "nessie_id": "89bafbef-6f9d-4fb2-9cd2-4c9e9d761165",
+      "resource": "transfer",
+      "source_record_id": "stu-004-T00175"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00177",
+      "nessie_id": "017c809b-9f52-4024-a7ab-39c8901f17ae",
+      "resource": "deposit",
+      "source_record_id": "stu-004-T00177"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00178",
+      "nessie_id": "29003fe7-399d-463b-af3b-0a55c7039358",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00178"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00179",
+      "nessie_id": "73e12a82-f90f-42f6-b091-a891d4897828",
+      "resource": "deposit",
+      "source_record_id": "stu-004-T00179"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00180",
+      "nessie_id": "934a2031-e568-4605-9b0a-eff289dd187f",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00180"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00181",
+      "nessie_id": "58a53ba0-d4c5-4de2-9af8-2c0950d62dca",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00181"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00182",
+      "nessie_id": "5e5f6c71-41ef-465f-b05c-b403d88dd6f3",
+      "resource": "withdrawal",
+      "source_record_id": "stu-004-T00182"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00183",
+      "nessie_id": "6c7ed02b-8c1c-4fc1-8a58-85c016110a9f",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00183"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00184",
+      "nessie_id": "4cf31c32-2587-4432-963f-512f21c60c0e",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00184"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00185",
+      "nessie_id": "e4330ca6-18f5-4dcd-8527-035a5112b5d7",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00185"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00186",
+      "nessie_id": "20126b48-684b-4f42-885a-bdef32d3c611",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00186"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00187",
+      "nessie_id": "74836765-35a0-4062-9720-30f38ec287ac",
+      "resource": "withdrawal",
+      "source_record_id": "stu-004-T00187"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00188",
+      "nessie_id": "7438fbd3-d87d-43a5-bb6a-186919696f8f",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00188"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00189",
+      "nessie_id": "ef794664-fbea-48ae-bea9-b65d978cd947",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00189"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00190",
+      "nessie_id": "d97d93a1-2a45-4edc-98ec-cfbab263e527",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00190"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00191",
+      "nessie_id": "d2debf4e-4ecd-4159-8839-1f87c0b332ce",
+      "resource": "deposit",
+      "source_record_id": "stu-004-T00191"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00192",
+      "nessie_id": "66a7322e-06fe-4bca-89ec-cbe7e3242eff",
+      "resource": "transfer",
+      "source_record_id": "stu-004-T00192"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00193",
+      "nessie_id": "1fe9cbe0-3bc7-44de-86be-7d39356c968f",
+      "resource": "transfer",
+      "source_record_id": "stu-004-T00193"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00194",
+      "nessie_id": "c47b9133-3524-43f5-84d3-e06f22bad5e4",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00194"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00195",
+      "nessie_id": "2362ab4e-63a1-4983-a120-a3ecb74dd52b",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00195"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00196",
+      "nessie_id": "d125bb06-ebdb-4cff-83bb-1c638c15cdf6",
+      "resource": "withdrawal",
+      "source_record_id": "stu-004-T00196"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00197",
+      "nessie_id": "e4f63037-62ac-4e02-8aa0-75b150278235",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00197"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00198",
+      "nessie_id": "008390de-9b48-4418-8d75-428757e3eccf",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00198"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00199",
+      "nessie_id": "d220c5e7-950b-4a3e-9349-1ba0b04c4632",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00199"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00200",
+      "nessie_id": "dd6b4931-7e80-4719-bfe2-fa94a55600b8",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00200"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00201",
+      "nessie_id": "6a04419e-3b03-4cc8-9f8e-2fcda81b7327",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00201"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00202",
+      "nessie_id": "a5175920-ee42-4eca-82e8-6111310ed076",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00202"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00203",
+      "nessie_id": "078b72f0-9fcc-4016-943f-fb9eed3f7555",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00203"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00204",
+      "nessie_id": "460e5454-4d42-41a2-8b68-74e055e45fc2",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00204"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00206",
+      "nessie_id": "61aea618-4a58-4d87-a7f8-660d41f91f28",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00206"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00207",
+      "nessie_id": "006d98f8-3795-4deb-942d-3d65fe072f18",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00207"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00208",
+      "nessie_id": "4757e173-6027-4f7e-9bdd-01c0d7ce387e",
+      "resource": "purchase",
+      "source_record_id": "stu-004-T00208"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00209",
+      "nessie_id": "c8ccf835-440a-4f8c-98c1-7fc59659ebb3",
+      "resource": "transfer",
+      "source_record_id": "stu-004-T00209"
+    },
+    {
+      "local_key": "stu-004:txn:stu-004-T00210",
+      "nessie_id": "2b21db7d-b11a-4898-9c63-7be8b2281512",
+      "resource": "transfer",
+      "source_record_id": "stu-004-T00210"
+    }
+  ]
+}

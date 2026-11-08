@@ -14,8 +14,9 @@ unified profile → wellness engine → LangGraph + Nemotron simulation.**
 |---|---|---|
 | 1 | Repository and API inspection | Done |
 | 2 | Student profile generation, mapping, validation | Done |
-| 3 | Nessie seeding | Next |
-| 4–7 | Retrieval, wellness engine, simulation, integration | Planned |
+| 3 | Nessie seeding and verification | Done |
+| 4 | Nessie retrieval and unified profile API | Next |
+| 5–7 | Wellness engine, simulation, integration | Planned |
 
 ## Setup
 
@@ -41,6 +42,23 @@ python -m pytest
 
 Generation is deterministic, so re-running produces identical files.
 
+## Phase 3: seed and verify Nessie
+
+```bash
+python scripts/seed_nessie.py               # all profiles; safe to re-run
+python scripts/verify_nessie_data.py        # read back from Nessie and reconcile
+python scripts/seed_nessie.py stu-001 --reset --yes   # delete stu-001's Nessie accounts/records, reseed
+```
+
+- Seeding is idempotent. Each plan step has a stable key. Nessie ids are stored in MongoDB
+  (`nessie_id_map`) the moment they are created, and exported to `data/nessie/`.
+- If MongoDB has no id for a step (fresh database, crash, another machine), the seeder finds
+  the existing Nessie record by its `[wp:...]` marker and reuses it instead of duplicating it.
+- Verification checks every record and field, account balances, each account's net activity
+  against the ledger, monthly income, and stray marker-tagged records. Reports go to
+  `data/verification/` and the `seed_runs` collection.
+- Seeding is a setup step only. Simulations never write to Nessie.
+
 ## Demo profiles
 
 | ID | Student | Highlights |
@@ -59,9 +77,11 @@ backend/
   validation/   financial consistency checks
   schemas/      Pydantic models (student profile, Nessie bodies, seed plan, unified profile)
   database/     MongoDB persistence (students, goals, seed_plans, nessie_id_map, seed_runs)
+  integrations/nessie/  Nessie HTTP client (retries, timeouts, normalization) and resource paths
+  seeding/      idempotent Nessie seeder, reset, read-back verifier
   pipeline.py   generate → fill → map → normalize → validate
 scripts/        runnable pipeline steps
-data/           generated sample outputs (committed)
+data/           generated sample outputs, Nessie id maps and verification reports (committed)
 docs/           DATA_MAPPING.md
 third_party/pnc_wellness/   vendored PNC toolkit (Apache-2.0, unmodified)
 tests/

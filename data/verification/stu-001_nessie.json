@@ -1,0 +1,87 @@
+{
+  "profile_id": "stu-001",
+  "ok": true,
+  "checked_at": "2026-11-08T00:44:33.543074Z",
+  "nessie_customer_id": "e83a0edb-8834-4ddf-bc58-e1a4ce45388e",
+  "expected_counts": {
+    "customer": 1,
+    "merchant": 11,
+    "account": 3,
+    "loan": 1,
+    "bill": 5,
+    "deposit": 18,
+    "withdrawal": 30,
+    "purchase": 138,
+    "transfer": 24
+  },
+  "found_counts": {
+    "customer": 1,
+    "merchant": 11,
+    "account": 3,
+    "loan": 1,
+    "bill": 5,
+    "deposit": 18,
+    "withdrawal": 30,
+    "purchase": 138,
+    "transfer": 24
+  },
+  "accounts": [
+    {
+      "local_key": "stu-001:account:stu-001-checking",
+      "nessie_id": "8c8824a4-2e1d-4936-9181-dd6e91fd899e",
+      "expected_balance": 1461,
+      "nessie_balance": 1461,
+      "ledger_net_activity": 821,
+      "nessie_net_activity": 821,
+      "ok": true
+    },
+    {
+      "local_key": "stu-001:account:stu-001-savings",
+      "nessie_id": "8f6ef78f-be01-4eaf-8c8d-f35aa9b22175",
+      "expected_balance": 1830,
+      "nessie_balance": 1830,
+      "ledger_net_activity": 900,
+      "nessie_net_activity": 900,
+      "ok": true
+    },
+    {
+      "local_key": "stu-001:account:stu-001-credit-card",
+      "nessie_id": "0331115f-bcae-4d42-85c4-70cf6590a4db",
+      "expected_balance": 52,
+      "nessie_balance": 52,
+      "ledger_net_activity": -128,
+      "nessie_net_activity": -128,
+      "ok": true
+    }
+  ],
+  "missing": [],
+  "mismatches": [],
+  "unexpected": [],
+  "income_by_month": {
+    "2026-05": {
+      "pnc": 1588,
+      "nessie": 1588
+    },
+    "2026-06": {
+      "pnc": 1923,
+      "nessie": 1923
+    },
+    "2026-07": {
+      "pnc": 1903,
+      "nessie": 1903
+    },
+    "2026-08": {
+      "pnc": 1623,
+      "nessie": 1623
+    },
+    "2026-09": {
+      "pnc": 1613,
+      "nessie": 1613
+    },
+    "2026-10": {
+      "pnc": 1632,
+      "nessie": 1632
+    }
+  },
+  "api_calls": 21
+}
