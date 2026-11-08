@@ -1,6 +1,7 @@
 import type { SVGProps } from "react";
 import { Money } from "../components/money";
 import { Text } from "../components/text";
+import { getSessionUser } from "../lib/api";
 
 const currency = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" });
 
@@ -69,10 +70,12 @@ function BankIcon(props: SVGProps<SVGSVGElement>) {
 }
 
 export function Home() {
+  const firstName = getSessionUser()?.first_name;
+
   return (
     <div className="flex flex-col gap-10">
       <header className="flex flex-col gap-5">
-        <Text variant="h2" as="h1">Hello, Arish</Text>
+        <Text variant="h2" as="h1">{firstName ? `Hello, ${firstName}` : "Hello"}</Text>
 
         <section aria-labelledby="current-balance-label" className="flex flex-col gap-1.5">
           <Text id="current-balance-label" variant="overline" tone="muted">

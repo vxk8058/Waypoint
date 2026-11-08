@@ -1,5 +1,6 @@
 import { Link, NavLink, Outlet } from "react-router";
 import logo from "../assets/logo.png";
+import { AccountMenu } from "../components/account-menu";
 import { Goal } from "../components/goal";
 
 const tabs = [
@@ -11,7 +12,7 @@ const tabs = [
 export function Dashboard() {
   return (
     <div className="flex min-h-screen">
-      <aside className="flex w-56 shrink-0 flex-col border-r border-blue-grey-800 bg-canvas p-4">
+      <aside className="sticky top-0 flex h-screen w-56 shrink-0 flex-col border-r border-blue-grey-800 bg-canvas p-4">
         <Link
           to="/dashboard"
           aria-label="Waypoint home"
@@ -39,6 +40,10 @@ export function Dashboard() {
             </NavLink>
           ))}
         </nav>
+
+        <div className="mt-auto border-t border-blue-grey-800 pt-4">
+          <AccountMenu />
+        </div>
       </aside>
 
       <main className="flex-1 p-8">
