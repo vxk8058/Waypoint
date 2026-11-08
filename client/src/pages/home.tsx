@@ -1,4 +1,5 @@
 import type { SVGProps } from "react";
+import { Money } from "../components/money";
 import { Text } from "../components/text";
 
 const currency = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" });
@@ -64,18 +65,6 @@ function BankIcon(props: SVGProps<SVGSVGElement>) {
       <path d="M5 10v8M9.5 10v8M14.5 10v8M19 10v8" />
       <path d="M3 20h18" />
     </svg>
-  );
-}
-
-// Renders "$1,020.00" with the cents raised and smaller, e.g. $1,020⁰⁰.
-function Money({ amount }: { amount: number }) {
-  const formatted = currency.format(amount);
-  const dot = formatted.lastIndexOf(".");
-  return (
-    <span className="tabular-nums">
-      {formatted.slice(0, dot)}
-      <sup className="ml-px text-[0.65em] font-medium">{formatted.slice(dot)}</sup>
-    </span>
   );
 }
 
