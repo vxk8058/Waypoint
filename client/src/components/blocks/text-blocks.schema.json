@@ -1,0 +1,99 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "TextBlockSpecs",
+  "description": "Props for the text blocks. Bundled into ai-document.schema.json by scripts/build-ai-schema.mjs.",
+  "$defs": {
+    "heading": {
+      "title": "HeadingSpec",
+      "description": "A section heading. Use level 1 for each major section of the answer, 2 for sub-sections. Sentence case, no trailing period. Keep it short; a heading that states the takeaway (\"Dining is up 18%\") beats a label (\"Dining\").",
+      "type": "object",
+      "required": ["text"],
+      "additionalProperties": false,
+      "properties": {
+        "text": { "type": "string", "description": "Heading text. Inline **bold**/*italic* allowed but rarely needed." },
+        "level": { "type": "integer", "enum": [1, 2, 3], "default": 1, "description": "1 = section, 2 = sub-section, 3 = small label-style heading." }
+      }
+    },
+    "paragraph": {
+      "title": "ParagraphSpec",
+      "description": "Body text. Supports inline Markdown: **bold**, *italic*, `code`, [label](https://url). Separate paragraphs with a blank line. Put the key number in **bold**. Keep paragraphs short (1–3 sentences) and place them next to the chart they explain.",
+      "type": "object",
+      "required": ["text"],
+      "additionalProperties": false,
+      "properties": {
+        "text": { "type": "string" },
+        "size": { "type": "string", "enum": ["default", "lead", "small"], "default": "default", "description": "lead = larger intro/summary sentence at the top; small = footnotes, caveats, sources." },
+        "tone": { "type": "string", "enum": ["default", "muted"], "default": "default", "description": "muted for secondary remarks." }
+      }
+    },
+    "list": {
+      "title": "ListSpec",
+      "description": "A bulleted or numbered list. Use for 2–7 parallel points or steps. Inline Markdown allowed in items.",
+      "type": "object",
+      "required": ["items"],
+      "additionalProperties": false,
+      "properties": {
+        "items": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "ordered": { "type": "boolean", "default": false, "description": "true for numbered steps where order matters." }
+      }
+    },
+    "callout": {
+      "title": "CalloutSpec",
+      "description": "A highlighted box for one important message. info = neutral tip or context; success = goal reached, good news; warning = something to watch (approaching a limit); danger = a real problem (over budget, missed payment). Use at most one or two per response.",
+      "type": "object",
+      "required": ["text"],
+      "additionalProperties": false,
+      "properties": {
+        "tone": { "type": "string", "enum": ["info", "success", "warning", "danger"], "default": "info" },
+        "title": { "type": "string", "description": "Short bold first line. Defaults to Note / Good news / Heads up / Warning." },
+        "text": { "type": "string", "description": "Inline Markdown allowed." }
+      }
+    },
+    "stats": {
+      "title": "StatsSpec",
+      "description": "1–4 headline numbers shown as tiles (e.g. total spent, saved, net worth). Use instead of a chart when the answer is a single number or a few. Put it near the top of a response.",
+      "type": "object",
+      "required": ["items"],
+      "additionalProperties": false,
+      "properties": {
+        "items": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 4,
+          "items": {
+            "type": "object",
+            "required": ["label", "value"],
+            "additionalProperties": false,
+            "properties": {
+              "label": { "type": "string", "description": "What the number is, e.g. \"Spent in October\"." },
+              "value": { "type": ["number", "string"], "description": "A raw number (formatted with `format`) or a pre-formatted string." },
+              "format": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "style": { "type": "string", "enum": ["number", "currency", "percent"] },
+                  "currency": { "type": "string", "description": "ISO 4217 code. Default USD." },
+                  "decimals": { "type": "integer", "minimum": 0, "maximum": 6 },
+                  "compact": { "type": "boolean", "description": "Force $1.2M style. Default: auto at 100,000+." },
+                  "prefix": { "type": "string" },
+                  "suffix": { "type": "string" }
+                }
+              },
+              "change": { "type": ["number", "string"], "description": "Change vs. the comparison period. A number is a percent (12 → \"+12%\") unless changeFormat says otherwise; a string is shown as-is (\"+$240\")." },
+              "changeFormat": { "type": "string", "enum": ["percent", "number", "currency"], "default": "percent" },
+              "goodDirection": { "type": "string", "enum": ["up", "down", "none"], "default": "up", "description": "Which direction is good. Spending: down. Savings: up. none = always neutral colour." },
+              "caption": { "type": "string", "description": "Comparison context, e.g. \"vs. September\"." }
+            }
+          }
+        }
+      }
+    },
+    "divider": {
+      "title": "DividerSpec",
+      "description": "A thin horizontal rule between unrelated parts. Rarely needed: headings already separate sections.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {}
+    }
+  }
+}

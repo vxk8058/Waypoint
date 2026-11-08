@@ -4,6 +4,7 @@ import type { ButtonProps } from './button'
 import { TextField } from './text-field'
 import { Text } from './text'
 import { AiComponent } from './ai-component'
+import { AiDocument } from './ai-document'
 
 // Example payloads exactly as the AI backend would send them.
 const chartExamples = [
@@ -167,6 +168,84 @@ const chartExamples = [
     },
   },
 ]
+
+// A full AI response: text and charts mixed, in the order the model sends them.
+const documentExample = {
+  blocks: [
+    { type: 'heading', props: { text: 'Your October in review', level: 1 } },
+    {
+      type: 'paragraph',
+      props: {
+        size: 'lead',
+        text: 'You spent **$2,646** this month, about 6% less than September, and you put **$610** into savings.',
+      },
+    },
+    {
+      type: 'stats',
+      props: {
+        items: [
+          { label: 'Spent', value: 2646.12, format: { style: 'currency' }, change: -6.2, goodDirection: 'down', caption: 'vs. September' },
+          { label: 'Saved', value: 610, format: { style: 'currency' }, change: 14, caption: 'vs. September' },
+          { label: 'Savings rate', value: 13, format: { style: 'percent' }, change: '+2 pts', caption: 'vs. September' },
+        ],
+      },
+    },
+    {
+      type: 'bar_chart',
+      props: {
+        title: 'Spending by category',
+        subtitle: 'October',
+        valueFormat: { style: 'currency' },
+        orientation: 'horizontal',
+        sort: 'descending',
+        highlight: ['Dining'],
+        data: [
+          { label: 'Rent', value: 1450 },
+          { label: 'Dining', value: 512.75 },
+          { label: 'Groceries', value: 386.4 },
+          { label: 'Transport', value: 142 },
+          { label: 'Gifts', value: 90 },
+          { label: 'Subscriptions', value: 64.97 },
+        ],
+      },
+    },
+    { type: 'heading', props: { text: 'Dining is the one to watch', level: 2 } },
+    {
+      type: 'paragraph',
+      props: {
+        text: 'Dining came in **$112 over budget**, mostly from weekend takeout. Everything else stayed under.\n\nRent is still more than half of your spending, so the split below barely moves month to month.',
+      },
+    },
+    {
+      type: 'callout',
+      props: { tone: 'warning', title: 'Dining is 28% over budget', text: 'Cutting two takeout orders a week would bring it back to *$400*.' },
+    },
+    {
+      type: 'pie_chart',
+      props: {
+        title: 'Where October went',
+        valueFormat: { style: 'currency' },
+        data: [
+          { label: 'Rent', value: 1450 },
+          { label: 'Groceries', value: 386.4 },
+          { label: 'Dining', value: 512.75 },
+          { label: 'Transport', value: 142 },
+          { label: 'Subscriptions', value: 64.97 },
+          { label: 'Gifts', value: 90 },
+        ],
+      },
+    },
+    { type: 'heading', props: { text: 'Side by side', level: 2 } },
+    {
+      type: 'row',
+      props: {
+        blocks: [chartExamples[4], chartExamples[6]],
+      },
+    },
+    { type: 'list', props: { items: ['Set a **$400** dining cap for November', 'Move the $90 gift budget into December', 'Review subscriptions: $64.97/mo'] } },
+    { type: 'paragraph', props: { size: 'small', tone: 'muted', text: 'Based on transactions synced through Oct 31.' } },
+  ],
+}
 
 const variants: NonNullable<ButtonProps['variant']>[] = [
   'primary',
@@ -357,6 +436,13 @@ export function ComponentShowcase() {
               error={usernameError}
               hint="3–20 characters"
             />
+          </div>
+        </section>
+
+        <section className="space-y-4">
+          <h2 className="text-lg font-semibold">AI response (text + charts)</h2>
+          <div className="rounded-xl border border-blue-grey-800 bg-canvas p-6">
+            <AiDocument document={documentExample} />
           </div>
         </section>
 

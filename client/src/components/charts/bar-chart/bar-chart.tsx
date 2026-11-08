@@ -1,5 +1,5 @@
 import { useChartWarnings, useHiddenSeries } from "../shared/hooks";
-import { HALO, FONT } from "../shared/layout";
+import { HALO, FONT, thinTicks } from "../shared/layout";
 import { useMemo, useRef, useState } from "react";
 import type { KeyboardEvent } from "react";
 import { normalizeBarChartSpec } from "./normalize";
@@ -484,11 +484,15 @@ function layoutChart(spec: ResolvedBarChartSpec, visible: ResolvedBarChartSpec["
   });
 
   // ---- ticks ----
+  // Horizontal value labels sit side by side: drop every other one when they'd touch.
+  const labelled = new Set(
+    isV ? tickValues.map((_, i) => i) : thinTicks(tickValues.map((v, i) => ({ pos: toPx(v), text: tickTexts[i], i })), (t) => measureText(t, FONT), 12).map((t) => t.i),
+  );
   const ticks = tickValues.map((v, i) => {
     const p = toPx(v);
     return {
       value: v,
-      text: tickTexts[i],
+      text: labelled.has(i) ? tickTexts[i] : "",
       grid: isV ? { x1: mL, x2: mL + plotW, y1: p, y2: p } : { x1: p, x2: p, y1: mT, y2: mT + plotH },
       label: isV
         ? { x: mL - 10, y: p + 4, textAnchor: "end" as const }

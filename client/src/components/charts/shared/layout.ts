@@ -17,7 +17,7 @@ export interface Tick {
 }
 
 /** Drop tick labels that would overlap their neighbour. */
-export function thinTicks(ticks: Tick[], measure: (t: string) => number, gap = 16): Tick[] {
+export function thinTicks<T extends Tick>(ticks: T[], measure: (t: string) => number, gap = 16): T[] {
   if (ticks.length < 3) return ticks;
   for (let every = 1; every < ticks.length; every++) {
     const kept = ticks.filter((_, i) => i % every === 0);

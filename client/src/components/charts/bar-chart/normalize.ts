@@ -112,7 +112,7 @@ export function normalizeBarChartSpec(input: unknown): NormalizeResult {
     "valueLabels",
     warnings,
   );
-  const sort = pickEnum<SortOrder>(raw.sort, ["none", "asc", "desc"], "none", "sort", warnings);
+  const sort = pickEnum<SortOrder>(({ ascending: "asc", descending: "desc", none: "none" } as Record<string, string>)[String(raw.sort)] ?? raw.sort, ["none", "asc", "desc"], "none", "sort", warnings);
 
   if (layout === "percent" && resolved.some((s) => s.values.some((v) => v !== null && v < 0))) {
     warnings.push("Percent layout uses absolute values; negative values are shown as their share of the total.");
