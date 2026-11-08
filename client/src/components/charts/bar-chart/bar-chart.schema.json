@@ -1,0 +1,117 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "BarChartSpec",
+  "description": "Render a bar chart. Use for comparing amounts across categories (spending by category, income vs spending by month). Not for trends over many time points (use a line chart) or a single headline number.",
+  "type": "object",
+  "required": ["categories", "series"],
+  "additionalProperties": false,
+  "properties": {
+    "title": { "type": "string", "description": "Short chart title, sentence case. Say what is measured, e.g. \"Spending by category, October\"." },
+    "subtitle": { "type": "string", "description": "Optional context line: units, period, or the takeaway." },
+    "categories": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Labels along the category axis, in display order. Keep them short."
+    },
+    "series": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 5,
+      "description": "One entry per measure. Up to 4 are coloured; a 5th is grey; more are folded into \"Other\". Keep the same order across charts so colours stay consistent.",
+      "items": {
+        "type": "object",
+        "required": ["name", "values"],
+        "additionalProperties": false,
+        "properties": {
+          "name": { "type": "string" },
+          "values": {
+            "type": "array",
+            "items": { "type": ["number", "null"] },
+            "description": "One number per category, same order as `categories`. null = no data."
+          },
+          "color": {
+            "type": "string",
+            "enum": ["purple", "teal", "orange", "blue", "neutral"],
+            "description": "Optional. Pin a colour so the same entity matches across charts. Omit to use palette order."
+          }
+        }
+      }
+    },
+    "orientation": {
+      "type": "string",
+      "enum": ["vertical", "horizontal"],
+      "default": "vertical",
+      "description": "vertical = columns (good for time periods). horizontal = bars (good for long category names or many categories)."
+    },
+    "layout": {
+      "type": "string",
+      "enum": ["grouped", "stacked", "percent"],
+      "default": "grouped",
+      "description": "grouped compares series side by side; stacked shows parts summing to a total; percent shows each category's composition as 100%."
+    },
+    "valueFormat": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "style": { "type": "string", "enum": ["number", "currency", "percent"], "default": "number", "description": "percent means values are already percentages (45 = 45%)." },
+        "currency": { "type": "string", "description": "ISO 4217 code, default USD." },
+        "decimals": { "type": "integer", "minimum": 0, "maximum": 6 },
+        "compact": { "type": ["boolean", "string"], "enum": [true, false, "auto"], "default": "auto", "description": "12.4K / $1.2M notation. auto compacts at 10,000+." },
+        "prefix": { "type": "string" },
+        "suffix": { "type": "string", "description": "Unit suffix, e.g. \" hrs\"." }
+      }
+    },
+    "categoryAxis": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "label": { "type": "string" },
+        "show": { "type": "boolean", "default": true }
+      }
+    },
+    "valueAxis": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "label": { "type": "string" },
+        "show": { "type": "boolean", "default": true },
+        "min": { "type": "number", "maximum": 0, "description": "Must be ≤ 0; bars always start at zero." },
+        "max": { "type": "number", "minimum": 0 },
+        "tickCount": { "type": "integer", "minimum": 2, "maximum": 10, "default": 5 },
+        "gridlines": { "type": "boolean", "default": true }
+      }
+    },
+    "valueLabels": {
+      "type": "string",
+      "enum": ["auto", "none", "all", "max", "min-max", "last", "totals"],
+      "default": "auto",
+      "description": "Which bars print their value. Be selective; tooltips and the table already show every value. totals applies to stacked layouts."
+    },
+    "legend": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": { "show": { "type": "boolean", "description": "Defaults to true for 2+ series." } }
+    },
+    "highlight": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Category names to emphasise (others are dimmed). Use to point at what your answer is about."
+    },
+    "referenceLines": {
+      "type": "array",
+      "description": "Rules at a value, e.g. a budget or savings target.",
+      "items": {
+        "type": "object",
+        "required": ["value"],
+        "additionalProperties": false,
+        "properties": {
+          "value": { "type": "number" },
+          "label": { "type": "string" }
+        }
+      }
+    },
+    "sort": { "type": "string", "enum": ["none", "asc", "desc"], "default": "none", "description": "Sort categories by total. Don't sort time periods." },
+    "height": { "type": "integer", "minimum": 160, "maximum": 800, "default": 320, "description": "Vertical charts only; horizontal charts size to their rows." },
+    "emptyMessage": { "type": "string" }
+  }
+}

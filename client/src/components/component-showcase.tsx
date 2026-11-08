@@ -3,6 +3,71 @@ import { Button } from './button'
 import type { ButtonProps } from './button'
 import { TextField } from './text-field'
 import { Text } from './text'
+import { AiComponent } from './ai-component'
+
+// Example payloads exactly as the AI backend would send them.
+const chartExamples = [
+  {
+    type: 'bar_chart',
+    props: {
+      title: 'Spending by category, October',
+      subtitle: 'Dining is over its $400 budget',
+      orientation: 'horizontal',
+      sort: 'desc',
+      valueFormat: { style: 'currency' },
+      valueLabels: 'all',
+      highlight: ['Dining'],
+      referenceLines: [{ value: 400, label: 'Budget' }],
+      data: [
+        { label: 'Rent', value: 1450 },
+        { label: 'Groceries', value: 386.4 },
+        { label: 'Dining', value: 512.75 },
+        { label: 'Transport', value: 142 },
+        { label: 'Subscriptions', value: 64.97 },
+      ],
+    },
+  },
+  {
+    type: 'bar_chart',
+    props: {
+      title: 'Income vs spending',
+      subtitle: 'Last 6 months',
+      categories: ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
+      series: [
+        { name: 'Income', values: [4200, 4200, 4650, 4200, 4200, 5100] },
+        { name: 'Spending', values: ['3,890', 4410, 3720, 3950, null, 3610] },
+      ],
+      valueFormat: { style: 'currency' },
+      valueAxis: { label: 'USD' },
+    },
+  },
+  {
+    type: 'bar_chart',
+    props: {
+      title: 'Where each paycheck goes',
+      categories: ['Q1', 'Q2', 'Q3', 'Q4'],
+      layout: 'stacked',
+      valueFormat: { style: 'currency', compact: true },
+      series: [
+        { name: 'Needs', values: [6100, 6250, 6300, 6400] },
+        { name: 'Wants', values: [2900, 3400, 2600, 3100] },
+        { name: 'Savings', values: [2500, 2100, 3300, 3800], color: 'teal' },
+      ],
+      referenceLines: [{ value: 12000, label: 'Target' }],
+    },
+  },
+  {
+    type: 'bar_chart',
+    props: {
+      title: 'Monthly net cash flow',
+      categories: ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
+      series: [{ name: 'Net', values: [310, -210, 930, 250, -480, 1490] }],
+      valueFormat: { style: 'currency' },
+      valueLabels: 'min-max',
+      height: 260,
+    },
+  },
+]
 
 const variants: NonNullable<ButtonProps['variant']>[] = [
   'primary',
@@ -193,6 +258,15 @@ export function ComponentShowcase() {
               error={usernameError}
               hint="3–20 characters"
             />
+          </div>
+        </section>
+
+        <section className="space-y-4">
+          <h2 className="text-lg font-semibold">Bar chart (AI-driven)</h2>
+          <div className="grid gap-6 lg:grid-cols-2">
+            {chartExamples.map((block, i) => (
+              <AiComponent key={i} block={block} />
+            ))}
           </div>
         </section>
 
