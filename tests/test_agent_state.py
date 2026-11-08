@@ -59,7 +59,7 @@ def test_requests_start_fresh_for_same_and_different_users():
     for profile_id in ("stu-001", "stu-002"):
         fresh = initial_state("Savings?", user(profile_id))
         assert fresh == {"query": "Savings?", "user_id": f"user-{profile_id}",
-                         "profile_id": profile_id, "results": [], "iterations": 0}
+                         "profile_id": profile_id, "results": [], "calculations": [], "iterations": 0}
         assert fresh["results"] is not first["results"]
     assert first["query"] == "Balance?"
 

@@ -96,17 +96,17 @@ def test_retry_replaces_stale_results_and_cap_terminates(service):
     svc, profile = service
     refreshed = profile.model_copy(deep=True)
     next(a for a in refreshed.accounts if a.type == "checking").balance += 100
-    svc.get.side_effect = [profile, refreshed, refreshed]
+    svc.get.side_effect = [profile, refreshed, refreshed, refreshed]
     planner, calls = scripted(
         RouteDecision=[{"products": ["checking"], "reasoning": "Balance"}],
         VerifyDecision=[{"done": False, "need_products": ["checking"], "missing": "Still unclear"}],
         UIPlan=[{"answer": "Your checking balance is {checking.balance}."}])
     out = run(svc, planner)
-    assert out["iterations"] == 3 and len(calls["VerifyDecision"]) == 3 and svc.get.call_count == 3
+    assert out["iterations"] == 4 and len(calls["VerifyDecision"]) == 4 and svc.get.call_count == 4
     assert len(out["results"]) == 1
     new_total = sum(a.balance for a in refreshed.accounts if a.type == "checking")
     assert out["results"][0].data["balance_total"] == new_total
-    assert f'"balance_total": {new_total}' in calls["VerifyDecision"][1]
+    assert f"Checking balance: ${new_total:,} (dollars)" in calls["VerifyDecision"][1]
     assert not out["verify"].done and out["verify"].missing.endswith("(Verification limit reached.)")
     assert "Verification limit reached" in out["final_ui"]["blocks"][-1]["props"]["text"]
 
@@ -149,11 +149,98 @@ def test_run_agent_logs_path_retries_and_termination_without_data(service, caplo
     lines = [r.getMessage() for r in caplog.records if r.name == "waypoint.agent"]
     nodes = [line.split()[1] for line in lines]
     assert nodes[0] == "node=eval_query" and nodes[-1] == "node=gen_ui"
-    assert nodes.count("node=verify") == 3 and nodes.count("node=eval_query") == 3
+    assert nodes.count("node=verify") == 4 and nodes.count("node=eval_query") == 4
     assert "agent node=checking confidence=0.0 errors=1" in lines  # the failed first fetch
-    assert "round=3 done=False need_products=[] need_other_data=False" in lines[-2]
+    assert "round=4 done=False need_products=[] need_other_data=False" in lines[-2]
     assert out["final_ui"]["blocks"][0]["props"]["text"].startswith("Your checking balance is $")
     balance = str(sum(a.balance for a in profile.accounts if a.type == "checking"))
     logged = "\n".join(lines)
     for private in ("My private question", "stu-001", "user-1", "Private", "secret-host", balance):
         assert private not in logged
+
+
+# Calculate plan, step 4: Verify → Calculate → Verify
+
+CAR = "If I add $100 a day for the next month, how much more quickly can I get my car?"
+DAYS = {"name": "days_needed", "label": "Days to reach goal", "unit": "days",
+        "formula": "ceil({savings.goal_remaining} / 100)"}
+
+
+def savings_route(*verify):
+    return scripted(RouteDecision=[{"products": ["savings"], "reasoning": "Goal"}], VerifyDecision=list(verify),
+                    UIPlan=[{"answer": "Here is your goal progress."}])
+
+
+def test_verify_requests_calculation_then_finishes(service, caplog):
+    svc, profile = service
+    planner, calls = savings_route({"done": False, "missing": "Days at $100 a day", "calculations": [DAYS]},
+                                   {"done": True})
+    caplog.set_level("INFO", logger="waypoint.agent")
+    out = run_agent(build_agent_graph(svc, planner, worker()), initial_state(CAR, USER))
+    remaining = profile.goal.target_amount - profile.goal.current_saved
+    assert out["calculations"] == [{**DAYS, "value": -(-remaining // 100)}]
+    assert out["iterations"] == 2 and out["verify"].done and svc.get.call_count == 1  # no re-fetch
+    assert f'"value": {-(-remaining // 100)}' in calls["VerifyDecision"][1]
+    nodes = [r.getMessage().split()[1] for r in caplog.records if r.name == "waypoint.agent"]
+    assert nodes == ["node=eval_query", "node=savings", "node=verify", "node=calculate", "node=verify", "node=gen_ui"]
+    assert "agent node=calculate count=1 errors=0" in [r.getMessage() for r in caplog.records]
+    assert "ceil" not in caplog.text and "goal_remaining" not in caplog.text
+
+
+def test_failed_formula_can_be_corrected_and_chained(service):
+    svc, profile = service
+    bad = {**DAYS, "formula": "{savings.goal_remaining} / 250"}  # 250 isn't in the question
+    weeks = {"name": "weeks_needed", "label": "Weeks to reach goal", "unit": "count", "formula": "ceil(days_needed / 7)"}
+    planner, calls = savings_route({"done": False, "missing": "Days", "calculations": [bad]},
+                                   {"done": False, "missing": "Fix it", "calculations": [DAYS, weeks]},
+                                   {"done": True})
+    out = build_agent_graph(svc, planner, worker()).invoke(initial_state(CAR, USER))
+    assert '"error": "Number 250 is not in the question or the allowed constants"' in calls["VerifyDecision"][1]
+    days = -(-(profile.goal.target_amount - profile.goal.current_saved) // 100)
+    assert [(c["name"], c.get("value")) for c in out["calculations"]] == [("days_needed", days),
+                                                                            ("weeks_needed", -(-days // 7))]
+    assert out["verify"].done and out["iterations"] == 3
+
+
+def test_repeated_calculation_requests_stop_at_round_limit(service):
+    svc, _ = service
+    planner, calls = savings_route({"done": False, "missing": "More maths", "calculations": [DAYS]})
+    out = build_agent_graph(svc, planner, worker()).invoke(initial_state(CAR, USER))
+    assert len(calls["VerifyDecision"]) == 4 and out["iterations"] == 4
+    assert not out["verify"].done and out["verify"].missing == "More maths (Verification limit reached.)"
+    assert "Verification limit reached" in out["final_ui"]["blocks"][-1]["props"]["text"]
+
+
+def test_calculate_without_record_date_reports_errors():
+    from backend.agent.nodes.calculate import calculate
+    state = {"query": CAR, "results": [], "calculations": [],
+             "verify": VerifyDecision(done=False, missing="x", calculations=[DAYS])}
+    assert calculate(state)["calculations"] == [{**DAYS, "error": "No record date is available for calculations"}]
+
+
+def test_calculated_answer_end_to_end(service):
+    svc, profile = service
+    planner, _ = scripted(
+        RouteDecision=[{"products": ["savings"], "reasoning": "Goal"}],
+        VerifyDecision=[{"done": False, "missing": "Days at $100 a day", "calculations": [DAYS]}, {"done": True}],
+        UIPlan=[{"answer": "Adding that, you'd reach your goal in {calc.days_needed}.",
+                 "stats": ["calc.days_needed", "savings.goal_remaining"]}])
+    out = build_agent_graph(svc, planner, worker()).invoke(initial_state(CAR, USER))
+    days = -(-(profile.goal.target_amount - profile.goal.current_saved) // 100)
+    blocks = out["final_ui"]["blocks"]
+    assert blocks[0]["props"]["text"] == f"Adding that, you'd reach your goal in {days} days."
+    assert [b["type"] for b in blocks] == ["paragraph", "stats", "bar_chart"]
+
+
+def test_failed_calculation_is_retried_once_its_inputs_exist():
+    from backend.agent.nodes.calculate import calculate
+    from backend.agent.schemas import ProductResult
+    savings = ProductResult(product="savings", summary="ok", confidence=1, data={
+        "accounts": [{"balance": 4561}], "balance_total": 4561, "as_of_date": "2026-10-31",
+        "goal": {"name": "Car fund", "target_amount": 6000, "current_saved": 4200, "monthly_contribution": 400,
+                 "target_date": "2027-12-31"}, "goal_remaining": 1800})
+    weeks = {"name": "weeks", "label": "Weeks", "unit": "count", "formula": "ceil(days_needed / 7)"}
+    state = {"query": CAR, "results": [savings], "calculations": [{**weeks, "error": "Unknown name days_needed"}],
+             "verify": VerifyDecision(done=False, missing="x", calculations=[DAYS])}
+    out = {c["name"]: c for c in calculate(state)["calculations"]}
+    assert out["days_needed"]["value"] == 18 and out["weeks"]["value"] == 3 and "error" not in out["weeks"]

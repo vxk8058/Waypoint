@@ -23,6 +23,7 @@ from ..config import Settings
 from ..schemas.normalized import (
     MonthlySummary, UnifiedAccount, UnifiedBill, UnifiedGoal, UnifiedProfile, UnifiedTransaction, WellnessInputs,
 )
+from ..services import badges, missions, recap
 from ..services.profile_service import ProfileNotFound, ProfileService
 
 log = logging.getLogger("waypoint.api")
@@ -39,6 +40,10 @@ class AgentRequest(BaseModel):
     model_config = ConfigDict(extra="forbid")  # no profile_id: the agent always uses the signed-in user's profile
 
     question: str = Field(min_length=1, max_length=1000)
+
+
+class MissionRequest(BaseModel):
+    hint: str = Field(default="", max_length=300)  # e.g. a Simulation question; data for the picker, never instructions
 
 
 class LoginResponse(BaseModel):
@@ -213,6 +218,43 @@ def create_app(db: Database | None = None, profiles: ProfileService | None = Non
         """Monthly income/spending/debt summary and raw inputs for the wellness engine."""
         return SummaryResponse(data=data_info(p), monthly_summary=p.monthly_summary,
                                wellness_inputs=p.wellness_inputs)
+
+    def latest_mission(db, user_id: str, period: str) -> dict | None:
+        legacy = [{"period": {"$exists": False}}] if period == "week" else []  # early weekly missions had no period
+        return db.missions.find_one({"user_id": user_id, "$or": [{"period": period}, *legacy]}, sort=[("start", -1)])
+
+    @app.get("/api/me/mission", tags=["missions"])
+    def mission(p: Profile, request: Request, user: Annotated[PublicUser, Depends(current_user)]):
+        """The latest weekly mission and daily challenge, with progress measured from transactions."""
+        today = date.today()
+        return {period: missions.progress(doc, p, today) if (doc := latest_mission(request.app.state.db, user.user_id, period))
+                else None for period in ("week", "day")}
+
+    @app.post("/api/me/mission", tags=["missions"])
+    def start_mission(p: Profile, request: Request, user: Annotated[PublicUser, Depends(current_user)],
+                      period: Literal["week", "day"] = Query("week"), body: MissionRequest | None = None):
+        """An AI picks the mission from the customer's data; the server checks it and sets every number."""
+        db, today = request.app.state.db, date.today()
+        latest = latest_mission(db, user.user_id, period)
+        if latest and missions.progress(latest, p, today)["status"] == "active":
+            raise HTTPException(409, "A mission for this period is already in progress")
+        if (doc := missions.generate(p, period, user.user_id, today, hint=body.hint if body else "")) is None:
+            raise HTTPException(422, "Not enough spending history to set a mission")
+        db.missions.insert_one(dict(doc))  # insert_one adds _id to the dict it gets
+        return {"mission": missions.progress(doc, p, today)}
+
+    @app.get("/api/me/badges", tags=["missions"])
+    def get_badges(p: Profile, request: Request, user: Annotated[PublicUser, Depends(current_user)]):
+        """Badges for verified wins; earned ones are stored so they are never taken away."""
+        return badges.badges(request.app.state.db, user.user_id, p, date.today())
+
+    @app.get("/api/me/recap", tags=["missions"])
+    def get_recap(p: Profile, request: Request, user: Annotated[PublicUser, Depends(current_user)],
+                  mode: Literal["last7", "calendar"] = Query("last7")):
+        """A code-built weekly recap document (same block format as Simulation answers)."""
+        db, today = request.app.state.db, date.today()
+        return recap.recap(p, list(db.missions.find({"user_id": user.user_id})),
+                           badges.badges(db, user.user_id, p, today), mode, today)
 
     @app.post("/api/me/agent", tags=["agent"])
     def ask_agent(body: AgentRequest, request: Request, user: Annotated[PublicUser, Depends(current_user)]) -> dict:

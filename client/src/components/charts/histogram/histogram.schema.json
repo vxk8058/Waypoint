@@ -1,0 +1,216 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "HistogramSpec",
+  "description": "Render a histogram: how values of ONE measure are distributed (e.g. transaction sizes). Send raw values and let the chart bin them, or send bins.",
+  "type": "object",
+  "required": [],
+  "additionalProperties": false,
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Short title, sentence case. Say what is measured."
+    },
+    "subtitle": {
+      "type": "string",
+      "description": "Optional context: units, period, or the takeaway."
+    },
+    "values": {
+      "type": "array",
+      "items": {
+        "type": "number"
+      },
+      "description": "Raw observations. Preferred: enables mean/median markers."
+    },
+    "bins": {
+      "type": "array",
+      "description": "Pre-binned data, used instead of values.",
+      "items": {
+        "type": "object",
+        "required": [
+          "start",
+          "end",
+          "count"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "start": {
+            "type": "number"
+          },
+          "end": {
+            "type": "number"
+          },
+          "count": {
+            "type": "number",
+            "minimum": 0
+          }
+        }
+      }
+    },
+    "binCount": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 100,
+      "description": "Approximate bin count; widths are rounded to clean numbers."
+    },
+    "binWidth": {
+      "type": "number",
+      "exclusiveMinimum": 0,
+      "description": "Exact bin width; overrides binCount."
+    },
+    "valueFormat": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "How numbers are printed.",
+      "properties": {
+        "style": {
+          "type": "string",
+          "enum": [
+            "number",
+            "currency",
+            "percent"
+          ],
+          "default": "number",
+          "description": "percent means values are already percentages (45 = 45%)."
+        },
+        "currency": {
+          "type": "string",
+          "description": "ISO 4217 code, default USD."
+        },
+        "decimals": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 6
+        },
+        "compact": {
+          "type": [
+            "boolean",
+            "string"
+          ],
+          "enum": [
+            true,
+            false,
+            "auto"
+          ],
+          "default": "auto",
+          "description": "12.4K / $1.2M notation. auto compacts at 10,000+."
+        },
+        "prefix": {
+          "type": "string"
+        },
+        "suffix": {
+          "type": "string",
+          "description": "Unit suffix, e.g. \" hrs\"."
+        }
+      }
+    },
+    "countLabel": {
+      "type": "string",
+      "default": "Count",
+      "description": "What one count is, e.g. \"Transactions\"."
+    },
+    "markers": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "mean",
+          "median"
+        ]
+      },
+      "description": "Summary rules (raw values only)."
+    },
+    "referenceLines": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "value"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "value": {
+            "type": "number"
+          },
+          "label": {
+            "type": "string"
+          }
+        }
+      },
+      "description": "Vertical rules on the value axis."
+    },
+    "highlightRange": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Emphasise bins in this range.",
+      "properties": {
+        "from": {
+          "type": "number"
+        },
+        "to": {
+          "type": "number"
+        }
+      }
+    },
+    "color": {
+      "type": "string",
+      "enum": [
+        "purple",
+        "teal",
+        "orange",
+        "blue",
+        "neutral"
+      ]
+    },
+    "xAxis": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "label": {
+          "type": "string"
+        },
+        "show": {
+          "type": "boolean",
+          "default": true
+        }
+      }
+    },
+    "yAxis": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "label": {
+          "type": "string"
+        },
+        "show": {
+          "type": "boolean",
+          "default": true
+        },
+        "min": {
+          "type": "number"
+        },
+        "max": {
+          "type": "number"
+        },
+        "tickCount": {
+          "type": "integer",
+          "minimum": 2,
+          "maximum": 10,
+          "default": 5
+        },
+        "gridlines": {
+          "type": "boolean",
+          "default": true
+        }
+      }
+    },
+    "height": {
+      "type": "integer",
+      "minimum": 160,
+      "maximum": 800,
+      "default": 280
+    },
+    "emptyMessage": {
+      "type": "string"
+    }
+  }
+}

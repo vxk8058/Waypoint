@@ -1,0 +1,294 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "LineChartSpec",
+  "description": "Render a line chart. Use for trends over time or any ordered x (balances, net worth, projections). Use a bar chart to compare separate categories.",
+  "type": "object",
+  "required": [
+    "x",
+    "series"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Short title, sentence case. Say what is measured."
+    },
+    "subtitle": {
+      "type": "string",
+      "description": "Optional context: units, period, or the takeaway."
+    },
+    "x": {
+      "type": "array",
+      "items": {
+        "type": [
+          "string",
+          "number"
+        ]
+      },
+      "description": "X values in order: ISO dates (\"2026-03-01\" or \"2026-03\"), numbers, or short category labels."
+    },
+    "xType": {
+      "type": "string",
+      "enum": [
+        "time",
+        "number",
+        "category"
+      ],
+      "description": "Optional; detected from x when omitted."
+    },
+    "series": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 5,
+      "description": "One entry per line. ≤4 stay distinguishable; more are drawn grey.",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "values"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "values": {
+            "type": "array",
+            "items": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "description": "One per x. null leaves a gap."
+          },
+          "color": {
+            "type": "string",
+            "enum": [
+              "purple",
+              "teal",
+              "orange",
+              "blue",
+              "neutral"
+            ],
+            "description": "Optional. Pin so the same entity matches across charts."
+          },
+          "band": {
+            "type": "object",
+            "required": [
+              "lower",
+              "upper"
+            ],
+            "additionalProperties": false,
+            "description": "Uncertainty range, e.g. simulation 10th–90th percentile.",
+            "properties": {
+              "lower": {
+                "type": "array",
+                "items": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                }
+              },
+              "upper": {
+                "type": "array",
+                "items": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "curve": {
+      "type": "string",
+      "enum": [
+        "linear",
+        "monotone",
+        "step"
+      ],
+      "default": "monotone",
+      "description": "step for values that change in jumps (balances after deposits)."
+    },
+    "area": {
+      "type": "boolean",
+      "default": false,
+      "description": "Light wash under the line. Best with one series."
+    },
+    "markers": {
+      "type": "string",
+      "enum": [
+        "auto",
+        "none",
+        "last",
+        "all"
+      ],
+      "default": "auto"
+    },
+    "valueLabels": {
+      "type": "string",
+      "enum": [
+        "auto",
+        "none",
+        "last",
+        "max",
+        "min-max"
+      ],
+      "default": "auto",
+      "description": "Which points print their value. Be selective."
+    },
+    "endLabels": {
+      "type": "boolean",
+      "description": "Series names at line ends. Default on for 2–4 series when they don't collide."
+    },
+    "highlight": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Series names to emphasise; others turn grey."
+    },
+    "forecastFrom": {
+      "type": [
+        "string",
+        "number"
+      ],
+      "description": "The x value where actuals end and projection begins; the rest is dashed and labelled Projected."
+    },
+    "valueFormat": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "How numbers are printed.",
+      "properties": {
+        "style": {
+          "type": "string",
+          "enum": [
+            "number",
+            "currency",
+            "percent"
+          ],
+          "default": "number",
+          "description": "percent means values are already percentages (45 = 45%)."
+        },
+        "currency": {
+          "type": "string",
+          "description": "ISO 4217 code, default USD."
+        },
+        "decimals": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 6
+        },
+        "compact": {
+          "type": [
+            "boolean",
+            "string"
+          ],
+          "enum": [
+            true,
+            false,
+            "auto"
+          ],
+          "default": "auto",
+          "description": "12.4K / $1.2M notation. auto compacts at 10,000+."
+        },
+        "prefix": {
+          "type": "string"
+        },
+        "suffix": {
+          "type": "string",
+          "description": "Unit suffix, e.g. \" hrs\"."
+        }
+      }
+    },
+    "xAxis": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "label": {
+          "type": "string"
+        },
+        "show": {
+          "type": "boolean",
+          "default": true
+        }
+      }
+    },
+    "yAxis": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "label": {
+          "type": "string"
+        },
+        "show": {
+          "type": "boolean",
+          "default": true
+        },
+        "min": {
+          "type": "number"
+        },
+        "max": {
+          "type": "number"
+        },
+        "tickCount": {
+          "type": "integer",
+          "minimum": 2,
+          "maximum": 10,
+          "default": 5
+        },
+        "gridlines": {
+          "type": "boolean",
+          "default": true
+        },
+        "includeZero": {
+          "type": "boolean",
+          "default": true,
+          "description": "Set false to zoom into a narrow range (e.g. 98–104)."
+        }
+      }
+    },
+    "referenceLines": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "value"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "value": {
+            "type": "number"
+          },
+          "label": {
+            "type": "string"
+          }
+        }
+      },
+      "description": "Horizontal rules, e.g. a savings goal."
+    },
+    "legend": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "show": {
+          "type": "boolean"
+        }
+      }
+    },
+    "height": {
+      "type": "integer",
+      "minimum": 160,
+      "maximum": 800,
+      "default": 300
+    },
+    "emptyMessage": {
+      "type": "string"
+    }
+  }
+}

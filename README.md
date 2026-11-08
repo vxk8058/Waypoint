@@ -9,6 +9,29 @@ Financial Wellness toolkit, Capital One's Nessie API and NVIDIA Nemotron.
 Pipeline: **PNC-convention synthetic data → mapping → Nessie seeding → Nessie retrieval →
 unified profile → wellness engine → LangGraph + Nemotron simulation.**
 
+## What's in the app
+
+- **Goal bar:** progress toward the student's goal, checkpoints (25/50/75/100%), a forgiving savings streak, and how many days the last deposit saved.
+- **Missions:** a weekly mission and a daily challenge, picked by AI from the student's own spending and checked against their transactions.
+- **Badges:** earned only from verified wins (goal milestones, deposit streaks, completed missions); shown in the sidebar and kept once earned.
+- **Your week:** a recap of the last 7 days or the last calendar week: spending vs a usual week, top merchant, money saved, missions and badges.
+- **Simulation:** ask any money question ("Can I afford the car by Christmas?") and get a written answer with stats and charts; any answer can become this week's mission.
+- **Accounts and transactions:** balances, history and upcoming bills from Capital One Nessie.
+
+**The one rule everywhere:** AI chooses and explains, code computes. Every number shown comes from the student's records or from maths run in code.
+
+```mermaid
+flowchart LR
+  S[Student] --> FE["React app<br/>Home · Transactions · Simulation · Your week"]
+  FE -->|signed-in requests| API[FastAPI backend]
+  API --> PS["Profile service<br/>(cache + saved snapshot)"]
+  PS --> N[("Capital One Nessie<br/>accounts · purchases · deposits<br/>transfers · loans · bills")]
+  PS --> M[("MongoDB<br/>profiles · users · missions · badges")]
+  API --> AG["Banking agent<br/>LangGraph + Nemotron"]
+  API --> MI["Mission picker<br/>Nemotron + code checks"]
+  API --> GM["Badges + weekly recap<br/>code only"]
+```
+
 ## Status
 
 | Phase | Scope | Status |
@@ -18,7 +41,8 @@ unified profile → wellness engine → LangGraph + Nemotron simulation.**
 | 3 | Nessie seeding and verification | Done |
 | 4 | Nessie retrieval, unified profile, API with demo login | Done |
 | 5 | Financial wellness engine | Next |
-| 6–7 | Simulation, integration | Planned |
+| 6–7 | Banking agent, Simulation, integration | Done |
+| 8 | Missions, badges, weekly recap | Done |
 
 ## Setup
 
@@ -33,29 +57,44 @@ under Atlas → Network Access.
 
 ### Banking agent
 
-A read-only LangGraph agent answers questions about the signed-in user's accounts.
+`POST /api/me/agent` with `{"question": "..."}` (signed in). Set `NVIDIA_API_KEY`, `PLANNER_MODEL` and
+`WORKER_MODEL` in `.env`; without them the endpoint answers with a short fallback instead of failing.
 
-```bash
-curl -X POST localhost:8000/api/me/agent -H "Authorization: Bearer $TOKEN" \
-     -H "Content-Type: application/json" -d '{"question": "Where did my money go in October?"}'
+```mermaid
+flowchart TD
+  Q[Question] --> R{"Router<br/>is it about money?"}
+  R -- no --> UI
+  R -- yes --> B[["Account branches, in parallel<br/>checking · savings · credit card · loans<br/>(+ all transactions when needed)"]]
+  B --> V{"Verify<br/>do the facts answer it?"}
+  V -- needs more data --> B
+  V -- needs numbers --> C["Calculate<br/>data queries + formulas, run in code"]
+  C --> V
+  V -- "done, or 4 rounds used" --> UI["Gen UI<br/>AI lays out the page, code fills every number"]
+  UI --> D["Answer: headings, stats, charts, lists, notes"]
 ```
 
-- **Setup:** set `NVIDIA_API_KEY`, `PLANNER_MODEL` and `WORKER_MODEL` in `.env` (exact IDs from NVIDIA's
-  model catalog). Models load on the first question; without them the endpoint returns a fallback answer
-  with a "Query routing is unavailable" caveat. Other routes and the tests don't need these settings.
-- **Flow** (`backend/agent/graph.py`): the planner routes the question to the Checking, Savings, Credit Card
-  and Loans branches (in parallel); Verify checks the combined results and can re-fetch products or extra
-  data (transactions, student bio) for at most three rounds; Gen UI returns an AI document.
-- **Data:** branches read through the existing `ProfileService`, so Nessie caching, stale-snapshot fallback,
-  pre-seed mode and warnings apply. Only GET requests are made. The profile always comes from the bearer
-  token; the request body accepts only `question`. Warnings become caveats in the answer.
-- **Numbers:** amounts are computed in code. The model writes text with `{fact_key}` placeholders that code
-  fills in; any digit it types is rejected (one retry, then a code-only fallback).
-- **Output:** `{"blocks": [...]}` validated against the frontend's
-  `backend/agent/ui/ai-document.schema.json` (copied from the frontend; replace it when that schema changes).
-- **Logs:** `waypoint.agent` logs each request's path (nodes, routes, Verify rounds) without question text,
-  IDs or amounts. Don't enable `LANGSMITH_TRACING`: it would send full prompts with account data.
-- **Status:** see `docs/BANKING_AGENT_CHECKLIST.md`. Live Nemotron runs and frontend rendering are unverified.
+- **Any money question.** Only non-financial questions are refused. General questions ("how does APR work?") are answered as general information.
+- **Real maths.** Verify can ask code to query transactions (by merchant, category, dates; sum, count, average, top 5) and to run formulas (including interest and loan payoff). Results become facts the answer can cite.
+- **Credible by design.** The AI writes `{fact}` placeholders, never numbers; code fills them in, rejects invented figures, and drops any bad block. Bank access is read-only.
+- **Bounded.** At most 4 rounds; a failure falls back to a code-written answer.
+- **Logs.** `waypoint.agent` logs each step without question text, IDs or amounts. Keep `LANGSMITH_TRACING` off (it would send account data out).
+
+### Missions
+
+`GET /api/me/mission`, `POST /api/me/mission?period=week|day` (optional `{"hint": "..."}`, e.g. a Simulation question).
+
+```mermaid
+flowchart LR
+  P[Customer data] --> SUM["Code brief<br/>spending · goal · income"]
+  SUM --> AI["Nemotron picks a challenge<br/>spending cap or savings deposit"]
+  AI --> CHK{"Code checks<br/>real cutback? not essential?<br/>affordable?"}
+  CHK -- ok --> MS[(Mission saved)]
+  CHK -- not ok --> FB[Code-picked mission] --> MS
+  MS --> PR[Progress measured from transactions]
+```
+
+Badges (`GET /api/me/badges`) and the weekly recap (`GET /api/me/recap?mode=last7|calendar`) are computed in code
+only. Status and limits: `docs/BANKING_AGENT_CHECKLIST.md` and `docs/BANKING_AGENT_CALCULATE_PLAN.md`.
 
 ## Phase 2 pipeline
 
@@ -95,18 +134,38 @@ python scripts/seed_nessie.py                     # Nessie ids in MongoDB
 uvicorn backend.api.main:app --reload --port 8000
 ```
 
-Log in at `http://localhost:8000/docs` with **poyo@waypoint.demo / waypoint-demo**. This
-demo user is linked to `stu-002`, Poyo de Avon. Banking data is read live from Nessie and
+Log in at `http://localhost:8000/docs` with any demo login below (password **waypoint-demo**).
+Each login sees only its own student. Banking data is read live from Nessie and
 merged with PNC-only data from MongoDB. See [docs/API.md](docs/API.md).
+
+## Run the frontend
+
+The React app lives in `client/`. Start the API (above) first, then in a second terminal:
+
+```bash
+cd client
+npm install      # first time, or after package.json changes
+npm run dev      # http://localhost:5173
+```
+
+Sign in with any demo login (password **waypoint-demo**): `poyo@`, `lucas@`, `leah@` or `priya@waypoint.demo`.
+
+- In dev, Vite proxies `/auth` and `/api` to `http://localhost:8000` (`client/vite.config.ts`), so no
+  CORS setup is needed. For a backend elsewhere: `WAYPOINT_API_URL=http://host:port npm run dev`.
+- "Can't reach the Waypoint server" on sign-in means the API isn't running on port 8000.
+- The session token is kept in `localStorage` (`waypoint.session`). Use **Sign out** in the sidebar's
+  account menu, or delete that key, to log out.
+- Production: `npm run build` outputs `client/dist`. The proxy only exists in dev, so set
+  `VITE_API_BASE_URL` to the API's URL at build time and add the site's origin to the API's `CORS_ORIGINS`.
 
 ## Demo profiles
 
-| ID | Student | Highlights |
-|---|---|---|
-| `stu-001` (primary) | UT Dallas junior, CS, library job + family support | Card paid in full, deferred unsubsidized loan, emergency-fund goal |
-| `stu-002` (demo login) | Poyo de Avon, UNT sophomore, lives at home, retail job | No card, saving for a first car |
-| `stu-003` | Texas A&M senior, co-op internship | Auto loan, card carried at ~28% utilization, relocation goal |
-| `stu-004` | UT Austin freshman, dining job + aid refund | Subsidized loan, card carried, tuition-gap goal |
+| ID | Demo login | Student | Highlights |
+|---|---|---|---|
+| `stu-001` | `lucas@waypoint.demo` | Lucas Patel, UT Dallas junior, CS, library job + family support | Card paid in full, deferred unsubsidized loan, emergency-fund goal |
+| `stu-002` | `poyo@waypoint.demo` | Poyo de Avon, UNT sophomore, lives at home, retail job | No card, saving for a first car |
+| `stu-003` | `leah@waypoint.demo` | Leah Walker, Texas A&M senior, co-op internship | Auto loan, card carried at ~28% utilization, relocation goal |
+| `stu-004` | `priya@waypoint.demo` | Priya Ramirez, UT Austin freshman, dining job + aid refund | Subsidized loan, card carried, tuition-gap goal |
 
 ## Layout
 
@@ -120,7 +179,7 @@ backend/
   integrations/nessie/  Nessie HTTP client, response schemas, retrieval gateway
   seeding/      idempotent Nessie seeder, reset, read-back verifier
   services/     ProfileService: cached Nessie retrieval with snapshot and pre-seed fallbacks
-  auth/         demo user, password hashing, signed session tokens
+  auth/         demo users (one per student), password hashing, signed session tokens
   api/          FastAPI app (uvicorn backend.api.main:app)
   pipeline.py   generate → fill → map → normalize → validate
 scripts/        runnable pipeline steps
@@ -132,3 +191,16 @@ tests/
 
 See [docs/DATA_MAPPING.md](docs/DATA_MAPPING.md) for the field mapping and the verified
 Nessie API behavior that shaped it.
+
+
+# 1. Install dependencies in a virtual environment (one time)
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+
+# 2. Set up the data (one time; it's safe to run again)
+python scripts/validate_profile.py --save-mongo   # saves the student profiles to MongoDB
+python scripts/seed_nessie.py                     # creates their accounts in Nessie
+
+# 3. Start the API
+python -m uvicorn backend.api.main:app --reload --port 8000

@@ -1,0 +1,95 @@
+@import "tailwindcss";
+
+@theme {
+  /* Fonts */
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-grotesk: var(--font-display);
+
+  --color-canvas: #010614;
+  --color-surface: #0A1628;
+  --color-surface-raised: #13223A;
+
+  /* Primary */
+  --color-purple-050: #E6E6FF;
+  --color-purple-100: #C4C6FF;
+  --color-purple-200: #A2A5FC;
+  --color-purple-300: #8888FC;
+  --color-purple-400: #7069FA;
+  --color-purple-500: #5D55FA;
+  --color-purple-600: #4D3DF7;
+  --color-purple-700: #3525E6;
+  --color-purple-800: #1D0EBE;
+  --color-purple-900: #0C008C;
+
+  --color-teal-050: #EFFCF6;
+  --color-teal-100: #C6F7E2;
+  --color-teal-200: #8EEDC7;
+  --color-teal-300: #65D6AD;
+  --color-teal-400: #3EBD93;
+  --color-teal-500: #27AB83;
+  --color-teal-600: #199473;
+  --color-teal-700: #147D64;
+  --color-teal-800: #0C6B58;
+  --color-teal-900: #014D40;
+
+  /* Neutrals */
+  --color-blue-grey-050: #F0F4F8;
+  --color-blue-grey-100: #D9E2EC;
+  --color-blue-grey-200: #BCCCDC;
+  --color-blue-grey-300: #9FB3C8;
+  --color-blue-grey-400: #829AB1;
+  --color-blue-grey-500: #7A93AC; /* brightened: muted text passes WCAG AA on raised cards */
+  --color-blue-grey-600: #486581;
+  --color-blue-grey-700: #334E68;
+  --color-blue-grey-800: #243B53;
+  --color-blue-grey-900: #102A43;
+
+  /* Supporting */
+  --color-light-blue-vivid-050: #E3F8FF;
+  --color-light-blue-vivid-100: #B3ECFF;
+  --color-light-blue-vivid-200: #81DEFD;
+  --color-light-blue-vivid-300: #5ED0FA;
+  --color-light-blue-vivid-400: #40C3F7;
+  --color-light-blue-vivid-500: #2BB0ED;
+  --color-light-blue-vivid-600: #1992D4;
+  --color-light-blue-vivid-700: #127FBF;
+  --color-light-blue-vivid-800: #0B69A3;
+  --color-light-blue-vivid-900: #035388;
+
+  --color-red-vivid-050: #FFE3E3;
+  --color-red-vivid-100: #FFBDBD;
+  --color-red-vivid-200: #FF9B9B;
+  --color-red-vivid-300: #F86A6A;
+  --color-red-vivid-400: #EF4E4E;
+  --color-red-vivid-500: #E12D39;
+  --color-red-vivid-600: #CF1124;
+  --color-red-vivid-700: #AB091E;
+  --color-red-vivid-800: #8A041A;
+  --color-red-vivid-900: #610316;
+
+  --color-yellow-vivid-050: #FFFBEA;
+  --color-yellow-vivid-100: #FFF3C4;
+  --color-yellow-vivid-200: #FCE588;
+  --color-yellow-vivid-300: #FADB5F;
+  --color-yellow-vivid-400: #F7C948;
+  --color-yellow-vivid-500: #F0B429;
+  --color-yellow-vivid-600: #DE911D;
+  --color-yellow-vivid-700: #CB6E17;
+  --color-yellow-vivid-800: #B44D12;
+  --color-yellow-vivid-900: #8D2B0B;
+}
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  body {
+    @apply bg-canvas font-sans text-blue-grey-050 antialiased tabular-nums;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+  }
+}

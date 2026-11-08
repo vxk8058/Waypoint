@@ -56,8 +56,9 @@ def test_1_checking_balance(world):
                    VerifyDecision=[{"done": True}],
                    UIPlan=[{"answer": "Your checking balance is {checking.balance}.", "stats": ["checking.balance"]}])
     balance = sum(a.balance for a in profile.accounts if a.type == "checking")
-    assert r.status_code == 200 and kinds(r) == ["paragraph", "stats"]
+    assert r.status_code == 200 and kinds(r) == ["paragraph", "stats", "bar_chart"]
     assert r.json()["blocks"][1]["props"]["items"][0]["value"] == balance
+    assert r.json()["blocks"][2]["props"]["title"].startswith("Spending by category, October 2026")
     assert len(calls["VerifyDecision"]) == 1
 
 
@@ -68,7 +69,7 @@ def test_2_savings_vs_loan_payoff_runs_in_parallel_and_flags_missing_payoff(worl
                    UIPlan=[{"answer": "Your savings balance is {savings.balance}.", "stats": ["savings.balance"]}])
     assert len(calls["VerifyDecision"]) == 1  # both branches joined before one Verify
     callout = r.json()["blocks"][-1]["props"]["text"]
-    assert "No loan account is available" in callout and "No loan payoff quote is available." in callout
+    assert "No loan payoff quote is available." in callout and "No loan account" not in callout  # not a data problem
     assert r.json()["blocks"][1]["props"]["items"][0]["value"] == sum(
         a.balance for a in profile.accounts if a.type == "savings")
 
@@ -89,7 +90,7 @@ def test_4_api_failure_is_a_caveat_not_a_crash(world):
     r, _ = ask(service, "What's my checking balance?", RouteDecision=route("checking"),
                VerifyDecision=[{"done": False, "missing": "Checking data is unavailable."}],
                UIPlan=[{"answer": "I couldn't reach your checking records."}])
-    assert r.status_code == 200 and kinds(r)[-1] == "callout"
+    assert r.status_code == 200 and kinds(r)[-1] == "paragraph"  # caveats are a muted closing note
     assert "Checking retrieval failed (ConnectionError)" in r.text and "internal-host" not in r.text
 
 
@@ -101,7 +102,7 @@ def test_5_vague_query_asks_for_clarification_and_repeated_gaps_stop_at_three(wo
     r, calls = ask(service, "Help me with my money", RouteDecision=route("checking"),
                    VerifyDecision=[{"done": False, "need_products": ["checking"], "missing": "Unclear goal"}],
                    UIPlan=[{"answer": "Here is your checking account."}])
-    assert len(calls["VerifyDecision"]) == 3 and "Verification limit reached" in r.text
+    assert len(calls["VerifyDecision"]) == 4 and "Verification limit reached" in r.text
 
 
 def test_6_october_spending_chart_uses_exact_totals(world):
@@ -121,11 +122,14 @@ def test_6_october_spending_chart_uses_exact_totals(world):
     assert r.json()["blocks"][0]["props"]["text"] == f"You spent ${sum(expected.values()):,} in October."
 
 
-def test_7_savings_balance_is_text_only(world):
-    service, _ = world
+def test_7_savings_balance_gets_goal_progress_chart(world):
+    service, profile = world
     r, _ = ask(service, "What's my savings balance?", RouteDecision=route("savings"), VerifyDecision=[{"done": True}],
                UIPlan=[{"answer": "Your savings balance is {savings.balance}.", "stats": ["savings.balance"]}])
-    assert "bar_chart" not in kinds(r)
+    # The guide expected text only here; every answer with data now gets a chart (user request, 2026-11-08).
+    assert kinds(r) == ["paragraph", "stats", "bar_chart"]
+    assert r.json()["blocks"][2]["props"]["series"][0]["values"] == [profile.goal.current_saved,
+                                                                     profile.goal.target_amount]
 
 
 def test_agent_only_reads_the_signed_in_users_profile(world):
