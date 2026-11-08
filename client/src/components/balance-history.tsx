@@ -63,6 +63,8 @@ export function BalanceHistory({ accounts, asOf, className = "" }: BalanceHistor
     markers: "last" as const,
     valueLabels: "last" as const,
     valueFormat: { style: "currency" as const },
+    // Fit the y-axis to the data so small swings are visible.
+    yAxis: { includeZero: false },
     legend: { show: false },
     height: 220,
     emptyMessage: error ? "No data" : "No transactions yet",

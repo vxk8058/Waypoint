@@ -97,7 +97,7 @@ export function GoalBar({ goal, asOf, className = "" }: GoalBarProps) {
   return (
     <section
       aria-label="Goal"
-      className={["flex w-full select-none flex-col gap-2 rounded-lg border-2 border-transparent px-5 py-3 text-blue-grey-400", className]
+      className={["flex w-full select-none flex-col gap-2 rounded-lg border border-transparent px-5 py-3 text-blue-grey-400", className]
         .filter(Boolean)
         .join(" ")}
       style={{ background: gradientBorder }}
@@ -159,7 +159,7 @@ export function Goal({ className = "" }: { className?: string }) {
   }
   if (error || !data) {
     return (
-      <p role="alert" className={`rounded-lg bg-surface px-5 py-3 text-sm text-blue-grey-300 ${className}`}>
+      <p role="alert" className={`rounded-lg border border-transparent px-5 py-3 text-sm text-blue-grey-300 ${className}`}>
         Couldn't load your goal: {error?.message ?? "no data"}
       </p>
     );
