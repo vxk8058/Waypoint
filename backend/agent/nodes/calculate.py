@@ -10,6 +10,10 @@ def calculate(state: AgentState):
     results = state.get("results", [])
     requested = [c.model_dump() for c in state["verify"].calculations]
     previous = state.get("calculations", [])
+    names = {c["name"] for c in requested}
+    # Retry earlier failures too: one may only have failed because a name it uses didn't exist yet.
+    requested += [{k: c[k] for k in ("name", "label", "unit", "formula")}
+                  for c in previous if "error" in c and c["name"] not in names]
     as_of = data_date(results)
     if as_of is None:
         new = [{**c, "error": "No record date is available for calculations"} for c in requested]

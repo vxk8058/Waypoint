@@ -97,6 +97,17 @@ def build_facts(results, datasets: dict[str, dict]) -> dict[str, dict]:
             incomes, spent = (s["values"] for s in ds["series"])
             for month, label, i, s in zip(ds["keys"], ds["categories"], incomes, spent):
                 add(f"{key}.net.{month}", f"Income minus spending, {label}", i - s)
+    # Per-category monthly average over every month in the history (months with no spend count as $0),
+    # so "cut dining in half" needs one fact instead of a six-month sum.
+    if months := datasets.get("income_vs_spending", {}).get("keys"):
+        totals = defaultdict(int)
+        for key, ds in datasets.items():
+            if key.startswith("spending_by_category."):
+                for slug, value in zip(ds["keys"], ds["series"][0]["values"]):
+                    totals[slug] += value
+        for slug, total in totals.items():
+            add(f"spending.avg_monthly.{slug}", f"Average monthly spending, {_label(slug)}",
+                round(total / len(months)), "down")
     return facts
 
 

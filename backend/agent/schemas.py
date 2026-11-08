@@ -48,7 +48,7 @@ class Calculation(BaseModel):
     name: str = Field(pattern=r"^[a-z][a-z0-9_]{0,39}$")
     label: str = Field(min_length=1, max_length=80)
     unit: Unit
-    formula: str = Field(min_length=1, max_length=200)
+    formula: str = Field(min_length=1, max_length=400)
 
     @model_validator(mode="after")
     def not_a_function_name(self):

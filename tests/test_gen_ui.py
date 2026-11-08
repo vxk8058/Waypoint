@@ -280,3 +280,20 @@ def test_fallback_keeps_calculated_answer(profile):
     assert [b["type"] for b in blocks] == ["paragraph", "stats", "paragraph"]
     assert blocks[1]["props"]["items"][0]["value"] == f"{-(-remaining // 100)} days"
     assert blocks[2]["props"]["text"].startswith("How this was worked out: Days to reach goal = round up(")
+
+
+def test_monthly_category_average_counts_every_month(profile):
+    results = [result(profile, "transactions")]
+    datasets = build_datasets(results)
+    facts = build_facts(results, datasets)
+    months = datasets["income_vs_spending"]["keys"]
+    dining = sum(t.amount if t.direction == "out" else -t.amount for t in profile.transactions
+                 if t.flow_class == "expense" and t.category == "dining")
+    assert facts["spending.avg_monthly.dining"] == {"label": "Average monthly spending, Dining",
+                                                    "value": round(dining / len(months)), "good": "down",
+                                                    "unit": "dollars"}
+
+
+def test_calculated_dollar_tiles_are_whole_dollars():
+    from backend.agent.nodes.gen_ui import _tile
+    assert _tile({"label": "Saved by Christmas", "value": 4922.79, "good": "none", "unit": "dollars"})["value"] == 4923

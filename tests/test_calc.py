@@ -73,7 +73,7 @@ def test_limits_and_math_errors():
     with pytest.raises(CalcError, match="Division by zero"):
         ev("{savings.goal_remaining} / {zero}")
     with pytest.raises(CalcError, match="longer than"):
-        ev("1 + " * 60 + "1")
+        ev("1 + " * 110 + "1")
     with pytest.raises(CalcError, match="not a usable number"):
         ev("365 * 365 * 365 * 365")
     with pytest.raises(CalcError, match="not valid arithmetic"):
@@ -90,3 +90,23 @@ def test_run_all_chains_and_isolates_failures():
     out = run_all(calcs, FACTS, CAR, AS_OF)
     assert out[0]["value"] == 3000 and out[1]["error"] == "Division by zero" and "value" not in out[1]
     assert out[2] == {**calcs[2], "value": 18}
+
+
+# Live-run fixes: models mix up braces on facts and calculation names
+
+
+def test_bare_fact_keys_and_braced_calculation_names_are_normalized():
+    from backend.agent.calc import normalize
+    facts = {**FACTS, "liquid_cash": {"value": 500, "unit": "dollars"}}
+    assert ev("ceil(savings.goal_remaining / 100)") == 18
+    assert ev("spending_by_category.2026-10.spent.dining * 0.5", "Cut dining in half") == 74.5
+    assert ev("{days_needed} * 2 + {calc.days_needed}", earlier={"days_needed": 18}) == 54
+    assert normalize("{liquid_cash} + liquid_cash + {calc.d} + d", facts, {"d"}) == \
+        "{liquid_cash} + {liquid_cash} + d + d"  # already-braced keys aren't double-braced
+    with pytest.raises(CalcError, match="Unknown name goal_remaining"):
+        ev("goal_remaining / 100")  # a partial key isn't guessed
+
+
+def test_run_all_stores_normalized_formula():
+    calc = {"name": "d", "label": "Days", "unit": "days", "formula": "ceil(savings.goal_remaining / 100)"}
+    assert run_all([calc], FACTS, CAR, AS_OF)[0]["formula"] == "ceil({savings.goal_remaining} / 100)"

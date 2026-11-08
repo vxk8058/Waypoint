@@ -19,6 +19,8 @@ def eval_query(state: AgentState, planner=None):
             "Route a read-only banking question to every necessary product: checking, savings, credit_card, loans. "
             "Questions about spending, where money went, purchases, bills, or income span accounts: route them to "
             "checking and credit_card. 'My balance' or 'my account' with no product named means checking. "
+            "Goal, saving, car, or what-if questions (hypotheticals, not real account changes) need savings; "
+            "add checking and credit_card when the question changes spending or income. "
             "Return products=[] only when no product's data could help (for example a request with no topic, "
             "like 'help me with my money') or the task is unsupported (transfers, payments, or any change to "
             "an account, or a non-banking question), and explain what clarification is needed or why. "

@@ -166,6 +166,17 @@ Do these in order. Each step ends with its own tests passing, as in the main che
 - One sentence: "Goal, saving, car or what-if questions need savings; add checking and credit_card when the question changes spending."
 - **Tests:** the existing router tests still pass. Live check: the three suggested Simulation questions route consistently.
 
+**✅ Done (2026-11-08).**
+- The router prompt adds: "Goal, saving, car, or what-if questions (hypotheticals, not real account changes) need savings; add checking and credit_card when the question changes spending or income."
+  - The "hypotheticals, not real account changes" wording stops "take a car loan instead" from being refused under the existing "no account changes" rule.
+- Offline suite: 313 passed.
+- **Live router check** (Super planner, 3 runs each): all four Simulation questions included savings every time, and none were refused.
+  - "$100 a day…": savings + checking + credit_card twice, savings only once.
+  - "Afford the car by Christmas?" and "Cut dining out in half?": savings + checking + credit_card, 3 of 3.
+  - "Car loan instead?": savings + loans twice, all four once.
+  - Extra products vary between runs; that adds data, it doesn't drop the question.
+- **Regression check** (1 run each): checking; savings + loans; checking + credit_card; []; checking + credit_card; savings; transfer []; weather []. Same as before.
+
 ### Step 7: Live check (Super model, port 8001, demo user Poyo)
 
 | Question | Expected |
@@ -177,6 +188,56 @@ Do these in order. Each step ends with its own tests passing, as in the main che
 | What's the weather? | Still refused |
 
 Record the results in `BANKING_AGENT_CHECKLIST.md`.
+
+**Live results (2026-11-08, Super for both roles, live Nessie, Poyo / stu-002, port 8001).**
+
+| Question | Result |
+|---|---|
+| $100 a day for a month → car sooner? | ✅ mostly: "4.5 months at your current $400/month … 18 days" with the explanation line (158 s, 3 rounds). A direct rerun calculated 15.9 days, counting the existing $400/month too. Three failed formulas still showed as caveats. |
+| Afford the car by Christmas? | ⚠️ No calculation. Verify didn't treat the "First car fund" target as the car's cost, so it said no car price is recorded. Showed goal tiles. |
+| Cut dining out in half? | ❌ All formulas failed (see below). Showed balances and four "Couldn't calculate" caveats. |
+| Car loan instead? | ✅ as designed: declined because no price, rate or term is known; didn't invent any. |
+| Weather | ✅ refused. |
+
+**Why formulas failed** (from a direct rerun printing the formulas):
+1. **Missing braces and truncation:** the AI wrote fact keys without `{ }` (`spending_by_category.2026-05.spent.dining + …`), and summing six long keys hit the 200-character limit, so the formula was cut off.
+2. **Braces on calculation names:** the AI wrapped earlier calculation names in braces (`{months_to_goal_current}`), which are only for facts.
+3. **No retry of failures:** a formula that failed because an earlier result didn't exist yet is never rerun once that result exists, leaving a stale "Couldn't calculate" caveat even when the answer is complete.
+4. **Christmas:** Verify isn't told that a savings goal (a "car fund") is the thing being bought.
+
+**Regression rerun of the original scenarios** (Verify now sees facts, not records): all six pass, at 20–57 s (previously 23–68 s). Checking $1,653, savings $4,561, October spending $694 (dining $149), October income $1,131. All match earlier Nessie checks.
+
+**Suggested fixes** (small, all in code already touched):
+- In `calc.py`, accept bare fact keys and braced calculation names.
+- Add a per-category monthly-average fact (for example `spending.avg.dining`) so "cut X in half" needs one short formula.
+- Rerun earlier failed calculations each round.
+- One Verify prompt sentence: the savings goal is what the user is saving for.
+
+**✅ Fixes applied and rechecked live (2026-11-08).**
+- **`calc.normalize`:** bare fact keys get braces, braced calculation names (`{x}`, `{calc.x}`) lose them, and the normalized formula is what's stored, so the Gen UI explanation always sees one form. A partial key (`goal_remaining`) is not guessed.
+- **Formula limit** raised to 400 characters (runner and schema).
+- **New facts:** `spending.avg_monthly.<category>`, the average over every month in the history, with months that have no spending counting as $0.
+- **Calculate retries earlier failures** each round (for example a formula that used a name that didn't exist yet).
+- **Verify prompt:**
+  - "A savings goal (for example a car fund) is what the user is saving for…"
+  - Date functions shown with **single quotes**. Live debugging showed the model writing `days_until("…")` inside its JSON reply, which cut the formula off at `days_until(`.
+  - "A month is 30 days unless the user gives dates."
+- **Gen UI:** a rule not to repeat the unit after a placeholder (fixes "4 months months"), and dollar tiles rounded to whole dollars (fixes `4922.79`).
+- **Tests:** 6 new. Full suite: 318 passed.
+
+**Live recheck** (every run 2 rounds, 0 formula errors):
+
+| Question | Answer |
+|---|---|
+| $100 a day for a month (run 1) | 16 days vs 135 days at the current rate, 119 days sooner (137 s) |
+| $100 a day for a month (run 2) | Same numbers, clearer wording (107 s) |
+| Cut dining out in half | Saves about $67/month; spending $680 → $613; goal in 4 months (66 s) |
+| Afford the car by Christmas | About $4,923 saved by Christmas, $1,077 short; full goal in 5 months. Still notes the car's actual price isn't recorded (105 s) |
+
+**Remaining rough edges:**
+- Wording varies: one run said "$113 would get you there… versus 135 days at $13" without "per day".
+- Python's `round` rounds halves to even, so $67.50 can show as $67 or $68 depending on the formula.
+- What-if answers take about 1–2.5 minutes.
 
 ---
 

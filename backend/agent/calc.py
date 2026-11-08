@@ -8,7 +8,7 @@ from datetime import date, timedelta
 # Plain numbers a formula may use without the user having typed them: identities, calendar units, percent,
 # and number words ("half", "double"). Every other number must appear in the user's question.
 CONSTANTS = {0, 1, 2, 3, 7, 12, 30, 52, 100, 365, 0.25, 0.5, 0.75}
-MAX_FORMULA = 200
+MAX_FORMULA = 400
 MAX_RESULT = 1e9
 MAX_YEARS_AHEAD = 10
 
@@ -27,11 +27,24 @@ def question_numbers(question: str) -> set[float]:
     return {float(n.replace(",", "")) for n in _QUESTION_NUMBER.findall(question)}
 
 
+def normalize(formula: str, facts: dict, names) -> str:
+    """Canonical form: facts in braces, earlier calculation names bare (models often mix these up)."""
+    def unbrace(match):
+        name = match[1].removeprefix("calc.")
+        return name if match[1] not in facts and name in names else match[0]
+
+    formula = _PLACEHOLDER.sub(unbrace, formula)
+    for key in sorted(facts, key=len, reverse=True):  # longest first, so one key can't split a longer one
+        formula = re.sub(rf"(?<![\w.{{]){re.escape(key)}(?![\w.}}])", "{" + key + "}", formula)
+    return formula
+
+
 def evaluate(formula: str, facts: dict, question: str, as_of: date, earlier: dict | None = None) -> float:
     """facts: {key: {"value", "unit", ...}} referenced as {key}; earlier: {name: value} from previous calculations."""
     if len(formula) > MAX_FORMULA:
         raise CalcError(f"Formula is longer than {MAX_FORMULA} characters")
     env = dict(earlier or {})
+    formula = normalize(formula, facts, env)
 
     def placeholder(match):
         key = match[1]
@@ -63,7 +76,8 @@ def run_all(calculations: list[dict], facts: dict, question: str, as_of: date,
     """Run in order so later formulas can use earlier names; one failure doesn't stop the rest."""
     done, results = dict(earlier or {}), []
     for calc in calculations:
-        out = {k: calc[k] for k in ("name", "label", "unit", "formula")}
+        out = {k: calc[k] for k in ("name", "label", "unit")}
+        out["formula"] = normalize(calc["formula"], facts, done)
         try:
             out["value"] = done[calc["name"]] = evaluate(calc["formula"], facts, question, as_of, done)
         except CalcError as exc:

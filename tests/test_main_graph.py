@@ -230,3 +230,17 @@ def test_calculated_answer_end_to_end(service):
     blocks = out["final_ui"]["blocks"]
     assert blocks[0]["props"]["text"] == f"Adding that, you'd reach your goal in {days} days."
     assert blocks[2]["props"]["text"].endswith(f"÷ 100) = {days} days.")
+
+
+def test_failed_calculation_is_retried_once_its_inputs_exist():
+    from backend.agent.nodes.calculate import calculate
+    from backend.agent.schemas import ProductResult
+    savings = ProductResult(product="savings", summary="ok", confidence=1, data={
+        "accounts": [{"balance": 4561}], "balance_total": 4561, "as_of_date": "2026-10-31",
+        "goal": {"name": "Car fund", "target_amount": 6000, "current_saved": 4200, "monthly_contribution": 400,
+                 "target_date": "2027-12-31"}, "goal_remaining": 1800})
+    weeks = {"name": "weeks", "label": "Weeks", "unit": "count", "formula": "ceil(days_needed / 7)"}
+    state = {"query": CAR, "results": [savings], "calculations": [{**weeks, "error": "Unknown name days_needed"}],
+             "verify": VerifyDecision(done=False, missing="x", calculations=[DAYS])}
+    out = {c["name"]: c for c in calculate(state)["calculations"]}
+    assert out["days_needed"]["value"] == 18 and out["weeks"]["value"] == 3 and "error" not in out["weeks"]
