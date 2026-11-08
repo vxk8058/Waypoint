@@ -1,6 +1,6 @@
-"""Hardcoded demo login, linked to a seeded student profile.
+"""Hardcoded demo logins, each linked to one seeded student profile.
 
-The demo user is stored in MongoDB `users` (password as a PBKDF2 hash) and refreshed at
+Demo users are stored in MongoDB `users` (password as a PBKDF2 hash) and refreshed at
 startup. The password comes from WAYPOINT_DEMO_PASSWORD (default "waypoint-demo").
 Every API call derives the profile from the logged-in user, never from the request.
 """
@@ -11,9 +11,17 @@ from pymongo.database import Database
 
 from .passwords import hash_password, verify_password
 
+# One demo login per seeded student. Names match each student's Nessie customer.
+# All share the password from WAYPOINT_DEMO_PASSWORD (default "waypoint-demo").
 DEMO_USERS = [
     {"user_id": "user-poyo", "email": "poyo@waypoint.demo", "display_name": "Poyo de Avon",
      "first_name": "Poyo", "last_name": "de Avon", "profile_id": "stu-002"},
+    {"user_id": "user-lucas", "email": "lucas@waypoint.demo", "display_name": "Lucas Patel",
+     "first_name": "Lucas", "last_name": "Patel", "profile_id": "stu-001"},
+    {"user_id": "user-leah", "email": "leah@waypoint.demo", "display_name": "Leah Walker",
+     "first_name": "Leah", "last_name": "Walker", "profile_id": "stu-003"},
+    {"user_id": "user-priya", "email": "priya@waypoint.demo", "display_name": "Priya Ramirez",
+     "first_name": "Priya", "last_name": "Ramirez", "profile_id": "stu-004"},
 ]
 
 
