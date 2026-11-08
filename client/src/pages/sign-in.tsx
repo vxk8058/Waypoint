@@ -89,16 +89,7 @@ export function SignIn() {
             fullWidth
           />
 
-          <label className="flex w-fit cursor-pointer items-center gap-3 text-blue-grey-100">
-            <input
-              type="checkbox"
-              name="remember"
-              className="size-5 cursor-pointer rounded accent-purple-500"
-            />
-            Remember Me
-          </label>
-
-          <Button type="submit" size="lg" fullWidth className="mt-3 font-semibold">
+          <Button type="submit" size="lg" fullWidth className="mt-8 font-semibold">
             Sign in
           </Button>
         </form>
