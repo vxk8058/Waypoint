@@ -37,3 +37,14 @@ def test_nessie_id_map_unique(db):
     db.nessie_id_map.insert_one({"profile_id": "stu-001", "local_key": "k", "nessie_id": "a"})
     with pytest.raises(DuplicateKeyError):
         db.nessie_id_map.insert_one({"profile_id": "stu-001", "local_key": "k", "nessie_id": "b"})
+
+
+def test_missing_uri_points_to_env_file(monkeypatch):
+    monkeypatch.delenv("MONGODB_URI", raising=False)
+    with pytest.raises(RuntimeError, match=r"\.env"):
+        get_database(uri="")
+
+
+def test_placeholder_uri_rejected():
+    with pytest.raises(RuntimeError, match="placeholder"):
+        get_database(uri="mongodb+srv://user:<db_password>@cluster0.example.mongodb.net/")

@@ -16,6 +16,7 @@ from datetime import datetime, timezone
 from pymongo import ASCENDING, MongoClient
 from pymongo.database import Database
 
+from .. import ROOT
 from ..config import Settings
 
 COLLECTIONS = ("students", "goals", "seed_plans", "nessie_id_map", "seed_runs")
@@ -27,8 +28,14 @@ def get_database(uri: str | None = None, db_name: str | None = None, client: Mon
     if client is None:
         uri = uri or settings.mongodb_uri
         if not uri:
-            raise RuntimeError("MONGODB_URI is not set (add it to .env)")
-        client = MongoClient(uri, serverSelectionTimeoutMS=timeout_ms, appname="waypoint-backend")
+            raise RuntimeError(
+                f"MONGODB_URI is not set. Create {ROOT / '.env'} (copy .env.example and fill it in); "
+                ".env.example itself is never read and must not contain secrets.")
+        if "<" in uri or ">" in uri:
+            raise RuntimeError(
+                "MONGODB_URI still contains a <placeholder>. Replace <db_password> with the real "
+                "password (no angle brackets), URL-encoding special characters, e.g. ',' -> %2C.")
+        client =MongoClient(uri, serverSelectionTimeoutMS=timeout_ms, appname="waypoint-backend")
     return client[db_name or settings.mongodb_db]
 
 
